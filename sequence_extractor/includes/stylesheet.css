@@ -1,0 +1,61 @@
+body.links {font-family: arial, sans-serif; color: #000000; background: url(light_gray.gif); background-repeat: repeat}
+
+body.main {font-family: arial, sans-serif; color: #000000; background-color: #FFFFFF}
+
+div.category {font-size: medium; color: #FFFFFF; text-align: left; background-color: #6666FF}
+
+div.program {font-size: x-small; color: #000099}
+div.program a {font-size: x-small; color: #000099; text-decoration: none}
+div.program a:visited {font-size: x-small; color: #000099; text-decoration: none}
+div.program a:hover {font-size: x-small; color: #FF0000; text-decoration: underline}
+div.program a:active {font-size: x-small; color: #FF0000; text-decoration: underline}
+
+div.pre {font-size: small; color: #000000; font-family: courier, sans-serif; white-space: pre}
+div.pre a {font-size: small; color: #000000; font-family: courier, sans-serif; white-space: pre; text-decoration: none}
+div.pre a:visited {font-size: small; color: #000000; font-family: courier, sans-serif; white-space: pre; text-decoration: none}
+div.pre a:hover {font-size: small; color: #000000; font-family: courier, sans-serif; white-space: pre; text-decoration: underline}
+div.pre a:active {font-size: small; color: #000000; font-family: courier, sans-serif; white-space: pre; text-decoration: underline}
+
+div.title {font-size: x-large; color: #000000; text-align: left; background-color: #FFFFFF}
+
+div.copyright {font-size: x-small; color: #000000}
+
+td.title {font-size: x-large; color: #FFFFFF; text-align: left; background-color: #9999FF}
+
+td.sms {font-size: xx-large; color: #FFFFFF; text-align: center; background-color: #6666FF}
+
+td.link_bar {font-size: medium; color: #FFFFFF; text-align: center; background-color: #9999FF}
+td.link_bar a {font-size: medium; color: #FFFFFF; text-align: center; background-color: #9999FF; text-decoration: none}
+td.link_bar a:visited {font-size: medium; color: #FFFFFF; text-align: center; background-color: #9999FF; text-decoration: none}
+td.link_bar a:hover {font-size: medium; color: #FFFFFF; text-align: center; background-color: #9999FF; text-decoration: underline}
+td.link_bar a:active {font-size: medium; color: #FFFFFF; text-align: center; background-color: #9999FF; text-decoration: underline}
+
+div.link_bar {font-size: medium; color: #FFFFFF; text-align: center; background-color: #9999FF}
+div.link_bar a {font-size: medium; color: #FFFFFF; text-align: center; background-color: #9999FF; text-decoration: none}
+div.link_bar a:visited {font-size: medium; color: #FFFFFF; text-align: center; background-color: #9999FF; text-decoration: none}
+div.link_bar a:hover {font-size: medium; color: #FFFFFF; text-align: center; background-color: #9999FF; text-decoration: underline}
+div.link_bar a:active {font-size: medium; color: #FFFFFF; text-align: center; background-color: #9999FF; text-decoration: underline}
+
+div.options {font-size: small; color: #000000; text-align: left; background: url(very_light_gray.gif); background-repeat: repeat}
+div.options a {font-size: small; color: #000099; text-align: left; background: url(very_light_gray.gif); background-repeat: repeat; text-decoration: none}
+div.options a:visited {font-size:small; color: #000099; text-align: left; background: url(very_light_gray.gif); background-repeat: repeat; text-decoration: none}
+div.options a:hover {font-size: small; color: #FF0000; text-align: left; background: url(very_light_gray.gif); background-repeat: repeat; text-decoration: underline}
+div.options a:active {font-size: small; color: #FF0000; text-align: left; background: url(very_light_gray.gif); background-repeat: repeat; text-decoration: underline}
+
+td.description {font-size: medium; color: #000000; background: url(very_light_gray.gif); background-repeat: repeat}
+td.description a {font-size: medium; text-decoration: none; color: #000099; background: url(very_light_gray.gif); background-repeat: repeat}
+td.description a:visited {font-size: medium; text-decoration: none; color: #000099; background: url(very_light_gray.gif); background-repeat: repeat}
+td.description a:hover {font-size: medium; text-decoration: underline; color: #FF0000; background: url(very_light_gray.gif); background-repeat: repeat}
+td.description a:active {font-size: medium; text-decoration: underline; color: #FF0000; background: url(very_light_gray.gif); background-repeat: repeat}
+
+div.description {font-size: medium; color: #000000; background: url(very_light_gray.gif); background-repeat: repeat}
+div.description a {font-size: medium; text-decoration: none; color: #000099; background: url(very_light_gray.gif); background-repeat: repeat}
+div.description a:visited {font-size: medium; text-decoration: none; color: #000099; background: url(very_light_gray.gif); background-repeat: repeat}
+div.description a:hover {font-size: medium; text-decoration: underline; color: #FF0000; background: url(very_light_gray.gif); background-repeat: repeat}
+div.description a:active {font-size: medium; text-decoration: underline; color: #FF0000; background: url(very_light_gray.gif); background-repeat: repeat}
+
+div.home {font-size: small; color: #000000; text-align: center}
+div.home a {font-size: small; color: #000099; text-align: center}
+div.home a:visited {font-size:small; color: #000099; text-align: center}
+div.home a:hover {font-size: small; color: #FF0000; text-align: center}
+div.home a:active {font-size: small; color: #FF0000; text-align: center}

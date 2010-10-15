@@ -1,0 +1,120 @@
+<?php
+$table = 'fragments';
+$mode = $_GET['mode'];
+$formParams = array('table'=>'fragments', 'mode'=>$mode);
+$noUserFilter = False;
+$submitFunction = "true";
+#determine type of building block and set title
+include("formhead.php");
+$fields['type']? $type=$fields['type']:$type = $_GET['type'];
+switch ($type){
+	case 'gene':
+		$titleName = "Gene Fragment";
+	    break;
+	case 'PCR' :
+		$titleName = "PCR Product";
+	    break;
+	case 'backbone':
+		$titleName = "Plasmid Backbone";
+	    break;
+}
+# hidden field that contains type
+print "<input type=\"hidden\" value=\"$type\" name=\"${table}_0_type\"/>";
+#form fields
+#print_r($fields);echo "<br/>";
+printID($formParams);
+printTextField('Name', 'name',$formParams);
+printProjectFields($formParams);
+if ($type == 'PCR') printTextField('Reaction', 'reaction',$formParams);
+printTextArea('Description', 'description',$formParams);
+if ($type == 'gene') printTextField('Organism','organism',$formParams);
+if ($type == 'PCR') printPCRFields($formParams);
+if ($type == 'backbone') printTextField('Resistance Marker', 'resistance',$formParams);
+if ($type == 'backbone') printTextField('Origin of Replication', 'origin',$formParams);
+if ($type == 'backbone' or $type == 'gene') printLinkField('Link to more info', 'link',$formParams);
+if ($type == 'backbone' or $type == 'gene') printAttachmentField('File Attachement', 'attachment',$formParams);
+#if ($type == 'gene') printLinkField('Internet link', 'link',$formParams);
+printSequenceField('DNA Sequence', 'DNA', 'DNASequence',$formParams, True, False);
+if ($type == 'gene') printSequenceField('Protein Sequence', 'protein', 'proteinSequence',$formParams, true, false);
+printSubmitButton($formParams,$button);
+printCloseAddFragmentButton($formParams, $id);
+?>
+</form>
+
+<?php
+#functions
+###########################################################3
+
+function printPCRFields($formParams){
+	global $userid;
+	global $groups;
+	$mode = $formParams['mode'];
+	$fields = $formParams['fields'];
+	$table = $formParams['table'];
+	$titleName = "PCR";
+	$tables = array('oligos','plasmids');
+	$choices = array();
+	# get choices for the comboboxes
+	foreach ($tables as $t){
+		$tcols = array('tracker.trackID',"$t.name");
+		$rows = getRecords($t, $userid, $tcols);
+		if (!$rows) continue;
+		foreach ($rows as $row) {
+			$choices[$t][$row['trackID']] = $row['name'];
+		}
+	}
+	#oligo comboboxes
+	$PCRbox = "<div class=\"formRow\"><div class=\"formLabel\">PCR:<br/>";
+	$PCRbox .= "<a style=\"display: block;\" target=\"blank\" href=\"sequence_extractor/index.php\" onClick=\"RunPCR();\"> Run PCR </a>";
+	$PCRbox .= "</div>\n";
+	if($mode == "modify"){
+		$PCRbox .= "<div class=\"pcrField\">";
+	}
+	if ($mode == "display"){
+		$PCRbox .= "<div class=\"displayField\">";
+	}
+	$PCRbox .= "<div class=\"PCR\">";
+	for ($i=1;$i<=2;$i++){
+		$PCRbox .= "<span class=\"pcrLabel\">Oligo $i:</span>\n";
+		if($mode == "modify"){
+			$PCRbox .= "<select class=\"oligoBox\" id=\"oligo$i\" name=\"${table}_0_PCRoligo$i\" columns=\"30\">";
+			$c = "<option value=\"NA\"></option>\n";
+			if(count($choices['oligos'])){
+					foreach ($choices['oligos'] as $id => $oligo){
+					$c .= "<option value=\"$id\"";
+					if ($fields["PCRoligo$i"] == $id) $c .= " selected=\"selected\"";
+					$c .= ">$oligo</option>\n";
+				}
+			}
+			$PCRbox .= "$c </select>";
+		}
+		if ($mode == "display"){
+			$olid = $fields["PCRoligo$i"];
+			$PCRbox .= "<span class=\"pcrText\"><a href=\"editEntry.php?id=$olid&amp;mode=display\" >".$choices['oligos'][$olid]."</a></span>";
+			$PCRbox .= "<input type=\"hidden\" value=\"$olid\" id=\"oligo$i\" />";
+		}
+	}
+	$PCRbox .= "</div>";
+	# template combobox
+	$PCRbox .= "<div class=\"PCR\"><span class=\"pcrLabel\">Plasmid:</span>\n";
+	if($mode == "modify"){
+		$PCRbox .= "<select class=\"oligoBox\" id=\"template\" name=\"{$table}_0_PCRtemplate\">";
+		$c = "<option value=\"NA\"></option>\n";
+		if(count($choices['plasmids'])){
+			foreach ($choices['plasmids'] as $id => $plasmid){
+				$c .= "<option value=\"$id\"";
+				if ($fields['PCRtemplate'] == $id) $c .= " selected=\"selected\"";
+				$c .= ">$plasmid</option>\n";
+			}
+		}
+		$PCRbox .= "$c </select>";
+	}
+	if ($mode == "display"){
+		$plid = $fields["PCRtemplate"];
+		$PCRbox .= "<span class=\"pcrText\"><a href=\"editEntry.php?id=$plid&amp;mode=display\" >".$choices['plasmids'][$plid]."</a></span>";
+		$PCRbox .= "<input type=\"hidden\" value=\"$plid\" id=\"template\" />";
+	}
+	$PCRbox .= "</div></div></div>";
+	print $PCRbox;
+}
+?>

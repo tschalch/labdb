@@ -1,0 +1,47 @@
+<?php
+$submitFunction = "RemoveHiddenDiv(hiddenFields);";
+$titleName = "Vial";
+$mode = $_GET['mode'];
+$table = 'vials';
+$formParams = array('table'=>$table, 'mode'=>$mode);
+include("formhead.php");
+printTextField('Vial Label', 'name', $formParams);
+printTextField('Date', 'date', $formParams);
+printTextArea('Description', 'description', $formParams);
+# Sample comboboxes
+	$q = "SELECT * FROM sampleTypes";
+	$values = pdo_query($q);
+	$sampleTypes = pdo_query($q);
+#	$choices = array('plasmids'=>'Plasmid','glycerolstocks'=>'Glycerol Stock','oligos' => 'Oligo','proteins' => 'Protein');
+	$script = "<SCRIPT LANGUAGE=\"JavaScript\">\n";
+	$script .= "<!--\n";
+	$script .= "var hiddenFields = new Array(";
+	foreach ($sampleTypes as $type){
+		$script .= "\"cmb.${type['name']}\", ";
+	}
+	$script = substr($script, 0, -2);
+	$script .= ");\n";
+	$script .= "// -->\n";
+	$script .= "</SCRIPT>\n";
+	print $script;
+	printComboBox('Type of Sample', 'sampleType', $formParams, $sampleTypes, $fields['sampleType'], " onChange=\"AddFragmentField(type)\"");
+if ($fields['sampleID']){
+		$q = "SELECT id,name FROM ${fields['sampleType']}";
+		$choices = pdo_query($q);
+		print "<div name=\"cmb.$table\" style=\"display:block;\">";
+		printComboBox($fields['sampleType'], 'sampleID', $formParams, $choices, $fields['sampleID'],'',"frm${fields['sampleType']}");
+		print "</div>";
+} else {
+	foreach ($sampleTypes as $type){
+		$q = "SELECT * FROM ${type['table']}";
+		$choices = pdo_query($q);
+		print "<div name=\"cmb.${type['name']}\" style=\"display:none;\">";
+		printComboBox('Select '.$choices[$table], 'sampleID', $formParams, $choices, $fields['sampleID']);
+		print "</div>";
+	}
+}
+# box combobox
+$choices = pdo_query("SELECT id,name FROM boxes");
+printComboBox("Storage Box",'boxID', $formParams, $choices, $fields['boxID'],'','frmBoxes');
+printSubmitButton($formParams,$button);
+?>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="46cm" height="25cm" viewBox="-10 -1 46 25">
+  <ellipse style="fill: #ffffff" cx="16.75" cy="12.35" rx="19.1399" ry="11.395"/>
+  <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.06; stroke: #000000" cx="16.75" cy="12.35" rx="19.1399" ry="11.395"/>
+  <text style="fill: #000000; font-size: 1.7 cm; length: 9.52999 cm; font-family: arial black; font-style: normal; font-weight: normal" x="11.785" y="4.20125">Cloning DB</text>
+  <text style="fill: #000000; font-size: 0.8 cm; length: 0 cm; font-family: sans; font-style: normal; font-weight: normal" x="16.75" y="12.35"></text>
+  <ellipse style="fill: #ffffff" cx="7.51" cy="16.43" rx="3.3" ry="1.065"/>
+  <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" cx="7.51" cy="16.43" rx="3.3" ry="1.065"/>
+  <text style="fill: #000000; font-size: 1.2 cm; length: 3.91999 cm; font-family: sans; font-style: normal; font-weight: normal" x="5.55" y="16.7263">Storage</text>
+  <text style="fill: #000000; font-size: 0.8 cm; length: 0 cm; font-family: sans; font-style: normal; font-weight: normal" x="7.51" y="16.43"></text>
+  <ellipse style="fill: #ffffff" cx="-4.17617" cy="2.07342" rx="5.5499" ry="2.575"/>
+  <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.06; stroke: #000000" cx="-4.17617" cy="2.07342" rx="5.5499" ry="2.575"/>
+  <text style="fill: #000000; font-size: 1.4 cm; length: 2.6175 cm; font-family: arial black; font-style: normal; font-weight: normal" x="-5.48492" y="1.91092">Lab</text>
+  <text style="fill: #000000; font-size: 1.4 cm; length: 6.755 cm; font-family: arial black; font-style: normal; font-weight: normal" x="-7.55367" y="3.31092">Inventory</text>
+  <text style="fill: #000000; font-size: 0.8 cm; length: 0 cm; font-family: sans; font-style: normal; font-weight: normal" x="-4.17617" y="2.07342"></text>
+  <rect style="fill: #ffffff" x="15.35" y="17.925" width="4.7" height="1.75"/>
+  <rect style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x="15.35" y="17.925" width="4.7" height="1.75"/>
+  <text style="fill: #000000; font-size: 1 cm; length: 2.435 cm; font-family: sans; font-style: normal; font-weight: normal" x="16.4825" y="19.0462">oligos</text>
+  <rect style="fill: #ffffff" x="9.66" y="7.155" width="4.7" height="1.75"/>
+  <rect style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x="9.66" y="7.155" width="4.7" height="1.75"/>
+  <text style="fill: #000000; font-size: 1 cm; length: 3.785 cm; font-family: sans; font-style: normal; font-weight: normal" x="10.1175" y="8.27625">Plasmids</text>
+  <rect style="fill: #ffffff" x="20.27" y="9.935" width="7.08" height="1.75"/>
+  <rect style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x="20.27" y="9.935" width="7.08" height="1.75"/>
+  <text style="fill: #000000; font-size: 1 cm; length: 6.325 cm; font-family: sans; font-style: normal; font-weight: normal" x="20.6475" y="11.0562">Building Blocks</text>
+  <line style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x1="20.27" y1="10.81" x2="14.8005" y2="8.23721"/>
+  <polygon style="fill: #000000" points="14.4612,8.07759 15.02,8.06419 14.8005,8.23721 14.8072,8.51664 "/>
+  <polygon style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" points="14.4612,8.07759 15.02,8.06419 14.8005,8.23721 14.8072,8.51664 "/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x1="20.05" y1="18.8" x2="23.8094" y2="15.9864"/>
+  <polygon style="fill: #000000" points="23.9355,15.892 23.8303,16.1019 23.8094,15.9864 23.7044,15.9338 "/>
+  <polygon style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" points="23.9355,15.892 23.8303,16.1019 23.8094,15.9864 23.7044,15.9338 "/>
+  <ellipse style="fill: #ffffff" cx="24.025" cy="15.15" rx="2.025" ry="0.675"/>
+  <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" cx="24.025" cy="15.15" rx="2.025" ry="0.675"/>
+  <text style="fill: #000000; font-size: 0.8 cm; length: 1.9525 cm; font-family: sans; font-style: normal; font-weight: normal" x="23.0487" y="15.3487">PCRs</text>
+  <ellipse style="fill: #ffffff" cx="31.235" cy="8.58" rx="2.025" ry="0.675"/>
+  <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" cx="31.235" cy="8.58" rx="2.025" ry="0.675"/>
+  <text style="fill: #000000; font-size: 0.8 cm; length: 2.2025 cm; font-family: sans; font-style: normal; font-weight: normal" x="30.1337" y="8.77875">Genes</text>
+  <ellipse style="fill: #ffffff" cx="23.345" cy="7.01" rx="2.025" ry="0.675"/>
+  <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" cx="23.345" cy="7.01" rx="2.025" ry="0.675"/>
+  <text style="fill: #000000; font-size: 0.8 cm; length: 2.74 cm; font-family: sans; font-style: normal; font-weight: normal" x="21.975" y="7.20875">Proteins</text>
+  <line style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x1="29.21" y1="8.58" x2="27.35" y2="10.81"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x1="23.345" y1="7.685" x2="23.81" y2="9.935"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x1="24.025" y1="14.475" x2="23.81" y2="11.685"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x1="15.35" y1="18.8" x2="9.84345" y2="17.1831"/>
+  <rect style="fill: #ffffff" x="-0.19" y="7.805" width="4.7" height="1.75"/>
+  <rect style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x="-0.19" y="7.805" width="4.7" height="1.75"/>
+  <text style="fill: #000000; font-size: 1 cm; length: 2.9025 cm; font-family: sans; font-style: normal; font-weight: normal" x="0.70875" y="8.92625">Strains</text>
+  <line style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x1="9.66" y1="8.03" x2="4.99297" y2="8.61904"/>
+  <polygon style="fill: #000000" points="4.62092,8.666 5.08568,8.35536 4.99297,8.61904 5.14829,8.85142 "/>
+  <polygon style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" points="4.62092,8.666 5.08568,8.35536 4.99297,8.61904 5.14829,8.85142 "/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x1="2.16" y1="9.555" x2="5.17655" y2="15.6769"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x1="12.01" y1="8.905" x2="9.84345" y2="15.6769"/>
+  <ellipse style="fill: #ffffff" cx="31.345" cy="13.7" rx="2.615" ry="0.675"/>
+  <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" cx="31.345" cy="13.7" rx="2.615" ry="0.675"/>
+  <text style="fill: #000000; font-size: 0.8 cm; length: 3.6975 cm; font-family: sans; font-style: normal; font-weight: normal" x="29.4963" y="13.8988">Backbones</text>
+  <line style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x1="28.73" y1="13.7" x2="27.35" y2="11.685"/>
+</svg>

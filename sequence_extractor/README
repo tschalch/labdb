@@ -1,0 +1,56 @@
+Installing Sequence Extractor
+-----------------------------
+Paul Stothard, stothard@ualberta.ca
+
+This guide assumes that you have the Apache web server installed and
+that you are familiar with its configuration. 
+
+0. The sequence extractor web pages are in the 'html' directory, and
+the Perl scripts are in the 'cgi-bin' directory.
+
+1. Make sure Apache can follow symbolic links from its cgi-bin and
+htdocs directory by checking the httpd.conf file. The configuration
+should look something like this:
+
+<Directory "/usr/local/apache2/cgi-bin">
+    AllowOverride All
+    Options FollowSymLinks
+    Order allow,deny
+    Allow from all
+</Directory>
+
+<Directory "/usr/local/apache2/htdocs">
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+</Directory>
+
+2. Create symbolic links in the Apache cgi-bin directory and the
+Apache htdocs directory to the sequence extractor 'html' and 'cgi-bin'
+directories:
+
+cd to htdocs and then use something like:
+ln -s /home/paul/paul_dev/perl/sequence_extractor_2006/html/ seqext
+
+cd to cgi-bin and then use:
+ln -s /home/paul/paul_dev/perl/sequence_extractor_2006/cgi-bin/ seq_ext
+
+3. Edit the Sequence Extractor index.html file to set the correct path
+to the cgi-bin script. The line to change is:
+
+<form method="post" action="http://localhost/cgi-bin/seq_ext/se.pl">
+
+For example, for the Bioinformatics.org mirror this line is:
+
+<form method="post" action="http://bioinformatics.org/paul/cgi-bin/se.pl">
+
+4. Edit the make_output.pm file to change the URL for the overlib.js
+library. The line to edit is:
+
+print "<script type=\"text/javascript\" src=\"http://localhost/seqext/includes/overlib.js\"><!-- overLIB (c) Erik Bosrup --></script>\n";
+
+For example, for the Bioinformatics.org mirror this line is:
+
+print "<script type=\"text/javascript\" src=\"http://bioinformatics.org/seqext/includes/overlib.js\"><!-- overLIB (c) Erik Bosrup --></script>\n";
+

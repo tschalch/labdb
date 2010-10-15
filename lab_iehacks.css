@@ -1,0 +1,21 @@
+div.formField {
+  width: 806px;
+  margin-left: 0px;
+  }
+  
+#leftToMap div.formField {
+  margin-left: 0px;
+} 
+
+div.displayField{
+  width: 806px;
+  margin-left: 0px;
+  }
+
+#leftToMap div.displayField{
+  margin-left: 0px;
+  }
+
+textarea.form {
+  width: 806px;
+}

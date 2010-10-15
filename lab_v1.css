@@ -1,0 +1,459 @@
+body { 	font-family: arial, verdana, sans-serif;
+	font-size : 0.8em }
+p { margin-left: 20px }
+
+.sequence {	font-size : 125%;
+                position: relative;
+                margin-right: 10px;
+                left: 0;
+                margin-top: 0px;
+		line-height: 100%;
+		width: 50em;
+                }
+
+.search{
+	font-size : 50%;
+	text-align: left;
+	float: left;
+}
+.project{
+	text-align: left;
+        float: right;
+        display: block;
+}
+
+div.project span.projectCombo{
+  float: left;
+  text-align: left;
+  margin-left: 10px;
+}
+
+.inputbox{
+	background: white;
+	border: 1px solid #191970;
+	padding: 2px;
+}
+
+a{text-decoration: none; color: #2E8B57}
+
+img {border:0}
+
+TABLE.lists {
+	border-collapse: collapse;
+	width: 1010px;
+	border: 1px solid black;
+	}
+TD.lists{
+	border-width: 1px;
+	border-style: solid;
+	border-color: black;
+	padding: 5px;
+	}
+TD.seq{text-align: center}
+
+TH.lists{
+	border-width: 0px;
+	border-style: solid;
+	border-color: black;
+	background-color: white;
+	padding:0.2em;
+	}
+textarea.form {
+	width:100%;
+	border: 1px solid #B8B8B8;
+}
+
+textarea.list {width: 100%}
+
+body {
+	margin: 0;
+	padding: 10px;
+	width: 1200px;
+}
+
+div.PCR{
+  display: block;
+  overflow:auto;
+  vertical-align: middle;
+  padding-bottom: 5px;
+  padding-right: 5px;
+}
+span.pcrField{
+  display: block;
+  overflow: auto;
+  float: right;
+  padding: 5px 5px 5px 5px;
+}
+
+div.PCR span.pcrLabel {
+  float: left;
+  text-align: left;
+  padding: 3px 3px 0 0;
+  width: 50px;
+  margin-right: 5px
+}
+div.PCR span.pcrText {
+  float: left;
+  text-align: left;
+  padding: 3px 20px 0 3px;
+}
+
+div.PCR select.oligoBox {
+  float: left;
+  width: 150px;
+  margin-right: 15px;
+}
+div.template{
+  clear: both;
+}
+
+div.formRow {
+  width:100%;
+  overflow: hidden;
+/*  padding-left: 100px;*/
+  padding: 0.5em 0 0.5em 0;
+  }
+
+div.formRowHelp {
+  width:980px;
+  background-color: #FFFACD;
+  border: 2px solid #FFD700;
+  padding: 6px 6px 6px 6px;
+  margin: 5px 5px 5px 5px;
+  }
+#leftToMap div.formRowHelp {
+  width: 476px;
+} 
+
+div.frontPageRow {
+  width:75%;
+  text-align:center;
+  overflow: hidden;
+/*  padding-left: 100px;*/
+  padding: 0.5em 0 0.5em 0;
+  }
+
+div.idfield{
+  color: gray;
+  padding: 0;
+}
+
+div.formLabel {
+  float: left;
+  clear: left;
+  width: 190px;
+  padding: 0 10px 0 0;
+  display: inline;
+  min-height: 20px;
+  }
+
+#leftToMap div.formLabel {
+  width: 130px;
+} 
+
+div.formField {
+  width: 808px;
+  margin-left: 200px;
+  text-align: left;
+  background-color: white;
+  padding:  0em 0em 0em 0px;
+  min-height: 20px;
+  }
+  
+#leftToMap div.formField {
+  width: 350px;
+  margin-left: 140px;
+} 
+
+div.displayField{
+  width: 808px;
+  margin-left: 200px;
+  text-align: left;
+  /*background-color: #FFCCFF;*/
+  background-color: white;
+  padding:  0em 0em 0em 0em;
+  min-height: 20px;
+  }
+
+#leftToMap div.displayField{
+  width: 350px;
+  margin-left: 140px;
+  }
+
+
+#navcontainer
+{
+clear: both;
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 40px;
+margin-top: 20px;
+border-top: 1px solid #999;
+z-index: 1;
+}
+
+#navcontainer ul
+{
+list-style-type: none;
+text-align: center;
+margin-top: -8px;
+padding: 0;
+position: relative;
+z-index: 2;
+}
+
+#navcontainer li
+{
+display: inline;
+text-align: center;
+margin: 0 5px;
+}
+
+#navcontainer li a
+{
+padding: 1px 7px;
+color: #666;
+background-color: #fff;
+border: 1px solid #ccc;
+text-decoration: none;
+}
+
+#navcontainer li a:hover
+{
+color: #000;
+border: 1px solid #666;
+border-top: 2px solid #666;
+border-bottom: 2px solid #666;
+}
+
+#navcontainer li a#current
+{
+color: #000;
+border: 1px solid #666;
+border-top: 2px solid #666;
+border-bottom: 2px solid #666;
+}
+input.textfield{
+  margin: 0;
+  width: 100%;
+  border: 1px solid #B8B8B8;
+}
+
+input.datefield{
+  border: 1px solid #B8B8B8;
+  padding: 2px;
+}
+
+#header
+{
+  margin-bottom: 10px;
+  border-bottom: 2px ridge black;
+}
+
+#container{
+  width:1000px;
+  padding-left: 200px;
+  border:1px solid #888;
+}
+#labnav{
+        width:180px;
+        position: absolute;
+        left: 0px;
+        padding: 0 10px 10px 10px;
+}
+
+#content{
+  padding: 0px 0px 0px 10px;
+  width: 1010px;
+  float:left;
+  margin-left: 180px;
+}
+
+#footer
+{
+clear: both;
+}
+
+div.autocomplete {
+position:absolute;
+width:250px;
+background-color:white;
+border:1px solid #888;
+margin:0px;
+padding:0px;
+}
+div.autocomplete ul {
+list-style-type:none;
+margin:0px;
+padding:0px;
+}
+div.autocomplete ul li.selected { background-color: #FFCCFF;}
+div.autocomplete ul li {
+list-style-type:none;
+display:block;
+margin:0;
+padding:2px;
+height:16px;
+cursor:pointer;
+}
+
+#mainform {
+        background:#fff;
+        }
+
+
+#mainform #mapBox {
+        border:1px solid #000; 
+        float:right;
+        width:500px;
+	margin-bottom: 1em;
+        }
+
+.button {
+	border: 2px solid orange;
+	padding: 4px;
+	background-color:#FFCC66;
+	color: black;
+	cursor: pointer;
+}
+
+.submitButtons {
+	-moz-border-radius-bottomleft:5px;
+	-moz-border-radius-bottomright:5px;
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright:5px;
+	border: 2px solid #483D8B;
+	padding: 4px;
+	background-color: #B0C4DE;
+	color: black;
+	cursor: pointer;
+	width: 10em;
+	display:inline;
+	margin: 5px;
+}
+
+
+#mainform #leftToMap {
+        width:500px;
+        }
+
+#log_res {
+	overflow: auto;
+        height: 20px;
+}
+ 
+#log_res.ajax-loading {
+	background: url(img/spinner.gif) no-repeat left;
+}
+
+/* Sequence editor definitions */
+#seqEditor {
+	clear: both;
+	position: relative;
+	font-family: Courier New, Courier, monospace;
+	margin-right: 10px;
+	padding-left: 80px;
+	padding-top: 2em;
+	border-color: white;
+	line-height: 3em;
+	width: 928px;
+	background-color: white;
+	border: 1px solid black;
+	margin-bottom: 20px;
+}
+
+#seqEditor #editDNA{
+	position: relative;
+	z-index: 2;
+}
+		
+#seqEditor #editProtein{
+	position: absolute;
+	top: 1em;
+	left: 80px;
+	color: black;
+	z-index: 1;
+}
+
+#seqEditor #lineNumbers{
+	position: absolute;
+	top: 2em;
+	padding-left: 20px;
+	left: 0em;
+	color: black;
+}
+
+.labnavBox {
+	-moz-border-radius-bottomleft:10px;
+	-moz-border-radius-bottomright:10px;
+	-moz-border-radius-topleft:10px;
+	-moz-border-radius-topright:10px;
+	overflow-x:auto;
+	padding:10px;
+	width: 150px;
+	margin-bottom: 1em;
+}
+
+.labnavBox a{text-decoration: none; color:white}
+
+#RestNav a{
+	text-decoration: none;
+	color:#191970;
+	}
+
+#Inventory{
+	background:#4682B4 none repeat scroll 0 0;
+	color:#FFFFFF;
+}
+#Inventory a{text-decoration: none; color:white}
+
+#Cloning{
+	background:#ADD8E6 none repeat scroll 0 0;
+	color:#191970;
+}
+#Cloning a{text-decoration: none; color: #191970}
+
+#Freezer{
+	background:#87CEFA none repeat scroll 0 0;
+	color:#FFFFFF;
+}
+#Freezer a{text-decoration: none; color: #191970}
+
+a.qsh3{
+	color:blue;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+div.qsh3{
+	padding-left: 40px;
+}
+h2.qs{
+	color: black;
+}
+
+#orfSizeSlider {
+	float: right; 
+	width: 120px;
+	height: 10px;
+	background: #eee;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border: 2px solid #ccc;
+}
+#orfSizeSlider div.knob {
+	background: #000;
+	width: 10px;
+	height: 10px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+div.orfSize {
+	float: right;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+#orfControl {
+	padding: 2px;
+	height: 12px;
+}

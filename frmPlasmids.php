@@ -1,0 +1,144 @@
+<?php
+$table = "plasmids";
+$titleName = "Plasmid";
+$submitFunction = "true";
+$mode = $_GET['mode'];
+if (!$mode) $mode = 'display';
+$formParams = array('table'=>$table,'mode'=>$mode);
+
+include("formhead.php");
+
+# get choices for fragment comboboxes
+$types = array('Plasmid Backbone'=>'backbone','Gene Fragment'=>'gene','PCR Product'=>'PCR');
+#print_r($choices);
+#get the associated fragments
+#if($formParams['fields']){
+#	$frquery="SELECT $ltable.fragmentID fragments.type FROM `$ltable` WHERE plasmidID=$id";
+#	$rows = pdo_query($tquery);
+#}
+/*menu*/
+print "<div style=\"clear:both;\"><div id=\"mapBox\">\n";
+if ($mode=='modify'){
+?>
+<div style="background-color: gray; height: 1em; padding: 0px 0px 20px 0px"><ul id="nav">
+	<li><a href="#">Graph</a>
+		<ul>
+			<li><a class="nav"
+			       onclick="vm.updateFragments($('xcmbxFrags'));
+					vm.drawVector();
+					return false;"
+			       href="#">
+				Refresh
+			</a></li>
+		</ul>
+	</li>
+	<li><a href="#">Tools</a>
+		<ul>
+			<li><a class="nav" onclick="translate(this); return false"
+			       target="newWindow" href="newEntry.php?form=frmGene&amp;type=gene&amp;mode=modify">
+				Translate
+			</a></li>
+			<li><a class="nav" onclick="SaveSVG(); return false"
+			       href="#">
+				Save SVG map
+			</a></li>
+		</ul>
+	</li>
+</ul></div>
+<script src="lib/MenuMatic_0.68.3-source.js" type="text/javascript"></script>
+<script type="text/javascript">
+function SaveSVG(){
+	var svg = $('map').get('html');
+	postwith("saveSVG.php", {"svg":svg, title:$('name').get('value')})
+}
+window.addEvent('domready', function() {
+	var myMenu = new MenuMatic();
+})
+</script>
+<?php
+}
+print "<div id=\"map\"></div>
+	       <div id=\"orfControl\">
+			<div id=\"orfSize\" class=\"orfSize\">100</div>
+			<div id=\"orfSizeSlider\">
+				<div class=\"knob\"></div>
+			</div>
+			<div class=\"orfSize\">Minimum ORF size:</div>
+		</div>
+	</div>\n";
+print "<div id=\"leftToMap\">\n";
+printID($formParams);
+printTextField('Name', 'name',$formParams);
+printProjectFields($formParams);
+printTextArea('Description', 'description',$formParams);
+printTextArea('Generation of plasmid', 'generation',$formParams);
+//restriction enzymes
+$helpText = "This field requires a comma separated liste of restriction enzymes.\
+	Alternatively, the enzymes available in our lab can be chosen by specifying leemorlab.\
+	After the list of enzymes, arguments to the <a href=\\\"doc/emboss/restrict.html\\\">\\'restrict\\' command of the Emboss package</a> \
+	can be added.<br/><br/>\
+	Examples:<pre>\
+		PstI,BamHI\\n\
+		leemorlab -max 2 -min 1</pre>";
+printTextField('Enzymes', 'enzymes',$formParams, null, $helpText);
+$fcounter = printCrossCombobxs($id, $types, 0, $formParams);
+printReferenceLink('Freezer', 'Freezer locations', $id, 'vial', $formParams);
+print "</div></div>\n";
+printSubmitButton($formParams,$button);
+printSequenceField("Sequence", 'DNA', 'sequence', $formParams, true, true);
+$sites = getRestrictionSites($fields['enzymes'], $fields['sequence'], $userid);
+print "</form>\n";
+if($mode == "modify"){
+	$seqField = "sequence";
+}else{
+	$seqField = "disp_sequence";
+}
+?>
+
+<script src="lib/raphael-1.2.5.js" type="text/javascript" charset="utf-8"></script>
+<script src="lib/sms/sms_common.js" type="text/javascript"></script>
+<script src="lib/sms/sms_genetic_codes.js" type="text/javascript"></script>
+<script src="lib/sms/orf_find.js" type="text/javascript"></script>
+<script src="lib/sms/translate.js" type="text/javascript"></script>
+<script src="vectorMap.js" type="text/javascript"></script>
+<!--[if lt IE 7]>
+	<link rel="stylesheet" href="css/MenuMatic-ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+<script type="text/javascript" charset="utf-8">
+/*ajax code*/ 
+
+window.addEvent('domready', function() {
+	fcounter = <?php print $fcounter ?>;
+	mode = '<?php print $mode; ?>';
+	table = 'fragments';
+	vm = new VectorMap({}, $("map"));		
+	vm.updateFragments($('xcmbxFrags'));
+	vm.sites = <?php print $sites; ?>;
+	vm.drawVector();
+	$('gene').addEvent('click', addcmbx);
+	$('backbone').addEvent('click', addcmbx);
+	$('PCR').addEvent('click', addcmbx);
+	$('enzymes').addEvent('change', formatEnzymes)
+	sequence = "";
+	
+	var slideEl = $('orfSizeSlider');
+	
+	// Create the new slider instance
+	new Slider(slideEl, slideEl.getElement('.knob'), {
+		steps: 40,	// There are 35 steps
+		range: [20,220],	// Minimum value is 8
+		onChange: function(value){
+			// Everytime the value changes, we change the font of an element
+			vm.options.orfLength = value;
+			vm.updateFragments($('xcmbxFrags'));
+			vm.drawVector();
+			$('orfSize').set('html', value);
+		}
+	}).set($('orfSize').get('html').toInt());
+})
+
+</script>
+
+

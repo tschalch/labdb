@@ -1,0 +1,202 @@
+.css {
+	font-size: 8pt;
+	font-style: normal;
+	line-height: normal;
+	color: #878CA3;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-top: 0px;
+	margin-left: 23px;
+	margin-bottom: 0px;
+	margin-right: 23px;
+
+
+
+
+
+
+
+
+
+}
+
+li {
+  margin: 0.6em 0;
+}
+.cssverde {
+	font-size: 8pt;
+	font-style: normal;
+	line-height: normal;
+	color: #72A800;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-top: 23px;
+	margin-right: 23px;
+	margin-left: 23px;
+	margin-bottom: 25px;
+
+
+}
+.cssverde2 {
+	font-size: 8pt;
+	font-style: normal;
+	line-height: normal;
+	color: #669900;
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	margin-top: 12px;
+	margin-right: 12px;
+	margin-left: 12px;
+	margin-bottom: 20px;
+	letter-spacing: 1pt;
+	word-spacing: 2pt;
+
+}
+.cssverdebold {
+	font-size: 8pt;
+	font-style: normal;
+	line-height: normal;
+	color: #669900;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-top: 23px;
+	margin-right: 23px;
+	margin-left: 23px;
+	margin-bottom: 25px;
+	font-weight: bold;
+	font-variant: normal;
+
+}
+.cssTitulos {
+	font-size: 8pt;
+	font-style: normal;
+	line-height: normal;
+	color: #686C89;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-top: 23px;
+	margin-right: 23px;
+	margin-left: 23px;
+	font-weight: bold;
+	text-transform: none;
+	font-variant: normal;
+
+
+}
+.csshead2 {
+
+	font-size: 7pt;
+	font-style: normal;
+	line-height: normal;
+	color: #686C89;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-top: 15px;
+	margin-right: 23px;
+	margin-left: 23px;
+}
+.cssbg {
+	font-size: 8pt;
+	font-style: normal;
+	line-height: normal;
+	color: #9999AF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-top: 23px;
+	margin-right: 23px;
+	margin-left: 23px;
+	background-image: url(../images/bg_1.gif);
+	background-repeat: repeat-y;
+	background-color: #DCDCF0;
+
+}
+.cssdown {
+
+	font-size: 8pt;
+	font-style: normal;
+	line-height: normal;
+	color: #9999AF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-left: 15px;
+	margin-bottom: 0px;
+}
+.cssprice {
+
+	font-size: 8pt;
+	font-style: normal;
+	line-height: normal;
+	color: #CC0000;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-top: 23px;
+	margin-right: 23px;
+	margin-left: 23px;
+	font-weight: bold;
+	text-transform: none;
+	font-variant: normal;
+}
+.cssdownloads {
+
+	font-size: 8pt;
+	font-style: normal;
+	line-height: normal;
+	color: #9999AF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-top: 0px;
+	margin-right: 18px;
+	margin-left: 23px;
+	margin-bottom: 25px;
+}
+.css2 {
+	font-size: 8pt;
+	font-style: normal;
+	line-height: normal;
+	color: #64698C;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-bottom: 25px;
+	margin-top: 5px;
+	margin-right: 5px;
+	margin-left: 5px;
+
+
+}
+.cssCopy {
+
+	font-size: 8pt;
+	font-style: normal;
+	line-height: normal;
+	color: #9999AF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-top: 0px;
+	margin-right: 23px;
+	margin-left: 23px;
+	margin-bottom: 25px;
+}
+.css3 {
+	font-size: 8pt;
+	font-style: normal;
+	line-height: normal;
+	color: #9999AF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-left: 23px;
+	margin-bottom: 25px;
+	margin-top: 23px;
+
+}
+.csssub {
+	font-size: 9px;
+	font-style: normal;
+	line-height: normal;
+	color: #878CA3;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-left: 23px;
+	margin-bottom: 25px;
+	margin-right: 23px;
+
+}
+.css6 {
+
+	font-size: 8pt;
+	font-style: normal;
+	line-height: normal;
+	color: #878CA3;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-top: 5px;
+	margin-left: 23px;
+	margin-bottom: 5px;
+	margin-right: 23px;
+}

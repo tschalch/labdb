@@ -1,0 +1,455 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html lang="en">
+<head>
+<title>Sequence Extractor</title>
+<meta name="keywords" content="bioinformatics, genomics, software, restriction map, PCR" />
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" href="includes/stylesheet.css"  type="text/css" />
+</head>
+
+<body class="main">
+
+<table width="620" border="0" cellspacing="2" cellpadding="2" align="left">
+<tbody>
+
+<tr>
+<td class="sms">Sequence Extractor</td>
+</tr>
+
+<tr>
+<td class="link_bar"><a href="index.html">Main</a> | <a href="features.html">Features</a> | <a href="help.html">Help</a> | <a href="download.html">Download</a> | <a href="license.html">License</a> | <a href="about.html">About</a></td>
+</tr>
+
+<tr>
+<td class="description">Sequence Extractor generates a clickable restriction map and PCR primer map of a DNA sequence. Protein translations and intron/exon boundaries are also shown. Use Sequence Extractor to build DNA constructs <i>in silico</i>. Please read the list of <a href="features.html">program features</a> to learn more.
+<br />
+<br />
+<form method="post" action="cgi-bin/seq_ext/se.pl">
+Paste a sequence into the text area below. Accepted formats are: <a href="raw_sample.html">raw</a>, <a href="genbank_sample.html">GenBank</a>, <a href="embl_sample.html">EMBL</a>, and <a href="fasta_sample.html">FASTA</a>.
+<br /><textarea name="sequenceRecord" rows="6" cols="81">
+LOCUS       U01668       4133 bp    DNA   circular  SYN       01-JUL-1997
+DEFINITION  Phagemid cloning vector pKSS, complete sequence.
+ACCESSION   U01668
+VERSION     U01668.1  GI:405986
+KEYWORDS    direct-selection cloning vehicle; positive-selection; pheS.
+SOURCE      unidentified cloning vector.
+  ORGANISM  unidentified cloning vector
+            artificial sequence; vectors.
+REFERENCE   1  (bases 3084 to 3868)
+  AUTHORS   Selzer,G., Som,T., Itoh,T. and Tomizawa,J.
+  TITLE     The origin of replication of plasmid p15A and comparative studies
+            on the nucleotide sequences around the origin of related plasmids
+  JOURNAL   Cell 32, 119-129 (1983)
+  MEDLINE   83129391
+REFERENCE   2  (bases 59 to 1239)
+  AUTHORS   Fayat,G., Mayaux,J., Sacerdot,C., Fromant,M., Springer,M.,
+            Grunberg-Manago,M. and Blanquet,S.
+  TITLE     Escherichia coli phenylalanyl-tRNA synthetase operon region.
+            Evidence for an attenuation mechanism. Identification of the gene
+            for the ribosomal protein L20
+  JOURNAL   J. Mol. Biol. 171, 239-261 (1983)
+  MEDLINE   84090239
+REFERENCE   3  (bases 1313 to 1474; 1932 to 4100)
+  AUTHORS   Yanisch-Perron,C., Vieira,J. and Messing,J.
+  TITLE     Improved M13 phage cloning vectors and host strains: nucleotide
+            sequences of the M13mp18 and pUC19 vectors
+  JOURNAL   Gene 33, 103-119 (1985)
+  MEDLINE   85180545
+REFERENCE   4  (bases 1932 to 3868)
+  AUTHORS   Balbas,P., Soberon,X., Merino,E., Zurita,M., Lomeli,H., Valle,F.,
+            Flores,N. and Bolivar,F.
+  TITLE     Plasmid vector pBR322 and its special-purpose derivatives - A
+            review
+  JOURNAL   Gene 50, 3-40 (1986)
+  MEDLINE   87219889
+REFERENCE   5  (bases 1476 to 1931)
+  AUTHORS   Short,J.M., Fernandez,J.M., Sorge,J.A. and Huse,W.D.
+  TITLE     Lambda ZAP: A bacteriophage lambda expression vector with in vivo
+            excision properties
+  JOURNAL   Nucleic Acids Res. 16, 7583-7600 (1988)
+  MEDLINE   88319944
+REFERENCE   6  (bases 365 to 366; 1026 to 1026)
+  AUTHORS   Kast,P. and Hennecke,H.
+  TITLE     Amino acid substrate specificity of Escherichia coli
+            phenylalanyl-tRNA synthetase altered by distinct mutations
+  JOURNAL   J. Mol. Biol. 222, 99-124 (1991)
+  MEDLINE   92046090
+REFERENCE   7  (bases 3220 to 3255)
+  AUTHORS   Lin-Chao,S., Chen,W.-T. and Wong,T.-T.
+  TITLE     High copy number of the pUC plasmid results from a
+            Rom/Rop-suppressible point mutation in RNA II
+  JOURNAL   Mol. Microbiol. 6, 3385-3393 (1992)
+  MEDLINE   93133118
+REFERENCE   8  (bases 1 to 55; 1316 to 4099)
+  AUTHORS   Alting-Mees,M.A., Sorge,J.A. and Short,J.M.
+  TITLE     pBluescriptII: Multifunctional cloning and mapping vectors
+  JOURNAL   Meth. Enzymol. 216, 483-495 (1992)
+  MEDLINE   93125166
+REFERENCE   9  (bases 4091 to 4133; 1 to 61; 1237 to 1336)
+  AUTHORS   Kast,P.
+  TITLE     pKSS - A second-generation general purpose cloning vector for
+            efficient positive selection of recombinant clones
+  JOURNAL   Gene 138, 109-114 (1994)
+  MEDLINE   94171019
+REFERENCE   10 (bases 1 to 4133)
+  AUTHORS   Kast,P.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (10-SEP-1993) Dept. of Chemistry and Molecular Biology,
+            The Scripps Research Institute, 10550 North Torrey Pines Road, La
+            Jolla, CA 92037, USA
+COMMENT     On Oct 6, 1993 this sequence version replaced gi:403935.
+FEATURES             Location/Qualifiers
+     source          1..4133
+                     /organism="unidentified cloning vector"
+                     /db_xref="taxon:45196"
+                     /lab_host="Escherichia coli"
+     misc_feature    1..61
+                     /note="multiple cloning site I:
+                     KpnI-EcoO109I-ApaI-AvaI-XhoI-SalI-AccI-HincII-ClaI-H
+                     indIII-EcoRV-EcoRI-AvaI-SmaI"
+                     /citation=[9]
+     misc_feature    join(1..55,1240..4133)
+                     /note="derived from GenBank accession X52331"
+     gene            146..1129
+                     /gene="pheS"
+                     /note="Gly294 mutant"
+     CDS             146..1129
+                     /gene="pheS (Gly294 mutant)"
+                     /EC_number="6.1.1.20"
+                     /function="confers p-Cl-phenylalanine sensitivity"
+                     /citation=[2]
+                     /codon_start=1
+                     /transl_table=11
+                     /product="phenylalanyl-tRNA synthetase alpha subunit
+                     (Gly294 variant)"
+                     /protein_id="AAB61946.1"
+                     /db_xref="GI:403936"
+                     /translation="MSHLAELVASAKAAISQASDVAALDNVRVEYLGKKGHLTLQMTT
+                     LRELPPEERPAAGAVINEAKEQVQQALNARKAELESAALNARLAAETIDVSLPGRRIE
+                     NGGLHPVTRTIDRIESFFGELGFTVATGPEIEDDYHNFDALNIPGHHPARADHDTFWF
+                     DTTRLLRTQTSGVQIRTMKAQQPPIRIIAPGRVYRNDYDQTHTPMFHQMEGLIVDTNI
+                     SFTNLKGTLHDFLRNFFEEDLQIRFRPSYFPFTEPSAEVDVMGKNGKWLEVLGCGMVH
+                     PNVLRNVGIDPEVYSGFGFGMGMERLTMLRYGVTDLRSFFENDLRFLKQFK"
+     old_sequence    365..366
+                     /gene="pheS"
+                     /citation=[2]
+                     /replace="GC"
+     gene            1026
+                     /gene="pheS (wild type)"
+     variation       1026
+                     /gene="pheS (wild type)"
+                     /note="the exchange of codon GCC (Ala294, wild type) with
+                     GGC (Gly294, mutant pheS, as present on pKSS) yielded the
+                     phenotypic change from p-Cl-phenylalanine resistance to
+                     sensitivity"
+                     /citation=[6]
+                     /replace="C"
+     misc_feature    1243..1284
+                     /note="multiple cloning site II:
+                     BamHI-SpeI-XbaI-EagI-NotI-DsaI-SacII(KspI)-SacI(SstI )"
+                     /citation=[9]
+     promoter        complement(1292..1311)
+                     /standard_name="T7 promoter"
+                     /citation=[5]
+     gene            1314..>1474
+                     /gene="'lacZ'"
+     CDS             1314..>1474
+                     /gene="lacZ"
+                     /EC_number="3.2.1.23"
+                     /note="N-truncated alpha-fragment of beta-galactosidase;
+                     blue/white screening with the lacZ system is irrelevant in
+                     pKSS"
+                     /citation=[5]
+                     /codon_start=3
+                     /transl_table=11
+                     /product="beta-galactosidase fragment"
+                     /protein_id="AAB61947.1"
+                     /db_xref="GI:403937"
+                     /translation="SLAVVLQRRDWENPGVTQLNRLAAHPPFASWRNSEEARTDRPSQ
+                     QLRSLNGEW"
+     primer_bind     complement(1318..1334)
+                     /note="annealing site for universal M13(-20) sequencing
+                     primer"
+                     /citation=[5]
+     rep_origin      1476..1931
+                     /standard_name="f1 phage origin region for single strand
+                     DNA replication"
+                     /note="nicking site of gene II protein is between pos.
+                     1768 and 1769"
+                     /citation=[5]
+                     /direction=right
+     old_sequence    1922
+                     /citation=[5]
+                     /replace="T"
+     gene            2062..2922
+                     /gene="bla"
+     CDS             2062..2922
+                     /gene="bla"
+                     /EC_number="3.5.2.6"
+                     /function="provides resistance to ampicillin"
+                     /citation=[3]
+                     /codon_start=1
+                     /transl_table=11
+                     /product="pre-beta-lactamase"
+                     /protein_id="AAB61948.1"
+                     /db_xref="GI:403938"
+                     /translation="MSIQHFRVALIPFFAAFCLPVFAHPETLVKVKDAEDQLGARVGY
+                     IELDLNSGKILESFRPEERFPMMSTFKVLLCGAVLSRIDAGQEQLGRRIHYSQNDLVE
+                     YSPVTEKHLTDGMTVRELCSAAITMSDNTAANLLLTTIGGPKELTAFLHNMGDHVTRL
+                     DRWEPELNEAIPNDERDTTMPVAMATTLRKLLTGELLTLASRQQLIDWMEADKVAGPL
+                     LRSALPAGWFIADKSGAGERGSRGIIAALGPDGKPSRIVVIYTTGSQATMDERNRQIA
+                     EIGASLIKHW"
+     sig_peptide     2062..2130
+                     /gene="bla"
+     mat_peptide     2131..2919
+                     /gene="bla"
+                     /EC_number="3.5.2.6"
+                     /product="beta-lactamase"
+     variation       2305
+                     /gene="bla"
+                     /note="mutation of HincII site of pBR322 [3]"
+                     /citation=[3]
+                     /replace="G"
+     variation       2606
+                     /gene="bla"
+                     /note="mutation of PstI site of pBR322 [3]"
+                     /citation=[3]
+                     /replace="C"
+     rep_origin      3082..3696
+                     /standard_name="pMB1 (ColE1-like) plasmid origin of
+                     replication, as in pBR322 [4]"
+                     /note="the DNA region indicated is sufficient for a
+                     functional replication origin [1]; DNA replication
+                     initiates at pos. 3681 to 3683 [4]"
+                     /citation=[1]
+                     /direction=right
+     old_sequence    3240
+                     /note="according to [7], the T at position 3240 is
+                     responsible for the higher copy number of pUC derivatives
+                     [3,8], including pKSS, compared to their parent pBR322
+                     [1,4]"
+                     /citation=[1]
+                     /replace="C"
+     gene            3864..3956
+                     /gene="'lacI"
+     CDS             3864..3956
+                     /gene="'lacI"
+                     /note="vestigal C-terminal portion of lac repressor; this
+                     3' portion of lacI is not functional"
+                     /citation=[3]
+                     /codon_start=1
+                     /transl_table=11
+                     /product="lac repressor fragment"
+                     /protein_id="AAB61949.1"
+                     /db_xref="GI:403939"
+                     /translation="APNTQTASPRALADSLMQLARQVSRLESGQ"
+     protein_bind    3957..3994
+                     /standard_name="CAP binding site (wild-type sequence)"
+                     /citation=[5]
+                     /bound_moiety="catabolite activator protein (CAP)"
+     promoter        3957..4061
+                     /standard_name="lac promoter-operator region (wild type)"
+                     /note="for details and references to the lac
+                     promoter-operator region see [(in) Miller,J.H. and
+                     Reznikoff,W.S. (eds); The Operon; 2nd ed (1980); Cold
+                     Spring Harbor; pp.177-243.]"
+                     /citation=[5]
+     -35_signal      4005..4010
+                     /gene="lacZ'"
+     gene            4005..4093
+                     /gene="lacZ'"
+     -10_signal      4029..4034
+                     /gene="lacZ'"
+     protein_bind    4041..4061
+                     /gene="lacZ'"
+                     /standard_name="lacO; lac operator"
+                     /bound_moiety="lac repressor protein"
+     CDS             4079..>4093
+                     /gene="lacZ'"
+                     /note="N-terminal 5 residues of beta-galactosidase"
+                     /citation=[5]
+                     /codon_start=1
+                     /transl_table=11
+                     /product="beta-galactosidase fragment"
+                     /protein_id="AAB61950.1"
+                     /db_xref="GI:2213571"
+                     /translation="MTMIT"
+     promoter        4104..4123
+                     /standard_name="T3 promoter"
+                     /citation=[5]
+     old_sequence    4133
+                     /note="all pBluescript I KS (+/-) vectors (and pKSS)
+                     exhibit the deletion of the G nucleotide 5' to the KpnI
+                     site [8,9]"
+                     /citation=[5]
+                     /replace="TG"
+BASE COUNT     1010 a   1052 c   1053 g   1018 t
+ORIGIN      
+        1 ggtaccgggc cccccctcga ggtcgacggt atcgataagc ttgatatcga attcccccgg
+       61 gaccaaaatg gcaagtaaaa tagcctgatg ggataggctc taagtccaac gaaccagtgt
+      121 caccactgac acaatgagga aaaccatgtc acatctcgca gaactggttg ccagtgcgaa
+      181 ggcggccatt agccaggcgt cagatgttgc cgcgttagat aatgtgcgcg tcgaatattt
+      241 gggtaaaaaa gggcacttaa cccttcagat gacgaccctg cgtgagctgc cgccagaaga
+      301 gcgtccggca gctggtgcgg ttatcaacga agcgaaagag caggttcagc aggcgctgaa
+      361 tgcgcgtaaa gcggaactgg aaagcgctgc actgaatgcg cgtctggcgg cggaaacgat
+      421 tgatgtctct ctgccaggtc gtcgcattga aaacggcggt ctgcatccgg ttacccgtac
+      481 catcgaccgt atcgaaagtt tcttcggtga gcttggcttt accgtggcaa ccgggccgga
+      541 aatcgaagac gattatcata acttcgatgc tctgaacatt cctggtcacc acccggcgcg
+      601 cgctgaccac gacactttct ggtttgacac tacccgcctg ctgcgtaccc agacctctgg
+      661 cgtacagatc cgcaccatga aagcccagca gccaccgatt cgtatcatcg cgcctggccg
+      721 tgtttatcgt aacgactacg accagactca cacgccgatg ttccatcaga tggaaggtct
+      781 gattgttgat accaacatca gctttaccaa cctgaaaggc acgctgcacg acttcctgcg
+      841 taacttcttt gaggaagatt tgcagattcg cttccgtcct tcctacttcc cgtttaccga
+      901 accttctgca gaagtggacg tcatgggtaa aaacggtaaa tggctggaag tgctgggctg
+      961 cgggatggtg catccgaacg tgttgcgtaa cgttggcatc gacccggaag tttactctgg
+     1021 tttcggcttc gggatgggga tggagcgtct gactatgttg cgttacggcg tcaccgacct
+     1081 gcgttcattc ttcgaaaacg atctgcgttt cctcaaacag tttaaataag gcaggaatag
+     1141 attatgaaat tcagtgaact gtggttacgc gaatgggtga acccggcgat tgatagcgat
+     1201 gcgctggcaa atcaaatcac tatggcgggc ctggaagttg ggggatccac tagttctaga
+     1261 gcggccgcca ccgcggtgga gctccaattc gccctatagt gagtcgtatt acaattcact
+     1321 ggccgtcgtt ttacaacgtc gtgactggga aaaccctggc gttacccaac ttaatcgcct
+     1381 tgcagcacat ccccctttcg ccagctggcg taatagcgaa gaggcccgca ccgatcgccc
+     1441 ttcccaacag ttgcgcagcc tgaatggcga atgggacgcg ccctgtagcg gcgcattaag
+     1501 cgcggcgggt gtggtggtta cgcgcagcgt gaccgctaca cttgccagcg ccctagcgcc
+     1561 cgctcctttc gctttcttcc cttcctttct cgccacgttc gccggctttc cccgtcaagc
+     1621 tctaaatcgg gggctccctt tagggttccg atttagtgct ttacggcacc tcgaccccaa
+     1681 aaaacttgat tagggtgatg gttcacgtag tgggccatcg ccctgataga cggtttttcg
+     1741 ccctttgacg ttggagtcca cgttctttaa tagtggactc ttgttccaaa ctggaacaac
+     1801 actcaaccct atctcggtct attcttttga tttataaggg attttgccga tttcggccta
+     1861 ttggttaaaa aatgagctga tttaacaaaa atttaacgcg aattttaaca aaatattaac
+     1921 gcttacaatt taggtggcac ttttcgggga aatgtgcgcg gaacccctat ttgtttattt
+     1981 ttctaaatac attcaaatat gtatccgctc atgagacaat aaccctgata aatgcttcaa
+     2041 taatattgaa aaaggaagag tatgagtatt caacatttcc gtgtcgccct tattcccttt
+     2101 tttgcggcat tttgccttcc tgtttttgct cacccagaaa cgctggtgaa agtaaaagat
+     2161 gctgaagatc agttgggtgc acgagtgggt tacatcgaac tggatctcaa cagcggtaag
+     2221 atccttgaga gttttcgccc cgaagaacgt tttccaatga tgagcacttt taaagttctg
+     2281 ctatgtggcg cggtattatc ccgtattgac gccgggcaag agcaactcgg tcgccgcata
+     2341 cactattctc agaatgactt ggttgagtac tcaccagtca cagaaaagca tcttacggat
+     2401 ggcatgacag taagagaatt atgcagtgct gccataacca tgagtgataa cactgcggcc
+     2461 aacttacttc tgacaacgat cggaggaccg aaggagctaa ccgctttttt gcacaacatg
+     2521 ggggatcatg taactcgcct tgatcgttgg gaaccggagc tgaatgaagc cataccaaac
+     2581 gacgagcgtg acaccacgat gcctgtagca atggcaacaa cgttgcgcaa actattaact
+     2641 ggcgaactac ttactctagc ttcccggcaa caattaatag actggatgga ggcggataaa
+     2701 gttgcaggac cacttctgcg ctcggccctt ccggctggct ggtttattgc tgataaatct
+     2761 ggagccggtg agcgtgggtc tcgcggtatc attgcagcac tggggccaga tggtaagccc
+     2821 tcccgtatcg tagttatcta cacgacgggg agtcaggcaa ctatggatga acgaaataga
+     2881 cagatcgctg agataggtgc ctcactgatt aagcattggt aactgtcaga ccaagtttac
+     2941 tcatatatac tttagattga tttaaaactt catttttaat ttaaaaggat ctaggtgaag
+     3001 atcctttttg ataatctcat gaccaaaatc ccttaacgtg agttttcgtt ccactgagcg
+     3061 tcagaccccg tagaaaagat caaaggatct tcttgagatc ctttttttct gcgcgtaatc
+     3121 tgctgcttgc aaacaaaaaa accaccgcta ccagcggtgg tttgtttgcc ggatcaagag
+     3181 ctaccaactc tttttccgaa ggtaactggc ttcagcagag cgcagatacc aaatactgtt
+     3241 cttctagtgt agccgtagtt aggccaccac ttcaagaact ctgtagcacc gcctacatac
+     3301 ctcgctctgc taatcctgtt accagtggct gctgccagtg gcgataagtc gtgtcttacc
+     3361 gggttggact caagacgata gttaccggat aaggcgcagc ggtcgggctg aacggggggt
+     3421 tcgtgcacac agcccagctt ggagcgaacg acctacaccg aactgagata cctacagcgt
+     3481 gagctatgag aaagcgccac gcttcccgaa gggagaaagg cggacaggta tccggtaagc
+     3541 ggcagggtcg gaacaggaga gcgcacgagg gagcttccag ggggaaacgc ctggtatctt
+     3601 tatagtcctg tcgggtttcg ccacctctga cttgagcgtc gatttttgtg atgctcgtca
+     3661 ggggggcgga gcctatggaa aaacgccagc aacgcggcct ttttacggtt cctggccttt
+     3721 tgctggcctt ttgctcacat gttctttcct gcgttatccc ctgattctgt ggataaccgt
+     3781 attaccgcct ttgagtgagc tgataccgct cgccgcagcc gaacgaccga gcgcagcgag
+     3841 tcagtgagcg aggaagcgga agagcgccca atacgcaaac cgcctctccc cgcgcgttgg
+     3901 ccgattcatt aatgcagctg gcacgacagg tttcccgact ggaaagcggg cagtgagcgc
+     3961 aacgcaatta atgtgagtta gctcactcat taggcacccc aggctttaca ctttatgctt
+     4021 ccggctcgta tgttgtgtgg aattgtgagc ggataacaat ttcacacagg aaacagctat
+     4081 gaccatgatt acgccaagct cgaaattaac cctcactaaa gggaacaaaa gct
+//
+</textarea><br /><br />
+If there are primers you would like shown on the map, enter each primer as follows: the sequence of the primer, a blank space, and the name of the primer. Use commas to separate multiple primer entries.
+<br /><textarea name="primerList" rows="6" cols="81">
+aacagctatgaccatg reverse primer,
+attaaccctcactaaag T3 primer,
+cgaggtcgacggtatcg KS primer,
+tctagaactagtggatc SK primer,
+aatacgactcactatag T7 primer,
+gtaaaacgacggccagt M13 primer,
+gttttcccagtcacgac -40 primer,
+atttaggtgacactatag Sp6
+</textarea><br />
+<button type="submit">Submit</button>
+<button type="button" onclick="document.forms[0].elements[0].value = ' '; document.forms[0].elements[1].value = ' '">Clear</button>
+<button type="reset">Reset</button><br />
+<br />
+
+<div class="link_bar">Advanced Options</div>
+
+<div class="description">Use the following options to alter the output of Sequence Extractor. For more details about individual options, see the <a href="help.html">help</a>.</div>
+
+<div class="options">
+<ul>
+<li>
+<a href="help.html#genetic_code">Genetic code</a>: <select name="geneticCodeSelection">
+<option selected="selected" value="standard">standard</option>
+</select>.</li>
+<li>
+<a href="help.html#restriction_set">Restriction set</a>: <select name="restrictionSetSelection">
+<option selected="selected" value="common">common</option>
+<option value="none">none</option>
+</select>.</li>
+<li>
+<a href="help.html#translate">Translate reading frame</a>: <select name="readingFramesToShow">
+<option selected="selected" value="one">one</option>
+<option value="two">two</option>
+<option value="three">three</option>
+<option value="all_three">one to three</option>
+<option value="all_six">all six</option>
+<option value="uppercase1">uppercase one</option>
+<option value="uppercase2">uppercase two</option>
+<option value="uppercase3">uppercase three</option>
+<option value="none">none</option>
+</select>.</li>
+<li>
+<a href="help.html#topology">Topology</a>: <select name="isCircular">
+<option selected="selected" value="0">linear</option>
+<option value="1">circular</option>
+</select>.</li>
+<li>
+<a href="help.html#allow_primers">Allow primers to have mismatched</a>: <input type="checkbox" name="checkForMismatchFivePrimeTails" value="1" checked="checked" /><a href="help.html#five_prime">5' tails</a>, <input type="checkbox" name="checkForMismatchThreePrimeTails" value="1" checked="checked" /><a href="help.html#three_prime">3' tails</a>.<br />
+<a href="help.html#bases_required">Matching bases required when mismatching bases allowed</a>: <select name="minimumMatch">
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option selected="selected" value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+</select>.</li>
+<li>
+<a href="help.html#bases_per_line">Bases per line</a>: <select name="basePerLine">
+<option value="60">60</option>
+<option selected="selected" value="80">80</option>
+<option value="100">100</option>
+</select>.</li>
+<li>
+<a href="help.html#show">Show</a><input type="checkbox" name="showReverseStrand" value="1" checked="checked" /><a href="help.html#reverse_strand">reverse strand</a>, <input type="checkbox" name="showNumberLine" value="1" checked="checked" /><a href="help.html#number_line">number line</a>, <input type="checkbox" name="showSpacerLine" value="1" checked="checked" /><a href="help.html#spacer_line">spacer line</a>.</li>
+<li>
+<a href="help.html#return">Return</a><input type="checkbox" name="returnRestSummary" value="1" checked="checked" /><a href="help.html#rest_sum">restriction summary</a>, <input type="checkbox" name="returnPrimerSummary" value="1" checked="checked" /><a href="help.html#primer_sum">primer summary</a>, <input type="checkbox" name="returnHelpInfo" value="1" /><a href="help.html#help_info">help information</a>, <input type="checkbox" name="returnCdsLinks" value="1" /><a href="help.html#coding_links">coding sequence links</a>, <input type="checkbox" name="returnTransLinks" value="1" /><a href="help.html#trans_links">translation links</a>, <input type="checkbox" name="returnOptionsChosen" value="1" /><a href="help.html#options_selected">options selected</a>.</li>
+</ul>
+</div>
+</form>
+<div class="copyright">Sequence Extractor copyright &copy; 2006 Paul Stothard</div>
+</td>
+</tr>
+
+<tr>
+<td>
+<a href="http://validator.w3.org/check/referer"><img style="border:0;width:88px;height:31px" src="includes/valid-xhtml10.png" alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+<a href="http://jigsaw.w3.org/css-validator/"><img style="border:0;width:88px;height:31px" src="includes/vcss.png" alt="Valid CSS!" /></a>
+</td>
+</tr>
+
+</tbody>
+</table>
+
+</body>
+</html>

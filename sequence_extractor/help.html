@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html lang="en">
+<head>
+<title>Sequence Extractor - Help</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" href="includes/stylesheet.css"  type="text/css" />
+</head>
+
+<body class="main">
+
+<table width="620" border="0" cellspacing="2" cellpadding="2" align="left">
+<tbody>
+
+<tr>
+<td class="sms">Sequence Extractor - Help</td>
+</tr>
+
+<tr>
+<td class="link_bar"><a href="index.html">Main</a> | <a href="features.html">Features</a> | <a href="help.html">Help</a> | <a href="download.html">Download</a> | <a href="license.html">License</a> | <a href="about.html">About</a></td>
+</tr>
+
+<tr>
+<td class="description">
+<p><a name="template"></a><b>Template</b> - the template sequence is the nucleotide
+sequence you want to view. Four formats are accepted:</p>
+
+<ul>
+<li>
+GenBank - the format used in the NIH (National Institutes of Health) sequence
+database. <a href="genbank_sample.html">View sample</a>.</li>
+
+<li>
+EMBL - the format used in the EMBL (European Molecular Biology Laboratory)
+sequence database. <a href="embl_sample.html">View sample</a>.</li>
+
+<li>
+FASTA - consists of a single line description followed by sequence data.
+The description line is marked by the > symbol, and the description is
+followed by a carriage return. <a href="fasta_sample.html">View sample</a>.</li>
+
+<li>
+Raw - consists only of sequence information. Non-<a href="iupac.html">IUPAC
+codes</a> are automatically removed. <a href="raw_sample.html">View sample</a>.</li>
+</ul>
+
+<p><a name="primers"></a><b>Primers</b> - the primer sequences are compared
+to the template sequence and potential annealing sites are marked. Primer
+sequences are entered as follows: the sequence of the primer is entered
+first, followed by a blank space, and then the name of the primer. Primer
+entries are separated by a comma. Degenerate
+<a href="iupac.html">IUPAC
+codes</a> can be included in the primer sequence. "I" for inosine is treated
+the same as "N".</p>
+
+<p><a name="genetic_code"></a><b>Genetic code</b> - the genetic code used
+when translations are calculated for FASTA or raw entries.</p>
+
+<p><a name="restriction_set"></a><b>Restriction set</b> - the set of restriction
+patterns searched for in the template sequence.</p>
+
+<p><a name="translate"></a><b>Translate reading frame</b> - the reading frames
+to be translated for FASTA or raw entries.</p>
+
+<ul>
+<li>
+<b>one</b> - show the translation for reading frame one.</li>
+
+<li>
+<b>two</b> -show the translation for reading frame two.</li>
+
+<li>
+<b>three</b> - show the translation for reading frame three.</li>
+
+<li>
+<b>one to three</b> - show the translation for reading frames one, two,
+and three.</li>
+
+<li>
+<b>all six</b> - show the translations for all six reading frames.</li>
+
+<li>
+<b>uppercase one</b> - treat uppercase text as a continuous reading frame,
+and start the translation in reading frame one.</li>
+
+<li>
+<b>uppercase two</b> - treat uppercase text as a continuous reading frame,
+and start the translation in reading frame two.</li>
+
+<li>
+<b>uppercase three</b> - treat uppercase text as a continuous reading frame,
+and start the translation in reading frame three.</li>
+</ul>
+
+<p><a name="topology"></a><b>Topology</b> - the topology of the sequence (linear
+or circular). The distinction alters how restriction patterns and primer
+sites are found. With linear sequences, the search is performed using the
+sequence as entered. For circular sequences, the end and beginning of the
+sequence are joined so that patterns spanning the ends of the entered sequence
+can be detected.</p>
+
+<p><a name="allow_primers"></a><b>Allow primers to have mismatched</b>:</p>
+
+<ul>
+<li>
+<a name="five_prime"></a><b>5' tails</b> - detect primer sites in which
+the 5' tail of the primer contains bases that do not perfectly anneal with
+the template.</li>
+
+<li>
+<a name="three_prime"></a><b>3' tails</b> - detect primer sites in which
+the 3' tail of the primer contains bases that do not perfectly anneal with
+the template.</li>
+</ul>
+
+<p><a name="bases_required"></a><b>Matching bases required when mismatching
+bases allowed</b> - when mismatching 5' tails or 3' tails are allowed,
+this option sets the minimum number of annealing bases required for a primer
+site to be detected.</p>
+
+<p><a name="base_per_line"></a><b>Bases per line</b> - the number of bases
+of template sequence shown per line in the returned figure.</p>
+
+<p><a name="show"></a><b>Show</b> - use these options to adjust the appearence
+of the sequence portion of the figure:</p>
+
+<ul>
+<li>
+<a name="reverse_strand"></a><b>Reverse strand</b> - display the reverse
+strand of the template sequence.</li>
+
+<li>
+<a name="number_line"></a><b>Number line</b> - display a line indicating
+base number below the template sequence.</li>
+
+<li>
+<a name="spacer_line"></a><b>Spacer line</b> - display a line of dashes
+between each line of template sequence.</li>
+</ul>
+
+<p><a name="return"></a><b>Return</b> - use these options to adjust what extra
+information is returned with the sequence figure.</p>
+
+<ul>
+<li>
+<a name="rest_sum"></a><b>Restriction summary</b> - display a summary of
+restriction patterns searched for, and the positions of restriction sites
+when found.</li>
+
+<li>
+<a name="primer_sum"></a><b>Primer summary</b> - display a summary of primer
+patterns searched for, and the positions of primer sites when found.</li>
+
+<li>
+<a name="help_info"></a><b>Help information</b> - display a brief description
+of how to interpret and use the returned figure.</li>
+
+<li>
+<a name="coding_links"></a><b>Coding sequence links</b> - display a group
+of links for viewing the coding sequences of the template in a separate
+window.</li>
+
+<li>
+<a name="trans_links"></a><b>Translation links</b> - display a group of
+links for viewing the protein translations of the template sequence in
+a separate window.</li>
+
+<li>
+<a name="options_selected"></a><b>Options selected</b> - display a summary
+of the options selected.</li>
+</ul>
+
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<br />&nbsp;
+<div class="home"><a href="index.html">home</a></div>
+<div class="copyright">Sequence Extractor copyright &copy; 2006 Paul Stothard</div>
+</td>
+</tr>
+
+<tr>
+<td>
+<a href="http://validator.w3.org/check/referer"><img style="border:0;width:88px;height:31px" src="includes/valid-xhtml10.png" alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+<a href="http://jigsaw.w3.org/css-validator/"><img style="border:0;width:88px;height:31px" src="includes/vcss.png" alt="Valid CSS!" /></a>
+</td>
+</tr>
+
+</tbody>
+</table>
+
+</body>
+</html>
