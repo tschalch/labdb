@@ -1,0 +1,37 @@
+
+
+                           Installation of labdb
+
+  System requirements
+  -------------------
+
+  Your system needs to provide a web server with PHP version 5 or higher, and
+  access to a MYSQL database. An installation of PhpMyAdmin is recommended for
+  manipulating the database directly.
+
+  Security precautions
+  --------------------
+
+  Since labdb has been developed for a closed environment, it should NOT be
+  installed in a location that is accessible from the World Wide Web or in any
+  other environment where malicous attacks are likely.
+
+  Installation procedure
+  ----------------------
+
+  Get the entire labdb distribution from https://github.com/tschalch/labdb using
+  checkout with git or by downloading the zip file. 
+
+  From the distribution, copy the "html" directory tree to your document root
+  and rename it to labdb. Use PhpMyAdmin to create a new database called "labdb"
+  with collation "utf8_unicode_ci". Import the file "labdbMin.sql" into the new
+  database. Add a new user called "labdb" to you MYSQL database and give it full
+  privileges to the labdb database.
+
+  Now edit the config.php in the labdb web directory to reflect your setup.
+  
+  This is it. The database is now accessible under the directory it was
+  installed on the webserver, and the default user is "admin" with password
+  "admin". Change the password on your first login by going to "Your Profile".
+
+

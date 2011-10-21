@@ -1,0 +1,45 @@
+
+                           labdb
+
+  What is it?
+  -----------
+
+  Labdb is an web based database for a molecular biology laboratory. I have
+  written this software for use in the Leemor Joshua-Tor lab at Cold Spring
+  Harbor Laboratory and it has been in use there for the last 4 years. I am not
+  a professional programmer, and the code is rather rough, but it works.
+  labdb has not been widely tested and will require some knowledge of php
+  and mysql from the administrator. I aim to maintain and possible further
+  develop this system for future use and for implementation in other
+  laboratories.
+
+  Features
+  --------
+
+  * Ordering and inventory system for chemicals, supplies and consumables. 
+  * Cloning and DNA construct design database.
+  * Log book function.
+  * Sample tracking.
+
+  The Latest Version
+  ------------------
+
+  Details of the latest version can be found on
+  https://github.com/tschalch/labdb. 
+
+  Installation
+  ------------
+
+  Please see the file called INSTALL.
+
+  Licensing
+  ---------
+
+  Please see the file called LICENSE.
+
+
+
+
+  Enjoy,
+
+  Thomas Schalch
