@@ -39,6 +39,16 @@ if (array_key_exists('status', $_GET)){
             break;
     }
 }
+if (array_key_exists('column', $_GET)){
+    $iscolumn = $_GET['column'];
+    switch($iscolumn){
+    case 1:
+            $title = "Columns";
+            $where = " (`type`=2) ";
+            $defaultOrder ="inventory.name";
+            break;
+    }
+}
 #End SQL parameters
 
 #array of query field => table heading

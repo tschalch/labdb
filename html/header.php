@@ -1,8 +1,5 @@
 <?php
-require_once('../FirePHPCore/FirePHP.class.php');
 ob_start();
-$firephp = FirePHP::getInstance(true);
-$firephp->setEnabled(true);
 
 echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" 
 	\"http://www.w3.org/TR/html4/strict.dtd\">";

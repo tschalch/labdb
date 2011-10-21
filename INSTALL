@@ -6,8 +6,9 @@
   -------------------
 
   Your system needs to provide a web server with PHP version 5 or higher, and
-  access to a MYSQL database. An installation of PhpMyAdmin is recommended for
-  manipulating the database directly.
+  access to a MYSQL database. An installation of phpMyAdmin is recommended for
+  manipulating the database directly. In order to use the restriction enzyme
+  functionality, the EMBOSS package needs to be installed.
 
   Security precautions
   --------------------
@@ -23,10 +24,13 @@
   checkout with git or by downloading the zip file. 
 
   From the distribution, copy the "html" directory tree to your document root
-  and rename it to labdb. Use PhpMyAdmin to create a new database called "labdb"
-  with collation "utf8_unicode_ci". Import the file "labdbMin.sql" into the new
-  database. Add a new user called "labdb" to you MYSQL database and give it full
-  privileges to the labdb database.
+  and rename it to labdb. Make sure the "output" directory is writeable by the
+  web server.
+  
+  Use phpMyAdmin to create a new database called "labdb" with collation
+  "utf8_unicode_ci". Import the file "labdbMin.sql" into the new database. Add a
+  new user called "labdb" to you MYSQL database and give it full privileges to
+  the labdb database.
 
   Now edit the config.php in the labdb web directory to reflect your setup.
   

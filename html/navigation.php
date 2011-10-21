@@ -4,7 +4,10 @@
 		<a class="labnav" href="list.php?list=listItems&amp;status=4">Finished items</a><br/>
 		<a class="labnav" href="newEntry.php?form=frmItem&amp;mode=modify">.. Add Item</a><br/>
 		<a class="labnav" href="list.php?list=listLocations">....Item Locations</a><br/>
-		<a class="labnav" href="newEntry.php?form=frmLocations&amp;mode=modify">...... Add Location</a><br/>
+		<a class="labnav" href="newEntry.php?form=frmLocations&amp;mode=modify">...... Add Location</a><br/><br/>
+                <a class="labnav" href="list.php?list=listLogbook">Logbook</a><br/>
+		<a class="labnav" href="newEntry.php?form=frmLog&amp;mode=modify">.. New Log Entry</a><br/>
+		<a class="labnav" href="list.php?list=listItems&amp;column=1">.. Columns</a><br/>
 		</div>
 		
 		<div id="Cloning" class="labnavBox">

@@ -1,6 +1,8 @@
 <?php 
 include("header.php");
-include("functions.php");	
+include("functions.php");
+include('config.php');
+    
 if (!isset($_POST['submitok'])):
    // Display the user signup form 
    ?>
@@ -88,7 +90,7 @@ $result = pdo_query($sql);
 if (!$result) {
 error('A database error occurred in processing your '.
      'submission.\\nIf this error persists, please '.
-     'contact schalch@cshl.edu.');
+     'contact $adminEmail.');
 }
 if ($result[0]['COUNT(*)']) {
 error('A user already exists with your chosen userid.\\n'.
@@ -108,7 +110,7 @@ $newid = pdo_query($sql);
 if (!$newid)
 	error('1A database error occurred in processing your '.
 	     'submission.\\nIf this error persists, please '.
-	     'contact schalch@cshl.edu.');
+	     'contact $adminEmail.');
     // Email the new password to the person.
     
 # setup groups
@@ -119,7 +121,7 @@ $sql = "INSERT INTO groups SET
 if (!pdo_query($sql))
 	error('2A database error occurred in processing your '.
 	     'submission.\\nIf this error persists, please '.
-	     'contact schalch@cshl.edu.');
+	     'contact $adminEmail.');
 
 $sql = "INSERT INTO groups SET
      userid = '$newid',
@@ -128,7 +130,7 @@ $sql = "INSERT INTO groups SET
 if (!pdo_query($sql))
 	error('3A database error occurred in processing your '.
 	     'submission.\\nIf this error persists, please '.
-	     'contact schalch@cshl.edu.');
+	     'contact $adminEmail.');
     // Email the new password to the person.
 
 
@@ -138,7 +140,7 @@ Your personal account for the Project Web Site
 has been created! To log in, proceed to the
 following address:
 
-http://nanda.cshl.org/labdb
+$labdbUrl
 
 Your personal login ID and password are as
 follows:
@@ -150,17 +152,17 @@ You aren't stuck with this password! Your can
 change it at any time after you have logged in.
 
 If you have any problems, feel free to contact me at
-<schalch@cshl.edu>.
+<$adminEmail>.
 
 Thomas
 ";
 
 mail($_POST['newemail'],"Your Password for labdb",
-	$message, "From:Thomas Schalch <schalch@cshl.edu>");
+	$message, "From:Thomas Schalch <$adminEmail>");
 
-mail("schalch@cshl.edu","New labdb user created",
+mail("$adminEmail","New labdb user created",
 	"user $_POST[newid] has signed up to labdb.",
-        "From:Thomas Schalch <schalch@cshl.edu>");
+        "From:Thomas Schalch <$adminEmail>");
 
 
 ?>

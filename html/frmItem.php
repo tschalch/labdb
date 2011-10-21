@@ -71,7 +71,6 @@ if ($mode == 'modify'):
 <link rel="stylesheet" href="lib/Autocompleter.css" type="text/css" />
 <script src="lib/Autocompleter.js" type="text/javascript"></script>
 <script src="lib/Autocompleter.Request.js" type="text/javascript"></script>
-<script src="lib/Observer.js" type="text/javascript"></script>
 <script type="text/javascript">
 //<![CDATA[
 window.addEvent('domready', function() {
@@ -104,5 +103,7 @@ if ($fields['status'] > 2){
     unset($statusChoices[1]);
 }
 printComboBox("Status", 'status', $formParams, $statusChoices, $fields['status']);
+$typeChoices = array(array("trackID"=>0, "name"=>"None"), array("trackID"=>1, "name"=>"Instrument"), array("trackID"=>2, "name"=>"Column"));
+printComboBox("Use in Log as", 'type', $formParams, $typeChoices, $fields['type']);
 printSubmitButton($formParams, $button);
 ?>

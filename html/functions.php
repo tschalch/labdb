@@ -13,7 +13,6 @@ function pdo_query($q){
 		$result = array();
 		$i = 0;
 	      	//print "query: $q <br/>";
-		//print_r($result);
 	      	$dbhq = $dbh->query($q);
 		//print_r($dbhq);
 	      	if (substr_count($q,'INSERT')){
@@ -31,6 +30,7 @@ function pdo_query($q){
 	      	}
 	        $dbh = null;
 		$result = escape_quotes($result);
+		//print_r($result);
 	      	return $result;
 	} catch (PDOException $e) {
 		print "Database Error!: " . $e->getMessage() . "<br/>";
@@ -154,6 +154,7 @@ function printDateField($label, $field, $formParams, $default=null){
 	$table = $formParams['table'];
 	$fields = $formParams['fields'];
 	$mode = $formParams['mode'];
+	if ($fields[$field]==null) $fields[$field] = $default;
 	if ($fields[$field]!='0000-00-00' and $fields[$field]){
 		$date = getdate(strtotime($fields[$field]));
 	}
@@ -859,7 +860,7 @@ function getRecords($table, $userid, $columns, $where='', $order='', $count = 0,
 		is NULL";
 	if ($where) $q1 .= " AND $where";
 	$q1 .= " ORDER BY ";
-	$order? $q1 .= "$order" : $q1 .= "$table.name";
+	$order? $q1 .= "$order" : $q1 .= "$table.id";
 	if($count){
 		$q1 .= ") AS foo";
 	}
@@ -1118,7 +1119,9 @@ function getRestrictionSites($enzymes, $dnaSequence){
 		}
 	}
 	// $enzymes;
-	$cmd = "echo '$dnaSequence' | /usr/bin/restrict -warning Y -rformat excel --commercial Y --filter --auto -sitelen $sitelen -enzymes $enzymes 2>&1";
+	$limit ='';
+	if (substr($enzymes, 0, 3) != 'all') $limit = "-limit N"; 
+	$cmd = "echo '$dnaSequence' | /usr/bin/restrict -warning Y -rformat excel $limit --commercial Y --filter --auto -sitelen $sitelen -enzymes $enzymes 2>&1";
 	//print "$cmd";
 	$tmp = exec($cmd, $output);
 	//print_r($output);

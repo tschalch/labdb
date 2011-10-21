@@ -112,7 +112,7 @@ if($category == 'PCR'){
 		$o = $row["PCRoligo$i"];
 		#$oligo = $oligos[$o];
 		$oligo = getRecord($o, $userid, $groups);
-		printf("<td class=\"lists\" style=\"text-align:center;\" width=\"5%%\"><a href=\"editEntry.php?id=%d&amp;mode=display\">%s</a></td>", $o, $oligo['name']);
+		printf("<td class=\"lists\" style=\"text-align:center;\" width=\"5%%\"><a href=\"editEntry.php?id=%d&amp;mode=display\">%s (%d)</a></td>", $o, $oligo['name'], $o);
 	}
 	print "<td class=\"lists\" width=\"10%\">";
 	for ($i=1;$i<=2;$i++){
@@ -122,7 +122,7 @@ if($category == 'PCR'){
 	}
 	print "</td>";
 	$template = getRecord($row["PCRtemplate"],$userid, $groups);
-	print "<td class=\"lists seq\" width=\"10%\"><a href=\"editEntry.php?id=${row['PCRtemplate']}&amp;mode=display\">".$template['name']."</a></td>";
+	print "<td class=\"lists seq\" width=\"10%\"><a href=\"editEntry.php?id=${row['PCRtemplate']}&amp;mode=display\">".$template['name']." (".$row['PCRtemplate'].")</a></td>";
 }
 
 	echo "<td class=\"lists seq\" width=\"10%\"><a href=\"sequence.php?field=DNASequence&amp;id=$id\">".CountATCG($row['DNASequence'])." bp</a></td>";

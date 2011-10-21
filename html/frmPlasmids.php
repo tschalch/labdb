@@ -18,7 +18,6 @@ $types = array('Plasmid Backbone'=>'backbone','Gene Fragment'=>'gene','PCR Produ
 #}
 /*menu*/
 print "<div style=\"clear:both;\"><div id=\"mapBox\">\n";
-if ($mode=='modify'){
 ?>
 <div style="background-color: gray; height: 1em; padding: 0px 0px 20px 0px"><ul id="nav">
 	<li><a href="#">Graph</a>
@@ -56,7 +55,6 @@ window.addEvent('domready', function() {
 })
 </script>
 <?php
-}
 print "<div id=\"map\"></div>
 	       <div id=\"orfControl\">
 			<div id=\"orfSize\" class=\"orfSize\">100</div>
