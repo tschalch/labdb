@@ -62,7 +62,7 @@ printID($formParams);
 printTextField('Item name', 'name', $formParams);
 printTextArea('Description', 'description', $formParams);
 $lcol = array('tracker.trackID','locations.name');
-$locations = getRecords('locations', $userid, $lcol);
+$locations = getRecords('locations', $userid, $lcol, '', "name");
 printComboBox("Location",'location', $formParams, $locations, $fields['location']);
 printTextField('Manufacturer', 'manufacturer', $formParams);
 printTextField('Supplier', 'supplier', $formParams);
