@@ -30,6 +30,25 @@ if ($new){
 }
 $button = "Save Entry";
 include("header.php");
+?>
+<link media="all" type="text/css" href="css/ui-themes/base/jquery.ui.all.css" rel="stylesheet">
+<link media="all" type="text/css" href="css/MenuMatic.css" rel="stylesheet">
+<link rel="stylesheet" href="css/Autocompleter.css" type="text/css" />
+
+<script src="js/Autocompleter.js" type="text/javascript"></script>
+<script src="js/Autocompleter.Request.js" type="text/javascript"></script>
+<script src="js/Autocompleter.labdb.js" type="text/javascript"></script>
+<script src="js/Observer.js" type="text/javascript"></script>
+
+</head>
+<body>
+
+<?php 
+include("title_bar.php");
+include("navigation.php");
+?>
+<div id="content">
+<?php
 initProjects($noUserFilter, $noProjectFilter);
 $formParams['fields'] = $fields;
 //print_r($fields);

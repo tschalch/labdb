@@ -17,7 +17,9 @@ if (isset($_POST['uid']) & isset($_POST['pwd'])){
 
 if(!isset($uid)) {
 unset($_SESSION['currUser']);
-include("header.php");
+include_once("header.php");
+print "</head><body>";
+include_once("title_bar.php");
  ?>
  <h1> Login</h1>
  <p>You must log in to access this area of the site. If you are

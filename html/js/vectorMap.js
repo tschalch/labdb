@@ -281,19 +281,17 @@ var VectorMap = new Class({
     },
 
     getCanvasSize : function(){
-	var nodes = this.vm.canvas.getChildren();
 	var minX = 1000;
 	var minY = 1000;
 	var maxX = 0;
 	var maxY = 0;
-	for (var i = 0; i < nodes.length; i++){
-		if (!nodes[i].raphael) continue;
-		var box = nodes[i].getBBox();
+	this.vm.forEach(function(el){
+		var box = el.getBBox();
 		if (box.x < minX) minX = box.x;
 		if (box.y < minY) minY = box.y;
 		if (box.x + box.width > maxX) maxX = box.x + box.width;
 		if (box.y + box.height > maxY) maxY = box.y + box.height;
-	}
+	});
 	var maxWidth = maxX - minX;
 	var maxHeight = maxY - minY;
 	return {minX: minX, maxX: maxX, minY: minY, maxY: maxY, maxWidth: maxWidth, maxHeight: maxHeight};
@@ -302,7 +300,7 @@ var VectorMap = new Class({
     fitMap : function(){
 	// determine center of complete graph
 	// set center of plasmid
-	var nodes = this.vm.canvas.getChildren();
+	//var nodes = this.vm.getChildren();
 	var cs = this.getCanvasSize();
 	var scaleFactor = [1.0, 1.0];
 	var borders = [this.options.orbitSpacing * this.R + 4, //left
@@ -318,24 +316,22 @@ var VectorMap = new Class({
 	}
 	//scale graph
 	this.R = this.R * scaleFactor[0];
-	for (var i = 0; i < nodes.length; i++){
-		if (!nodes[i].raphael) continue;
-		nodes[i].raphael.scale(scaleFactor[0], scaleFactor[1], this.cx, this.cy)
-		if (nodes[i].nodeName == "text"){
-			var text = nodes[i].raphael;
-			text.attr("font-size", scaleFactor[0] * nodes[i].raphael.attrs['font-size']);
+	this.vm.forEach(function (el){
+		el.scale(scaleFactor[0], scaleFactor[1], this.cx, this.cy)
+		if (el.nodeName == "text"){
+			var text = el.raphael;
+			text.attr("font-size", scaleFactor[0] * el.raphael.attrs['font-size']);
 			var box = text.getBBox();
 			text.translate((this.cx - box.x) * (1-scaleFactor[0]), (this.cy - box.y) * (1-scaleFactor[1]));
 		}		
-	}
+	});
 	//center graph
 	cs = this.getCanvasSize();
 	var mvX = borders[0] - cs.minX + ((this.options.width - borders[0] - borders[1] - cs.maxWidth)/2.0);
 	var mvY = borders[2] - cs.minY + ((this.options.height - borders[2] - borders[3] - cs.maxHeight)/2.0);
-	for (var i = 0; i < nodes.length; i++){
-		if (!nodes[i].raphael) continue;
-		nodes[i].raphael.translate(mvX, mvY);
-	}
+	this.vm.forEach(function (el){
+		el.translate(mvX, mvY);
+	})
 	this.cx = this.cx + mvX;
 	this.cy = this.cy + mvY;
 	var r = this.vm.rect(0,0,this.options.width,this.options.height).attr({fill:"white", stroke:"white"});

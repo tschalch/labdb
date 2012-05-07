@@ -2,6 +2,13 @@
 include_once("accesscontrol.php");
 include_once("header.php");
 ?>
+</head>
+<body>
+<?php 
+include("title_bar.php");
+include("navigation.php");
+?>
+<div id="content">
 	This site stores information about chemicals, clones and so on.</p>
          <p><form method="get" action="
  	<?php print "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}";

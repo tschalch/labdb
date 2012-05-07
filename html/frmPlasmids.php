@@ -44,7 +44,7 @@ print "<div style=\"clear:both;\"><div id=\"mapBox\">\n";
 		</ul>
 	</li>
 </ul></div>
-<script src="lib/MenuMatic_0.68.3-source.js" type="text/javascript"></script>
+<script src="js/MenuMatic_0.68.3.js" type="text/javascript"></script>
 <script type="text/javascript">
 function SaveSVG(){
 	var svg = $('map').get('html');
@@ -93,12 +93,12 @@ if($mode == "modify"){
 }
 ?>
 
-<script src="lib/raphael-1.2.5.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/raphael_2.1.0.js" type="text/javascript" charset="utf-8"></script>
 <script src="lib/sms/sms_common.js" type="text/javascript"></script>
 <script src="lib/sms/sms_genetic_codes.js" type="text/javascript"></script>
 <script src="lib/sms/orf_find.js" type="text/javascript"></script>
 <script src="lib/sms/translate.js" type="text/javascript"></script>
-<script src="vectorMap.js" type="text/javascript"></script>
+<script src="js/vectorMap.js" type="text/javascript"></script>
 <!--[if lt IE 7]>
 	<link rel="stylesheet" href="css/MenuMatic-ie6.css" type="text/css" media="screen" charset="utf-8" />
 <![endif]-->

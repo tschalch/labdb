@@ -3,10 +3,16 @@ $title = "Lab Inventory";
 include_once("accesscontrol.php");
 include("header.php");
 include_once("functions.php");
+?>
+</head>
+<body>
+<?php
 include("listItemsHeader.php");
 $_GET["list"]='listItems';
-include_once("listTitle.php");
-?>
+include("title_bar.php");
+include("navigation.php");
+?><div id="content"><?php include("listTitle.php");?>
+
 <img src="img/inventoryFlow-0_1.png"  type='image/png' border=0 usemap='#ideamap'>
 	<map name='ideamap'>
 

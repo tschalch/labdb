@@ -48,7 +48,7 @@ foreach ($rows as $row) {
 	print "<tr>";
 	$edit = 0;
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
-	echo listActions($id, $edit, false);
+	echo listActions($id, array("new","edit", "fasta", "vial", "delete") );
 	print "<td class=\"lists\" width=\"1%\" align=\"RIGHT\">$id</td>";
 	$name = $row['name'];
 	if (strlen($name) > 20){

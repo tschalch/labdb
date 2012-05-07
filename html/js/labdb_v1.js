@@ -273,6 +273,16 @@ function deleteRecords()
     return is_confirmed;
 } // end of the 'deleteRecord()' function
 
+function deleteRecord(element, record_id)
+{
+    var is_confirmed = confirm("Do you really want to delete this record?");
+    if (is_confirmed==true){
+	loadurl("list_doit_get.php?action=3&selection[]=" + record_id);		
+    };
+    return false;
+} // end of the 'deleteRecord()' function
+
+
 function changePermission(id){
 	loadurl('changePermission.php?id='+id);
 }

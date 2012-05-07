@@ -72,7 +72,6 @@ body {
 }
 
 div.PCR{
-  display: block;
   overflow:auto;
   vertical-align: middle;
   padding-bottom: 5px;
@@ -85,7 +84,7 @@ span.pcrField{
   padding: 5px 5px 5px 5px;
 }
 
-div.PCR span.pcrLabel {
+div.PCR label.pcrLabel {
   float: left;
   text-align: left;
   padding: 3px 3px 0 0;
@@ -98,13 +97,10 @@ div.PCR span.pcrText {
   padding: 3px 20px 0 3px;
 }
 
-div.PCR select.oligoBox {
+div.PCR input.oligoBox {
   float: left;
   width: 150px;
   margin-right: 15px;
-}
-div.template{
-  clear: both;
 }
 
 div.formRow {
@@ -457,3 +453,12 @@ div.orfSize {
 	padding: 2px;
 	height: 12px;
 }
+
+/*righclick menu*/
+.vmenu{border:1px solid #aaa; padding: 4px; position:absolute;background:#fff; opacity:0.9;display:none;font-size:0.75em;}
+.vmenu .first_li span{width:100px;display:block;padding:5px 10px;cursor:pointer}
+.vmenu .inner_li{display:none;margin-left:120px;position:absolute;border:1px solid #aaa;
+border-left:1px solid #ccc;margin-top:-28px;background:#fff;}
+.vmenu .sep_li{border-top: 1px ridge #aaa;margin:5px 0}
+.vmenu .fill_title{font-size:11px;font-weight:bold;/height:15px;/overflow:hidden;word-wrap:break-word;}
+.lists tr:hover td {background-color: #eee;}

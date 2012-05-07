@@ -32,7 +32,7 @@ foreach ($rows as $row) {
 	$id = $row['trackID'];
 	$edit = 0;
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
-	echo listActions($id, $edit, False);
+	echo listActions($id, array("new","edit","delete"));
 	echo "<td class=\"lists\" width=\"20%\">
 		<a href=\"editEntry.php?id=$id&mode=display\">${row['name']}</a></td>";
 	echo "<td class=\"lists\" width=\"70%\">${row['description']}</td>";

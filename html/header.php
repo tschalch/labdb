@@ -15,19 +15,12 @@ echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\"
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="Content-Script-Type" content="text/javascript" />
 
-        <link rel="stylesheet" type="text/css" href="lab_v1.css" />
-	<!--[if IE]>     <link rel="stylesheet" type="text/css" href="lab_iehacks.css" />   <![endif]-->   
-	<!--[if lte IE 6]>     <script type="text/javascript" src="myiescripts.js"></script>   <![endif]-->
-	<!--[if lt IE 6]>     <link rel="stylesheet" type="text/css" href="myiehacks-5.5.css" />   <![endif]--> 
+        <link rel="stylesheet" type="text/css" href="css/lab_v1.css" />
+	<!--[if IE]>     <link rel="stylesheet" type="text/css" href="css/lab_iehacks.css" />   <![endif]-->   
+	<!--[if lte IE 6]>     <script type="text/javascript" src="js/myiescripts.js"></script>   <![endif]-->
+	<!--[if lt IE 6]>     <link rel="stylesheet" type="text/css" href="js/myiehacks-5.5.css" />   <![endif]--> 
 
 	<link rel="shortcut icon" href="favicon.ico" />
-        <link rel="stylesheet" href="lib/MenuMatic.css" type="text/css" media="screen" charset="utf-8" />
-	<script src="labdb_v1.js" type="text/javascript"></script>
-	<script src="lib/mootools-1.2.4-core.js" type="text/javascript"></script>
-        <script src="lib/mootools-1.2.4.4-more.js" type="text/javascript"></script>
-</head>
-<body>
-<div id="header"><h1><a href="index.php" style="color:black;">Lab Database</a></h1></div>
+	<script src="js/labdb_v1.js" type="text/javascript"></script>
+	<script src="js/mootools-1.2.5-core.js" type="text/javascript"></script>
 
-  <div id="labnav"><?php include("navigation.php");?></div>
-  <div id="content">

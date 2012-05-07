@@ -37,7 +37,7 @@ foreach ($rows as $row) {
 		$row['permGroup'],
 		$row['permOthers']);
 	if (($row['owner']==$userid and $row['permOwner']>1)  or getPermissions($id,$userid)) $edit = 1;
-	echo listActions($id, $edit, false);
+	echo listActions($id, array("new","edit","delete") );
 	echo "<td class=\"lists\" width=\"20%\">
 		<a href=\"list.php?list=listVials&box=$id\">${row['name']}</a></td>";
 	echo "<td class=\"lists\" width=\"20%\">${row['location']}</td>";

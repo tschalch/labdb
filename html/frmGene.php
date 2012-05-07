@@ -29,6 +29,22 @@ if ($type == 'PCR') printTextField('Reaction', 'reaction',$formParams);
 printTextArea('Description', 'description',$formParams);
 if ($type == 'gene') printTextField('Organism','organism',$formParams);
 if ($type == 'PCR') printPCRFields($formParams);
+?>
+<style>
+    .ui-button { margin-left: -1px; }
+    .ui-button-icon-only .ui-button-text { padding: 0.35em; } 
+    .ui-autocomplete-input { margin: 0; padding: 0.48em 0 0.47em 0.45em;}
+    .ui-autocomplete {
+	    max-height: 20em;
+	    overflow-y: auto;
+	    /* prevent horizontal scrollbar */
+	    overflow-x: hidden;
+	    /* add padding to account for vertical scrollbar */
+	    padding-right: 20px;
+    }
+</style>
+
+<?php
 if ($type == 'backbone') printTextField('Resistance Marker', 'resistance',$formParams);
 if ($type == 'backbone') printTextField('Origin of Replication', 'origin',$formParams);
 if ($type == 'backbone' or $type == 'gene') printLinkField('Link to more info', 'link',$formParams);
@@ -75,18 +91,24 @@ function printPCRFields($formParams){
 	}
 	$PCRbox .= "<div class=\"PCR\">";
 	for ($i=1;$i<=2;$i++){
-		$PCRbox .= "<span class=\"pcrLabel\">Oligo $i:</span>\n";
+		$PCRbox .= "<label class=\"pcrLabel\">Oligo $i:</label>\n";
 		if($mode == "modify"){
-			$PCRbox .= "<select class=\"oligoBox\" id=\"oligo$i\" name=\"${table}_0_PCRoligo$i\" columns=\"30\">";
-			$c = "<option value=\"NA\"></option>\n";
-			if(count($choices['oligos'])){
-					foreach ($choices['oligos'] as $id => $oligo){
-					$c .= "<option value=\"$id\"";
-					if ($fields["PCRoligo$i"] == $id) $c .= " selected=\"selected\"";
-					$c .= ">$oligo</option>\n";
-				}
-			}
-			$PCRbox .= "$c </select>";
+		    $olid = $fields["PCRoligo$i"];
+		    $PCRbox .= "<input class=\"oligoBox\" id=\"oligo$i\" name=\"${table}_0_PCRoligo$i\" columns=\"30\" value=\"$olid\">";
+?>
+		    <script type="text/javascript">
+			window.addEvent('domready', function() {
+			    new Autocompleter.labdb("oligo<?php print $i; ?>", 'autocomplete.php', {
+				'postData': {
+				'field': 'name', // send additional POST data, check the PHP code
+				'table': 'oligos',
+				'extended': '1',
+				},
+			    });
+			});
+		    </script>
+<?php
+
 		}
 		if ($mode == "display"){
 			$olid = $fields["PCRoligo$i"];
@@ -96,18 +118,22 @@ function printPCRFields($formParams){
 	}
 	$PCRbox .= "</div>";
 	# template combobox
-	$PCRbox .= "<div class=\"PCR\"><span class=\"pcrLabel\">Plasmid:</span>\n";
+	$PCRbox .= "<div class=\"PCR\" ><label class=\"pcrLabel\">Plasmid:</label>\n";
 	if($mode == "modify"){
-		$PCRbox .= "<select class=\"oligoBox\" id=\"template\" name=\"{$table}_0_PCRtemplate\">";
-		$c = "<option value=\"NA\"></option>\n";
-		if(count($choices['plasmids'])){
-			foreach ($choices['plasmids'] as $id => $plasmid){
-				$c .= "<option value=\"$id\"";
-				if ($fields['PCRtemplate'] == $id) $c .= " selected=\"selected\"";
-				$c .= ">$plasmid</option>\n";
-			}
-		}
-		$PCRbox .= "$c </select>";
+		$PCRbox .= "<input class=\"oligoBox\" id=\"template\" name=\"{$table}_0_PCRtemplate\" value=\"${fields['PCRtemplate']}\" >";
+?>
+		    <script type="text/javascript">
+			window.addEvent('domready', function() {
+			    new Autocompleter.labdb("template", 'autocomplete.php', {
+				'postData': {
+				'field': 'name', // send additional POST data, check the PHP code
+				'table': 'plasmids',
+				'extended': '1',
+				},
+			    });
+			});
+		    </script>
+<?php
 	}
 	if ($mode == "display"){
 		$plid = $fields["PCRtemplate"];

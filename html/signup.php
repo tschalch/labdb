@@ -126,7 +126,12 @@ if (!pdo_query($sql))
 $sql = "INSERT INTO groups SET
      userid = '$newid',
      belongsToGroup = '$_POST[group]',
-     defaultPermissions = 0";
+     defaultPermissions = 0;";
+$sql += "INSERT INTO groups SET
+     userid = '$newid',
+     belongsToGroup = '19',
+     defaultPermissions = 0;";
+
 if (!pdo_query($sql))
 	error('3A database error occurred in processing your '.
 	     'submission.\\nIf this error persists, please '.

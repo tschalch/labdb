@@ -680,9 +680,40 @@ function printProjectFields($formParams){
 	printComboBox('Project', 'project', $formParams, $projects, $row['project']);
 	#setupProjects();
 } 
-function listActions($id, $edit, $vial){
-	$action = "<td class=\"lists\" width=\"1%\">";
-	$action .= "<input type=\"checkbox\" name=\"selection[]\" value=\"$id\"/></td>\n";
+function listActions($id, $actions){
+    	$action = "<td class=\"lists\" width=\"1%\">";
+	$action .= "<input type=\"checkbox\" name=\"selection[]\" value=\"$id\"/>\n";
+	$actionID = "nav";
+	$catalog = array();
+	$catalog["new"] = "<div><a href=\"newEntry.php?id=$id&amp;mode=modify\">
+	    <img style=\"padding-right:5px;\" title=\"New record based on this one\" src=\"img/copy.png\" />
+	    New
+	    </a></div>\n";
+	$catalog["edit"] = "<div><a style=\"\" href=\"editEntry.php?id=$id&amp;mode=modify\">
+		<img style=\"padding-right:5px;\" title=\"Edit record\" title=\"edit\"src=\"img/b_edit.png\" />
+		Edit
+	    </a></div>";
+	$catalog["fasta"] = "<div><a style=\"\" href=\"fasta.php?id=$id\">
+		<img style=\"padding-right:5px;\" title=\"Get fasta file\" title=\"edit\"src=\"img/File.ico\" />
+		Fasta file
+	    </a></div>";
+	$catalog["delete"] = "<div><a style=\"cursor:pointer;\" onclick=\"deleteRecord(this, $id);\">
+	    <img style=\"padding-right:5px;\" src=\"img/b_drop.png\" />
+		    Delete
+	    </a></div>";
+	$catalog["vial"] = "<div><a href=\"newEntry.php?form=frmVial&amp;mode=modify&amp;template=$id\">
+	    <img style=\"\" title=\"New vial based on this record.\"src=\"img/vial.png\" />
+		New Vial
+	    </a></div>";
+
+	$action .= "<div class=\"vmenu\">";
+	foreach ($actions as $a){
+	    $action .= $catalog[$a];
+	}
+	$action .= "</div></td>\n";
+	#$action .= "<script> window.addEvent('domready', function() {var myMenu = new MenuMatic({'id':\"$actionID\"});});</script>";
+	return $action;
+	
 	$action .= "<td class=\"lists\" style=\"text-align:center;\" width=\"2%\">";
 	$spacerSize = 20;
 	if ($edit) $spacerSize += 20;

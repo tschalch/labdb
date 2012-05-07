@@ -4,6 +4,16 @@ include_once("accesscontrol.php");
 include("header.php");
 include_once("functions.php");
 ?>
+
+</head>
+<body>
+
+<?php 
+include("listRightClickMenu.php");
+include("title_bar.php");
+include("navigation.php");
+?>
+<div id="content">
 <script type="text/javascript" language="javascript">
     <!--
     // js form validation stuff
@@ -131,7 +141,7 @@ foreach($_GET as $key => $value){
 	}
 }
 
-echo "<th/><th/>";
+echo "<th/>";
 foreach ($fields as $key => $field){
 	print "<th class=\"lists\" >";
 	if(is_string($field)) echo "$field ";

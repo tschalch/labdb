@@ -68,20 +68,19 @@ printTextField('Manufacturer', 'manufacturer', $formParams);
 printTextField('Supplier', 'supplier', $formParams);
 if ($mode == 'modify'):
 ?>
-<link rel="stylesheet" href="lib/Autocompleter.css" type="text/css" />
-<script src="lib/Autocompleter.js" type="text/javascript"></script>
-<script src="lib/Autocompleter.Request.js" type="text/javascript"></script>
 <script type="text/javascript">
 //<![CDATA[
 window.addEvent('domready', function() {
      new Autocompleter.Request.HTML('manufacturer', 'autocomplete.php', {
 		'postData': {
-			'field': 'manufacturer', // send additional POST data, check the PHP code
+		    'field': 'manufacturer', // send additional POST data, check the PHP code
+		    'table': 'inventory',
 		}
     });
      new Autocompleter.Request.HTML('supplier', 'autocomplete.php', {
 		'postData': {
-			'field': 'supplier', // send additional POST data, check the PHP code
+		    'field': 'supplier', // send additional POST data, check the PHP code
+		    'table': 'inventory',
 		}
     });
 });

@@ -4,10 +4,10 @@ include_once("accesscontrol.php");
 include_once("seq.inc.php");
 include_once("header.php");
 
-if(array_key_exists('selection', $_POST)){
-	$selection = $_POST['selection'];
+if(array_key_exists('selection', $_GET)){
+	$selection = $_GET['selection'];
 	#print_r($selection);
-	$action = $_POST['action'];
+	$action = $_GET['action'];
 	switch ($action) {
 	# write records to files
 	case "0":
@@ -34,8 +34,8 @@ if(array_key_exists('selection', $_POST)){
 		break;
 	# change permissions
 	case 2:
-		$permission = $_POST['perm'];
-		$newuser = $_POST['_0_user'];
+		$permission = $_GET['perm'];
+		$newuser = $_GET['_0_user'];
 		foreach($selection as $id){
 			changePermission($id, $newuser, $permission, $userid);
 		}

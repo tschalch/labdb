@@ -36,7 +36,7 @@ foreach ($rows as $row) {
 		$row['permGroup'],
 		$row['permOthers']);
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
-	echo listActions($id, $edit);
+	echo listActions($id, array("new","edit","delete"));
 	echo "<td class=\"lists\" width=\"30%\">
 		<a href=\"editEntry.php?id=$id&amp;mode=display\">${row['name']}</a></td>";
 	echo "<td class=\"lists\" width=\"50%\">${row['description']}</td>";
