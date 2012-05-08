@@ -23,4 +23,5 @@ echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\"
 	<link rel="shortcut icon" href="favicon.ico" />
 	<script src="js/labdb_v1.js" type="text/javascript"></script>
 	<script src="js/mootools-1.2.5-core.js" type="text/javascript"></script>
+	<script src="js/mootools-1.2.5.1-more.js" type="text/javascript"></script>
 

@@ -31,7 +31,6 @@ if ($new){
 $button = "Save Entry";
 include("header.php");
 ?>
-<link media="all" type="text/css" href="css/ui-themes/base/jquery.ui.all.css" rel="stylesheet">
 <link media="all" type="text/css" href="css/MenuMatic.css" rel="stylesheet">
 <link rel="stylesheet" href="css/Autocompleter.css" type="text/css" />
 

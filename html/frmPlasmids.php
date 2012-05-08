@@ -125,8 +125,9 @@ window.addEvent('domready', function() {
 	
 	// Create the new slider instance
 	new Slider(slideEl, slideEl.getElement('.knob'), {
-		steps: 40,	// There are 35 steps
+		steps: 20,	// There are 40 steps
 		range: [20,220],	// Minimum value is 8
+		initialStep: 100,
 		onChange: function(value){
 			// Everytime the value changes, we change the font of an element
 			vm.options.orfLength = value;
@@ -134,7 +135,7 @@ window.addEvent('domready', function() {
 			vm.drawVector();
 			$('orfSize').set('html', value);
 		}
-	}).set($('orfSize').get('html').toInt());
+	});
 })
 
 </script>
