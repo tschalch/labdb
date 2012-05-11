@@ -11,13 +11,6 @@ include("formhead.php");
 # get choices for fragment comboboxes
 $types = array('Plasmid'=>'plasmid');
 $choices = array();
-foreach ($types as $type){
-	$cols = array('tracker.trackID',"$type.name");
-	$rows = getRecords($type, $userid, $cols);
-	foreach ($rows as $row) {
-		$choices[$type][$row['trackID']] = $row['name'];
-	}
-}
 #print_r($rows);
 #print mysql_error($link);
 

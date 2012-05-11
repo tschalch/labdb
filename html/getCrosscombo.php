@@ -10,11 +10,11 @@ $start = $_GET['start'];
 $end = $_GET['end'];
 $dir = $_GET['dir'];
 $id = $_GET['id'];
-$connection = None;
 if ($id != ""){
     $connection = array('connID' => -1,'record'=>$id, 'start'=>$start, 'end'=>$end, 'direction'=>$dir);
 }
 
-getCrossCombobox($connection, $table, $type, $fcounter, $mode, $userid);
+#getCrossCombobox($connection, $table, $type, $fcounter, $mode, $userid);
+getAutoselectField($connection, $table, $type, $fcounter, $mode, $userid);
 
 ?>

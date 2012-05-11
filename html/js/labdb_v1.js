@@ -93,16 +93,22 @@ function addXcmbx(el, table, type, recid, start, end, dir) {
 		'mode': mode, 'start': start, 'end':end, 'dir':dir },
 		update: el,
 		onComplete: function () {
-				el.getFirst('div').inject($('xcmbxFrags'));
-				if(typeof(vm)!="undefined"){
-					vm.updateFragments($('xcmbxFrags'));
-					vm.drawVector();
-				}
-				}
+		    new Autocompleter.labdb(el.getFirst('div').getFirst('div').getFirst('input'),'autocomplete.php',{
+			'postData': {
+			'field': 'name', // send additional POST data, check the PHP code
+			'table': table,
+			'extended': '1',
+			}
+		    });
+		    el.getFirst('div').inject($('xcmbxFrags'));
+		    if(typeof(vm)!="undefined"){
+			    vm.updateFragments($('xcmbxFrags'));
+			    vm.drawVector();
+		    };
+		}
 		}).send();
 	fcounter++;
-
-	};
+};
 
 
 function CloseAddFragment(){

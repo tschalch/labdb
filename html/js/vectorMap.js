@@ -360,12 +360,14 @@ var VectorMap = new Class({
 	    if (!div.get('id').contains('gene')) continue;
             var first = div.getFirst('div');
             if (!first) continue;
-            first = first.getFirst('input');
-            if (!first) continue;
-            var start = first.get('value');            
-            var end = first.getNext('input').get('value');
-            var name = div.getFirst('div').getFirst('select').getSelected()[0].get('text');
-            var direction = div.getFirst('div').getFirst('select').getNext('select').get('value');
+	    var frag = first.getFirst('input');
+            if (!frag) continue;
+            var name = frag.get('value'); 
+	    var startel = frag.getNext('input');            
+            if (!startel) continue;
+	    start = startel.get('value');
+            var end = startel.getNext('input').get('value');
+            var direction = div.getFirst('div').getFirst('select').get('value');
             if (start != end && start != 0){
                 this.fragments.push([start.toInt() - 2, end.toInt() - 1, name, direction.toInt(),
                                 1, 0.02, {"fill": "#8B0000", "stroke": "black", "stroke-width": 0.5,

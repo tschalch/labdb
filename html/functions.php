@@ -9,7 +9,7 @@ function pdo_query($q){
 		include('config.php');
 		//print "\"$q\"";
 		$dbh = new PDO("mysql:host=$host;dbname=$database", $username, $password);
-		//$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$result = array();
 		$i = 0;
 	      	//print "query: $q <br/>";
@@ -497,6 +497,83 @@ function getCrossCombobox($connection, $table, $type, $fcounter, $mode, $userid)
     print "</div>\n\n";
 }
 
+function getAutoselectField($connection, $table, $type, $fcounter, $mode, $userid){
+    if (isset($connection)){
+		$fid = $connection['record'];
+		$fragment = getRecord($fid, $userid, $groups);
+		$type = ($fragment['type']) ? $fragment['type']: $fragment['st_name'];
+		$table = $fragment['table'];
+    } else {
+		$connection = array('connID' => -1, 'start' => '', 'end' =>'');
+    }
+    print "<div id=\"$type$fcounter\" style=\"height: 1.5em;\">\n";
+    if ($mode == 'display'){
+		$display = "";
+		$formDisplay = "display: none; ";
+    } else {
+		$display = "display: none; ";
+		$formDisplay = '';
+		print "<span style=\"width:20%; clear: left; float:left; text-align:left; 
+		    margin-right:10px;height:1.5em;\">$type:</span>\n";
+    }
+    print "<span style=\"$display \"><a title=\"$type\" style=\"float: left\" href=\"editEntry.php?id=$fid&amp;mode=display\"> ${fragment['name']}</a>";
+    if ($connection['start'] != 0 || $connection['end'] ) {
+	    print " (${connection['start']}-${connection['end']})";
+    }
+    print "</span>\n";
+	
+    //form fields
+    print "<div style=\"$formDisplay\">";
+
+    $name = "connections_${fcounter}_record";
+    $elementID = $name;
+    if ($mode == "modify"){
+	print "<input class=\"\" style=\"width: 35%; float: left\" id=\"$elementID\" name=\"$name\" columns=\"30\" value=\"$fid\"/>";
+    }
+    if ($mode == "display"){
+	print "<span class=\"\"><a href=\"editEntry.php?id=$fid&amp;mode=display\" >".$fragment['name']."</a></span>";
+	print "<input type=\"hidden\" value=\"$fid\" columns=\"50\" id=\"$elementID\" />";
+    }
+
+    if($type == 'gene'){
+	print "<input style=\"width: 10%; float: left;\" name=\"connections_${fcounter}_start\" value=\"${connection['start']}\"/>\n";
+	print "<input style=\"width: 10%; float: left;\" name=\"connections_${fcounter}_end\" value=\"${connection['end']}\"/>\n";
+	print "<select style=\"width: 10%; float: left;\" name=\"connections_${fcounter}_direction\">\n";
+	    $directions = array(1=>'forward', 0=>'reverse');
+	    foreach($directions as $d => $dname){
+		    print "<option value=\"$d\"";
+		    if ($connection != None and $connection['direction']==$d){
+			    print  " selected ";
+		    }
+		    print ">$dname</option>\n";
+	    }
+	    print "</select>\n";
+    }
+
+
+    print "<input type=\"hidden\" name=\"connections_${fcounter}_connID\" value=\"${connection['connID']}\"/>\n";
+    print "<img onClick=\"$(this).getParent().getParent().destroy()\"
+		style=\"float: left; display:inline; margin: 0.2em; cursor: pointer; vertical-align: middle\" alt=\"delete\" src=\"img/b_drop.png\" />";
+    print "<div style=\"padding: 0 0 0.5em 0;\"></div>\n";
+	print "</div>\n";
+    print "</div>\n\n";
+
+    ?>
+	<script type="text/javascript">
+	    window.addEvent('domready', function() {
+		new Autocompleter.labdb("<?php print $name; ?>", 'autocomplete.php', {
+		    'postData': {
+		    'field': 'name', // send additional POST data, check the PHP code
+		    'table': '<?php print $table;?>',
+		    'extended': '1',
+		    },
+		});
+	    });
+	</script>
+    <?php
+
+}
+
 function printCrossCombobxs($id, $types, $fcounter, $formParams){
 	$table = $formParams['table'];
 	$mode = $formParams['mode'];
@@ -530,7 +607,7 @@ function printCrossCombobxs($id, $types, $fcounter, $formParams){
 		//	print "</div>\n";
 		//}
 		foreach ($cnxs as $c){
-			getCrossCombobox($c, None, None, $fcounter, $mode, $userid);
+			getAutoselectField($c, None, None, $fcounter, $mode, $userid);
 			$fcounter++;
 		}
 	}
