@@ -9,7 +9,7 @@ function pdo_query($q){
 		include('config.php');
 		//print "\"$q\"";
 		$dbh = new PDO("mysql:host=$host;dbname=$database", $username, $password);
-		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		//$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$result = array();
 		$i = 0;
 	      	//print "query: $q <br/>";
@@ -62,16 +62,15 @@ function getInsertQuery($ds, $table, $id){
 
 function getUpdateQuery($ds, $table, $uid){
 	$i = 0;
+	if (array_key_exists('connID')){
+	    $uid=$ds['connID'];
+	}
 	$num = count($ds);
 	$uq = "UPDATE `$table` SET ";
 	foreach ($ds as $key => $field){
-		$i++;
-		if ($key == 'connID'){
-			$uid = $field;
-		} else {
-			$uq .= "`$key` = '".$field."' ";
-			if ($i < $num) $uq .= ',';
-		}
+	    $i++;
+	    $uq .= "`$key` = '".$field."' ";
+	    if ($i < $num) $uq .= ',';
 	}
 	$uq .= "WHERE connID='$uid';";
 	//print $uq;
