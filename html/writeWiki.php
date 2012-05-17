@@ -2,17 +2,11 @@
 #writes a list of selected records to wiki table format
 include_once("accesscontrol.php");
 include_once("functions.php");
-include("header.php");
-
-print "</head><body>";
-include("title_bar.php");
-include("navigation.php");
-
 
 function wikiPrintEntry($entry){
     global $userid, $groups;
     $wikiString = "| ${entry['trackID']} || ";
-    $wikiString .= "[{{labdburl}}/editEntry.php?id=${entry['trackID']}&mode=display ${entry['name']}] || ";
+    $wikiString .= "{{labdburl|id=${entry['trackID']}|label=${entry['name']}}} || ";
     if(isset($entry['PCRoligo1'])){
 	$tmstring="";
 	for ($i=1;$i<=2;$i++){
@@ -33,23 +27,23 @@ function wikiPrintEntry($entry){
     return $wikiString;
 }
 
-if ($_GET["output"] and $_GET["selection"]){
-	$output = $_GET["output"];
-	$selection = explode(",", $_GET["selection"]);
-	$wikiOutput = "{|class=\"wikitable\"<br/>\n";
-	$wikiOutput .= "|+Construct<br/\n>";
-	if(isset($selection[0]['PCRoligo1'])){
-	    $wikiOutput .= "! ID !! Construct !! Oligo 1 !! Oligo 2 !! Tm !! Template !! Product length<br/>\n";
-	} else {
-	    $wikiOutput .= "! ID !! Construct !! Description<br/>\n";
-	}
-	foreach ($selection as $entry){
-	    $entry = getRecord($entry, $userid, $groups);
-	    $wikiOutput .= "|-<br/>" . wikiPrintEntry($entry) . "<br/>\n";
-	}
-	$wikiOutput .= "|}<br/><br/>\n";
-	print "<div id=\"content\">". $wikiOutput . "</div>\n";
+if ($_GET["output"]=='wiki' and $_GET["selection"]){
+    header('Content-type: text/wiki');
+    header("Content-Disposition: attachment; filename=\"export.wiki\"");
+    $selection = explode(",", $_GET["selection"]);
+    $wikiOutput = "{|class=\"wikitable\"\n";
+    $wikiOutput .= "|+Constructs\n";
+    if(isset($selection[0]['PCRoligo1'])){
+    $wikiOutput .= "! ID !! Construct !! Oligo 1 !! Oligo 2 !! Tm !! Template !! Product length\n";
+    } else {
+	$wikiOutput .= "! ID !! Construct !! Description\n";
+    }
+    foreach ($selection as $entry){
+	$entry = getRecord($entry, $userid, $groups);
+	$wikiOutput .= "|-\n" . wikiPrintEntry($entry) . "\n";
+    }
+    $wikiOutput .= "|}\n";
+    print "$wikiOutput\n";
 }
 
-include("footer.php");
 ?>

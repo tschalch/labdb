@@ -83,7 +83,8 @@ if(array_key_exists('selection', $_POST)){
 		echo "Status changed to 'finished'<br/><br/>";
 		break;
 	case 7:
-	    include("writeWiki.php");
+	    $selString = join(",", $selection);
+	    header( "Location: writeWiki.php?output=wiki&selection=$selString" ) ;
 	    break;
 	}
 }

@@ -134,6 +134,6 @@ $proteinSequence = remove_non_coding_prot($row['proteinSequence']);
 	echo "</tr>";
 	$i++;
 }
-listProcessor(array(1,2,3));
+listProcessor(array(1,2,3,7));
 ?>
 </table>

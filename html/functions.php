@@ -787,7 +787,6 @@ function listActions($id, $actions){
 	    $action .= $catalog[$a];
 	}
 	$action .= "</div></td>\n";
-	#$action .= "<script> window.addEvent('domready', function() {var myMenu = new MenuMatic({'id':\"$actionID\"});});</script>";
 	return $action;
 	
 	$action .= "<td class=\"lists\" style=\"text-align:center;\" width=\"2%\">";
@@ -1123,8 +1122,7 @@ function showOptions(element){
 	if (in_array(4, $actions)) print "<option value=\"4\">&nbsp;-Order placed</option>";
 	if (in_array(5, $actions)) print "<option value=\"5\">&nbsp;-Item received</option>";
 	if (in_array(6, $actions)) print "<option value=\"6\">&nbsp;-Item finished</option>";
-
-
+	if (in_array(7, $actions)) print "<option value=\"7\">&nbsp;-Export in mediawiki format</option>";
 ?>
 	</select>
 	<div id="permTable" name="permTable" style="display:none; margin-right:20px" ><table>
