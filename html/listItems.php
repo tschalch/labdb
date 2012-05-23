@@ -9,6 +9,7 @@ include("listhead.php");
 	$action = "<script> window.addEvent('domready', function() {var myMenu = new MenuMatic({'matchWidthMode':False});});</script>";
 	print $action;
 	$zindex = 11;
+	$totalcost = 0;
 foreach ($rows as $row) {
 	#print "row: ";print_r($row); print "<br/>";
 	$id = $row['trackID'];
@@ -32,6 +33,8 @@ foreach ($rows as $row) {
 	echo "<td class=\"lists\" width=\"5%\">${row['quantity']}</td>";
 	echo "<td class=\"lists\" width=\"5%\">${row['unitMeas']}</td>";
 	echo "<td class=\"lists\" width=\"5%\">${row['price']}</td>";
+	$cost = $row['quantity'] * $row['price'];
+	$totalCost += $cost;
 	$stat = getStatus($row['status']);
 	echo "<td class=\"lists\" width=\"10%\">$stat</td>";
 	if ($row['orderDate']!='0000-00-00' and $row['orderDate']) $date = date("m/d/Y",strtotime($row['orderDate']));
@@ -44,6 +47,12 @@ foreach ($rows as $row) {
 	echo "</tr>";
 	$i++;
 }
+    echo "<tr><td colspan = \"100\">";
+    $noItems = count($rows);
+    echo "Number of Items: $noItems; ";
+    echo "Total Cost = \$ $totalCost"; 
+    echo "</td></tr>";
+
 if ($status == 1){
 	listProcessor(array(3,4,5));
 } else {

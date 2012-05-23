@@ -81,7 +81,7 @@ function printFragments($typ, $conxs){
 	}
 	print $out;
 }
-listProcessor(array(1,2,3));
+listProcessor(array(1,2,3,7));
 ?>
 </table>
 

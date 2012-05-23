@@ -22,7 +22,7 @@ function wikiPrintEntry($entry){
 	$wikiString .= "{{labdburl|id=${entry['PCRtemplate']}|label=${t['name']}}} (${entry['PCRtemplate']}) || ";
 	$wikiString .= CountATCG($entry['DNASequence'])." bp ";
     }else{
-	$wikiString .= "[{{labdburl|id=${entry['description']}}} (=${entry['description']})";
+	$wikiString .= "${entry['description']}";
     }
     return $wikiString;
 }
@@ -33,13 +33,16 @@ if ($_GET["output"]=='wiki' and $_GET["selection"]){
     $selection = explode(",", $_GET["selection"]);
     $wikiOutput = "{|class=\"wikitable\"\n";
     $wikiOutput .= "|+Constructs\n";
-    if(isset($selection[0]['PCRoligo1'])){
-    $wikiOutput .= "! ID !! Construct !! Oligo 1 !! Oligo 2 !! Tm !! Template !! Product length\n";
-    } else {
-	$wikiOutput .= "! ID !! Construct !! Description\n";
-    }
+    $title = false;
     foreach ($selection as $entry){
 	$entry = getRecord($entry, $userid, $groups);
+	if (!$title){
+	    $title = "! ID !! Construct !! Description\n";
+	    if(isset($entry['PCRoligo1'])){
+		$title = "! ID !! Construct !! Oligo 1 !! Oligo 2 !! Tm !! Template !! Product length\n";
+	    }
+	    $wikiOutput .= $title;
+	}
 	$wikiOutput .= "|-\n" . wikiPrintEntry($entry) . "\n";
     }
     $wikiOutput .= "|}\n";
