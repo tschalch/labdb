@@ -11,14 +11,17 @@ if (isset($fields['sID'])){
     $q = "SELECT * FROM sampletypes WHERE id=$sampleType;";
     $r = pdo_query($q);
     $sampleType = $r[0];
+    $table = $_GET['table'];
 }
-$name = 'sID';
+$field = 'sID';
+$element_name= "${table}_0_$field";
+$element_id="cmb$field";
 $sTable = $sampleType['table'];
-$cols = array('tracker.trackID', "CONCAT($sTable.name,' (id: ',tracker.trackID,')') AS name");
-$choices = getRecords($sTable, $userid, $cols);
 print "<div class=\"formRow\"><div class=\"formLabel\">Select content:</div>";
-print getComboBox($name, 'vials', $mode, $choices, $fields['sID'], '', True);
-print "</div></div>\n";
+print  "<div class=\"formField\">";
+getAutoselectField( $sTable, $mode, $element_id, $element_name, $trackID, "textfield");
+print "</div>";
+print "</div>\n";
 
 
 ?>

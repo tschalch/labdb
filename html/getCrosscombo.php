@@ -15,6 +15,6 @@ if ($id != ""){
 }
 
 #getCrossCombobox($connection, $table, $type, $fcounter, $mode, $userid);
-getAutoselectField($connection, $table, $type, $fcounter, $mode, $userid);
+getCrossAutoselectField($connection, $table, $type, $fcounter, $mode, $userid);
 
 ?>

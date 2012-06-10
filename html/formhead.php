@@ -2,16 +2,16 @@
 include_once("accesscontrol.php");
 #$noUserFilter = True;
 if ($edit or $duplicate){
-	if($form){
+if(isset($form)){
 		$query="SELECT `$table`.*, tracker.*, sampletypes.`table`, sampletypes.`form`, sampletypes.st_name AS stName FROM `$table` LEFT JOIN tracker ON $table.id=tracker.sampleID LEFT JOIN sampletypes ON sampletypes.`table`='$table' WHERE $table.id='$id' AND tracker.sampleType=sampletypes.id AND tracker.owner=$userid ";
 		#print $query;
 		$rows = pdo_query($query);
 		$row = $rows[0];
 	} else {
-		$row = getRecord($id, $userid, $groups);
+		$row = getRecord($id, $userid);
 	}
 	#print_r($row);
-	if ($duplicate) unset($row['trackID']);
+	if (isset($duplicate) and $duplicate) unset($row['trackID']);
 	foreach ($row as $key => $field){
 		$fields[$key] = $field;
 	}
@@ -22,7 +22,7 @@ if ($edit or $duplicate){
 		$title = "Edit $titleName ${fields['name']}";
 	}
 }
-if ($new){
+if (isset($new) and $new){
 	$title = "New $titleName Entry";
 	$formaction = "insert.php";
 	if($_POST['DNASequence']) $fields['DNASequence'] = fastaseq($_POST['DNASequence'], "\n", 60);
@@ -48,6 +48,8 @@ include("navigation.php");
 ?>
 <div id="content">
 <?php
+if (!isset($noUserFilter)) $noUserFilter = Null;
+if (!isset($noProjectFilter)) $noProjectFilter = Null;
 initProjects($noUserFilter, $noProjectFilter);
 $formParams['fields'] = $fields;
 //print_r($fields);

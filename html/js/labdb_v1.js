@@ -104,12 +104,21 @@ function addXcmbx(el, table, type, recid, start, end, dir) {
 		    if(typeof(vm)!="undefined"){
 			    vm.updateFragments($('xcmbxFrags'));
 			    vm.drawVector();
+			    vm.updateFragments($('xcmbxFrags'));
+			    vm.drawVector();
 		    };
 		}
 		}).send();
 	fcounter++;
 };
 
+function destroyFrag(el){
+    $(el).getParent().getParent().destroy(); 
+    if(typeof(vm)!="undefined"){
+	    vm.updateFragments($('xcmbxFrags'));
+	    vm.drawVector();
+    };
+}
 
 function CloseAddFragment(){
 	var el = window.opener.document.createElement('div');

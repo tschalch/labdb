@@ -204,6 +204,7 @@ var VectorMap = new Class({
 		var orbit_dir = this.fragments[i][4];
 		for (var j = bndrs[0]; j < bndrs[1]; j++){
 			var o = (orbit_dir > 0) ? 0 : 1;
+			while(j<0) j += this.vL;
 			var x = this.layoutMap[j%this.vL][o] += (1 * orbit_dir);
 			max_orbit = (Math.abs(max_orbit) < Math.abs(x)) ? x : max_orbit;
 		}

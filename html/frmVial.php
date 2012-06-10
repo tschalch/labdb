@@ -1,13 +1,13 @@
 <?php
 $titleName = "Vial";
 $mode = $_GET['mode'];
-$template = $_GET['template'];
 $table = 'vials';
 $submitFunction = "validate_form()";
 $formParams = array('table'=>$table, 'mode'=>$mode);
 
 # setup fields from template if one is given
-if ($template){
+if (isset($_GET['template'])){
+    $template = $_GET['template'];
     $template = getRecord($template,$userid);
     $fields['name'] = $template['name'].", id: ".$template['trackID'];
     $fields['project'] = $template['project'];
@@ -61,7 +61,7 @@ if ($mode == 'modify'){
 	    var req = new Request.HTML({  
 		    method: 'get',  
 		    url: "getCombo.php",
-		    data: { 'sampletype' : type, 'mode': '<?php print $mode; ?>'},
+		    data: { 'sampletype' : type, 'mode': '<?php print $mode; ?>', 'table': 'vials', 'field': 'sID'},
 		    update: el,
     //		onComplete: function () {
     //				vm.updateFragments($('xcmbx'));
@@ -142,6 +142,7 @@ printTextField('Created by', 'creator', $formParams);
 	}
         print "<div id=\"cmbo\"> \n";
         if(isset($fields['sID'])){
+	    $trackID = $fields['sID'];
             include('getCombo.php');
         }
         print "</div>\n\n";

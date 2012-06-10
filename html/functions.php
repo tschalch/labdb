@@ -397,7 +397,7 @@ function getComboBox($field, $table, $mode, $choices, $match, $action=null, $lin
 				$redchoices[$choice['trackID']]=$choice['name'];
 			}
 		}
-		if ($link){
+		if ($link and isset($match) and $match){
 			$cmbBox .= "<a href=\"editEntry.php?id=$match&amp;mode=display\"> ${redchoices[$match]}</a>";
 		}else{
 			$cmbBox .= "${redchoices[$match]}";
@@ -425,7 +425,7 @@ function getCrossCombobox($connection, $table, $type, $fcounter, $mode, $userid)
     $fstyle = '';
     if ($connection != None){
 		$fid = $connection['record'];
-		$fragment = getRecord($fid, $userid, $groups);
+		$fragment = getRecord($fid, $userid);
 		$type = ($fragment['type']) ? $fragment['type']: $fragment['st_name'];
 		$table = $fragment['table'];
     } else {
@@ -496,10 +496,10 @@ function getCrossCombobox($connection, $table, $type, $fcounter, $mode, $userid)
     print "</div>\n\n";
 }
 
-function getAutoselectField($connection, $table, $type, $fcounter, $mode, $userid){
+function getCrossAutoselectField($connection, $table, $type, $fcounter, $mode, $userid){
     if (isset($connection)){
 		$fid = $connection['record'];
-		$fragment = getRecord($fid, $userid, $groups);
+		$fragment = getRecord($fid, $userid);
 		$type = ($fragment['type']) ? $fragment['type']: $fragment['st_name'];
 		$table = $fragment['table'];
     } else {
@@ -526,13 +526,8 @@ function getAutoselectField($connection, $table, $type, $fcounter, $mode, $useri
 
     $name = "connections_${fcounter}_record";
     $elementID = $name;
-    if ($mode == "modify"){
-	print "<input class=\"\" style=\"width: 35%; float: left\" id=\"$elementID\" name=\"$name\" columns=\"30\" value=\"$fid\"/>";
-    }
-    if ($mode == "display"){
-	print "<span class=\"\"><a href=\"editEntry.php?id=$fid&amp;mode=display\" >".$fragment['name']."</a></span>";
-	print "<input type=\"hidden\" value=\"$fid\" columns=\"50\" id=\"$elementID\" />";
-    }
+
+    getAutoselectField($table, $mode, $elementID, $name, $fid, 'fragmentField');
 
     if($type == 'gene'){
 	print "<input style=\"width: 10%; float: left;\" name=\"connections_${fcounter}_start\" value=\"${connection['start']}\"/>\n";
@@ -541,7 +536,7 @@ function getAutoselectField($connection, $table, $type, $fcounter, $mode, $useri
 	    $directions = array(1=>'forward', 0=>'reverse');
 	    foreach($directions as $d => $dname){
 		    print "<option value=\"$d\"";
-		    if ($connection != None and $connection['direction']==$d){
+		    if ($connection != Null and $connection['direction']==$d){
 			    print  " selected ";
 		    }
 		    print ">$dname</option>\n";
@@ -549,18 +544,28 @@ function getAutoselectField($connection, $table, $type, $fcounter, $mode, $useri
 	    print "</select>\n";
     }
 
-
     print "<input type=\"hidden\" name=\"connections_${fcounter}_connID\" value=\"${connection['connID']}\"/>\n";
-    print "<img onClick=\"$(this).getParent().getParent().destroy()\"
+    print "<img onClick=\"destroyFrag(this)\"
 		style=\"float: left; display:inline; margin: 0.2em; cursor: pointer; vertical-align: middle\" alt=\"delete\" src=\"img/b_drop.png\" />";
     print "<div style=\"padding: 0 0 0.5em 0;\"></div>\n";
 	print "</div>\n";
     print "</div>\n\n";
+}
 
+function getAutoselectField($table, $mode, $elementID, $post_name, $trackID, $class){
+    global $userid;
+    if ($mode == "modify"){
+	print "<input class=\"$class\" float: left\" id=\"$elementID\" name=\"$post_name\"value=\"$trackID\"/>";
+    }
+    if ($mode == "display"){
+	if (isset($trackID)) $record = getRecord($trackID, $userid);
+	print "<span class=\"\"><a href=\"editEntry.php?id=$trackID&amp;mode=display\" >".$record['name']."</a></span>";
+	print "<input type=\"hidden\" value=\"$trackID\" columns=\"50\" id=\"$elementID\" />";
+    }
     ?>
 	<script type="text/javascript">
 	    window.addEvent('domready', function() {
-		new Autocompleter.labdb("<?php print $name; ?>", 'autocomplete.php', {
+		new Autocompleter.labdb("<?php print $elementID; ?>", 'autocomplete.php', {
 		    'postData': {
 		    'field': 'name', // send additional POST data, check the PHP code
 		    'table': '<?php print $table;?>',
@@ -570,14 +575,12 @@ function getAutoselectField($connection, $table, $type, $fcounter, $mode, $useri
 	    });
 	</script>
     <?php
-
 }
 
 function printCrossCombobxs($id, $types, $fcounter, $formParams){
 	$table = $formParams['table'];
 	$mode = $formParams['mode'];
 	global $userid;
-	global $groups;
 	print "<div class=\"formRow\"><div class=\"formLabel\">Building Blocks:</div>\n";
 	print "<div id=\"xcmbx\" class=\"displayField\">";
 	if ($mode == 'modify'){
@@ -606,7 +609,7 @@ function printCrossCombobxs($id, $types, $fcounter, $formParams){
 		//	print "</div>\n";
 		//}
 		foreach ($cnxs as $c){
-			getAutoselectField($c, None, None, $fcounter, $mode, $userid);
+			getCrossAutoselectField($c, Null, Null, $fcounter, $mode, $userid);
 			$fcounter++;
 		}
 	}
@@ -675,7 +678,6 @@ function setupProjects($userid){
 
 function getProjectCmbxs($projectID, $curUser){
 	global $userid;
-	global $groups;
 	$uq = "SELECT groups.belongsToGroup AS trackID, `fullname` AS `name` FROM groups
 		JOIN user ON groups.belongsToGroup=user.ID WHERE groups.userid=$userid
 		ORDER BY user.groupType";
@@ -749,7 +751,6 @@ function printOligoData($formParams, $field){
 
 function printProjectFields($formParams){
 	global $userid;
-	global $groups;
 	$columns = array('tracker.trackID','projects.name');
 	$projects = getRecords('projects', $userid, $columns);
 	$row = $formParams['fields'];
@@ -915,7 +916,7 @@ function getPermissionString($trackID){
 	foreach ($r as $perm){
 		if ($n > 0) $str.=", ";
 		$permstr = $permString[$perm['permission']];
-		$str .= "${perm['fullname']}:$permstr";
+		$str = "${perm['fullname']}:$permstr";
 		$n++;
 	}
 	return $str;
