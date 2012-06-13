@@ -6,7 +6,7 @@ $formaction = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}"; #action perfo
 #SQL parameters for data retrieval:
 #column names (need to be specified for each table):
 $table = "plasmids";
-$columns = array('plasmids.name', 'plasmids.description', 
+$columns = array('plasmids.name', 'plasmids.description', 'plasmids.generation',
 		 'tracker.trackID', 'tracker.owner','tracker.permOwner'
 		 );
 # optional join expressions to connect to more data
