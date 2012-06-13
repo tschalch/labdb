@@ -64,5 +64,5 @@ $username = $accresult[0]['userid'];
 $userid = $accresult[0]['ID'];
 $useremail = $accresult[0]['email'];
 $usernotes = $accresult[0]['notes'];
-if (!$_SESSION['currUser']) $_SESSION['currUser'] = $userid;
+if (!$_SESSION['currUser']) $_SESSION['currUser'] = -1;
 ?>
