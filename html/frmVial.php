@@ -9,7 +9,7 @@ $formParams = array('table'=>$table, 'mode'=>$mode);
 if (isset($_GET['template'])){
     $template = $_GET['template'];
     $template = getRecord($template,$userid);
-    $fields['name'] = $template['name'].", id: ".$template['trackID'];
+    $fields['name'] = "${template['trackID']} ${template['name']}";
     $fields['project'] = $template['project'];
     $fields['sID'] = $template['trackID'];
 }
