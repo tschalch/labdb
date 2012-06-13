@@ -694,12 +694,12 @@ function getProjectCmbxs($projectID, $curUser){
 		$cmbBox = "<span class=\"projectCombo\">";
 		$cmbBox .= "<select style=\"width: 200px;\" name=\"${choice[2]}\" 
 				onchange=\"document.f1.submit();\">\n";
-		$cmbBox .= "<option value=\"-1\">*</option>\n";
+		$cmbBox .= "<option selected value=\"-1\">*</option>\n";
 		foreach ($choice[1] as $item){
 			$cmbBox .= "<option value=\"${item['trackID']}\"";
-			if ($choice[0] == $item['trackID']){
-				$cmbBox .=  " selected";
-			}
+			//if ($choice[0] == $item['trackID']){
+			//	$cmbBox .=  " selected";
+			//}
 			$cmbBox .= ">${item['name']}</option>\n";
 		}
 		$cmbBox .= "</select></span>\n\n";
