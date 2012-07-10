@@ -973,7 +973,11 @@ function getRecords($table, $userid, $columns, $where='', $order='', $count = 0,
 	}
 	//print "<br/>$q1<br/>";
 	$r1 = pdo_query($q1);
-	if($r1) return $r1;
+	if(isset($r1) & is_array($r1)){
+	    return $r1;
+	} else {
+	    return array();
+	}
 }
 
 function newRecord($table, $ds, $userid){
