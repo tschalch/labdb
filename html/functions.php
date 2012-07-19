@@ -1128,6 +1128,7 @@ function showOptions(element){
 	if (in_array(5, $actions)) print "<option value=\"5\">&nbsp;-Item received</option>";
 	if (in_array(6, $actions)) print "<option value=\"6\">&nbsp;-Item finished</option>";
 	if (in_array(7, $actions)) print "<option value=\"7\">&nbsp;-Export in mediawiki format</option>";
+	if (in_array(8, $actions)) print "<option value=\"8\">&nbsp;-Export for ordering</option>";
 ?>
 	</select>
 	<div id="permTable" name="permTable" style="display:none; margin-right:20px" ><table>

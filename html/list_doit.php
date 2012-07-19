@@ -86,6 +86,10 @@ if(array_key_exists('selection', $_POST)){
 	    $selString = join(",", $selection);
 	    header( "Location: writeWiki.php?output=wiki&selection=$selString" ) ;
 	    break;
+	case 8:
+	    $selString = join(",", $selection);
+	    header( "Location: writeUnigeOrder.php?output=unige&selection=$selString" ) ;
+	    break;
 	}
 }
 #include("footer.php");
