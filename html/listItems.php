@@ -54,7 +54,7 @@ foreach ($rows as $row) {
     echo "</td></tr>";
 
 if ($status == 1){
-	listProcessor(array(3,4,5));
+	listProcessor(array(3,4,5,8));
 } else {
 	listProcessor(array(6));
 }
