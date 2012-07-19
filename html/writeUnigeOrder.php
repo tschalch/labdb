@@ -32,7 +32,7 @@ if ($_GET["output"]=='unige' and $_GET["selection"]){
 	$htmlOutput .= unigePrintEntry($entry) . "\n";
     }
     $orderTotalInt = floor($orderTotal);
-    $orderTotalCents = sprintf("%20d", round(100 * ($orderTotal - $orderTotalInt)));
+    $orderTotalCents = sprintf("%02d", round(100 * ($orderTotal - $orderTotalInt)));
     $htmlOutput .= "<tr><td/><td/><td/><td/><td/><td>$orderTotalInt</td><td>$orderTotalCents</td></tr>";
     $htmlOutput .= "</table>\n";
     print "$htmlOutput\n";
