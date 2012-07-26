@@ -1,7 +1,7 @@
 <?php
 include_once("accesscontrol.php");
 #$noUserFilter = True;
-if ($edit or $duplicate){
+if ((isset($edit) and $edit) or (isset($duplicate) and $duplicate)){
 if(isset($form)){
 		$query="SELECT `$table`.*, tracker.*, sampletypes.`table`, sampletypes.`form`, sampletypes.st_name AS stName FROM `$table` LEFT JOIN tracker ON $table.id=tracker.sampleID LEFT JOIN sampletypes ON sampletypes.`table`='$table' WHERE $table.id='$id' AND tracker.sampleType=sampletypes.id AND tracker.owner=$userid ";
 		#print $query;
@@ -25,8 +25,8 @@ if(isset($form)){
 if (isset($new) and $new){
 	$title = "New $titleName Entry";
 	$formaction = "insert.php";
-	if($_POST['DNASequence']) $fields['DNASequence'] = fastaseq($_POST['DNASequence'], "\n", 60);
-	if($_POST['proteinSequence']) $fields['proteinSequence'] = fastaseq($_POST['proteinSequence'], "\n", 60);
+	if(isset($_POST['DNASequence'])) $fields['DNASequence'] = fastaseq($_POST['DNASequence'], "\n", 60);
+	if(isset($_POST['proteinSequence'])) $fields['proteinSequence'] = fastaseq($_POST['proteinSequence'], "\n", 60);
 }
 $button = "Save Entry";
 include("header.php");
@@ -51,7 +51,7 @@ include("navigation.php");
 if (!isset($noUserFilter)) $noUserFilter = Null;
 if (!isset($noProjectFilter)) $noProjectFilter = Null;
 initProjects($noUserFilter, $noProjectFilter);
-$formParams['fields'] = $fields;
+$formParams['fields'] = isset($fields) ?  $fields : Null;
 //print_r($fields);
 ?>
 <div id='title'><h2><?php echo "$title";?></h2></div>

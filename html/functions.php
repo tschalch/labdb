@@ -153,11 +153,12 @@ function printDateField($label, $field, $formParams, $default=null){
 	$table = $formParams['table'];
 	$fields = $formParams['fields'];
 	$mode = $formParams['mode'];
-	if ($fields[$field]==null) $fields[$field] = $default;
-	if ($fields[$field]!='0000-00-00' and $fields[$field]){
+	if (isset($fields[$field]) and $fields[$field]!='0000-00-00'){
 		$date = getdate(strtotime($fields[$field]));
+	} else {
+	    $date = array('mon'=>'','mday'=>'','year'=>'','0'=>'');
 	}
-	#print "time:" . $fields[$field] . "<br/>";
+	#print "time:" . $fields[$field] . "isset: ". isset($fields[$field]) .  "<br/>";
 	#print strtotime($fields[$field])."<br/>";
 	#print_r(getdate(date("Y-m-d",$fields[$field])));
 	print "<div class=\"formRow\"><div class=\"formLabel\">$label:</div>";
@@ -170,10 +171,10 @@ function printDateField($label, $field, $formParams, $default=null){
 			<input type=\"hidden\" id=\"${table}_0_$field\" name=\"${table}_0_$field\" value=\"${date['0']}\"/></div>";
 	}	
 	if($mode == "display"){
-		if ($fields[$field]!='0000-00-00' and $fields[$field]){
-			$date = date("m/d/Y",strtotime($fields[$field]));
+		if (isset($fields[$field]) and $fields[$field] != '0000-00-00'){
+		    $date = date("m/d/Y",strtotime($fields[$field]));
+		    print "<div class=\"displayField\">$date</div>\n";
 		}
-		print "<div class=\"displayField\">$date</div>\n";
 	}
 	print "</div>\n\n";
 }
@@ -399,8 +400,6 @@ function getComboBox($field, $table, $mode, $choices, $match, $action=null, $lin
 		}
 		if ($link and isset($match) and $match){
 			$cmbBox .= "<a href=\"editEntry.php?id=$match&amp;mode=display\"> ${redchoices[$match]}</a>";
-		}else{
-			$cmbBox .= "${redchoices[$match]}";
 		}
 	}
 	return $cmbBox;
