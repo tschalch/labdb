@@ -83,6 +83,13 @@ window.addEvent('domready', function() {
 		    'table': 'inventory',
 		}
     });
+     new Autocompleter.Request.HTML('funding', 'autocomplete.php', {
+		'postData': {
+		    'field': 'funding', // send additional POST data, check the PHP code
+		    'table': 'inventory',
+		}
+    });
+
 });
 //]]>
 </script>
