@@ -62,7 +62,7 @@ function getInsertQuery($ds, $table, $id){
 
 function getUpdateQuery($ds, $table, $uid){
 	$i = 0;
-	if (array_key_exists('connID')){
+	if (array_key_exists('connID',$ds)){
 	    $uid=$ds['connID'];
 	}
 	$num = count($ds);
