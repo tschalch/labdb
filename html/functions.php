@@ -642,7 +642,7 @@ function initProjects($noUserFilter, $noProjectFilter){
 			$_SESSION['currUser'] = $currUid;
 			unset($currUid);
 		}
-		if ($currUid){
+		if (isset($currUid)){
 			$_SESSION['currUser'] = $currUid;
 			#$userSelect = " (tracker.owner = '$currUid')";
 		}
@@ -1139,9 +1139,9 @@ function showOptions(element){
 	$uq = "SELECT `ID` AS trackID, `fullname` AS `name` FROM `user`";
 	$users = pdo_query($uq);
 	if (!$users) $users = array();
-	$formParams = array('mode'=>'modify');
+	$formParams = array('mode'=>'modify','table'=>'users');
 	#getComboBox($field, $table, $mode, $choices, $match, $action=null, $link=null){
-	print getComboBox("user",$formParams['table'], $formParams['mode'],$users,None);
+	print getComboBox("user",$formParams['table'], $formParams['mode'],$users,null);
 ?>
 			</td>
 			<td><input type="radio" name="perm" value="0" checked></td>

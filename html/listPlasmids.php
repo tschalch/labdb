@@ -6,7 +6,7 @@ $formaction = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}"; #action perfo
 #SQL parameters for data retrieval:
 #column names (need to be specified for each table):
 $table = "plasmids";
-$columns = array('plasmids.name', 'plasmids.description', 'plasmids.generation',
+$columns = array('plasmids.name', 'plasmids.description', 'plasmids.generation','plasmids.sequence',
 		 'tracker.trackID', 'tracker.owner','tracker.permOwner'
 		 );
 # optional join expressions to connect to more data
@@ -22,7 +22,7 @@ $fields = array('trackID' => 'ID',
 		'Description' => 'Description',
 		'1' => 'Backbone',
 		'2' => 'Genes',
-		'3' => 'DNA Sequence',);
+		'sequence' => 'DNA Sequence',);
 
 #toggle Project combobox on and off
 $noProjectFilter = False;
@@ -60,7 +60,6 @@ foreach ($rows as $row) {
 	echo "</td>";
 	echo "<td class=\"lists seq\" width=\"10%\"><a href=\"sequence.php?table=plasmids&field=sequence&id=$id\">".CountATCG($row['sequence'])." bp</a></td>";
 	echo "</tr>";
-	$i++;
 }
 
 function printFragments($typ, $conxs){
@@ -72,6 +71,7 @@ function printFragments($typ, $conxs){
 		 if ($fragments[$trackID]['type'] == $typ) $typeCons[]=$c;
 	}
 	$c = 0;
+	$out = "";
 	foreach ($typeCons as $c2){
 		 $trackID = $c2['record'];
 		 $fname = $fragments[$trackID]['name'];

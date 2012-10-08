@@ -51,8 +51,8 @@ foreach ($rows as $row) {
 	echo listActions($id, array("new","edit", "fasta", "vial", "delete") );
 	print "<td class=\"lists\" width=\"1%\" align=\"RIGHT\">$id</td>";
 	$name = $row['name'];
+	$nameTitle = $name;
 	if (strlen($name) > 20){
-		$nameTitle = $name;
 		$name = substr($name,0,20)."...";
 	}
 	$seq = $row['sequence'];
@@ -63,8 +63,8 @@ foreach ($rows as $row) {
 	      <a title=\"$nameTitle\" href=\"editEntry.php?id=$id&amp;mode=display\">$name</a>
 	      <input type=\"hidden\" name=\"name_$id\" value=\"${row['name']}\"/></td>\n";
 	$desc = $row['description'];
+	$descTitle = $desc;
 	if (strlen($desc) > 25){
-		$descTitle = $desc;
 		$desc = substr($desc,0,25)."...";
 	}
 	echo "<td class=\"lists\" width=\"15%\"><span title=\"$descTitle\">$desc<span></td>\n";
@@ -88,7 +88,6 @@ foreach ($rows as $row) {
 	print "<input type=\"hidden\" name=\"scale_$id\" value=\"${row['scale']}\"/>";
 	print "<input type=\"hidden\" name=\"purity_$id\" value=\"${row['purity']}\"/></td>\n";
 	echo "</tr>\n";
-	$i++;
 }
 ?>
 <tr><td colspan = "100"><?php 
@@ -112,9 +111,10 @@ Select template for Sequence Extractor:
 	$cols = array('tracker.trackID',"plasmids.name");
 	$choices = getRecords("plasmids", $userid, $cols);
 	//print_r($choices);print "<br/>";
-	$current = $_SESSION['template'];
+	$current = isset($_SESSION['template'])?$_SESSION['template']:null;
 	print "<select name=\"template\">";
 	print "<option value=\"NA\"></option>";
+	$cmbBox = "";
 	foreach ($choices as $choice){
 		$cmbBox .= "<option value=\"${choice['trackID']}\"";
 		if ($choice['trackID'] == $current) $cmbBox .= " selected=\"selected\"";

@@ -1,8 +1,8 @@
 <?php
-$username="root";
-$password="labmice";
-$database="labdb";
+$username="lab_labdb";
+$password=",#4n5B41PHNh";
+$database="lab_labdb";
 $host="localhost";
-$labdbUrl="http://localhost:8888/labdb/html";
-$adminEmail="schalch@cshl.edu";
+$labdbUrl="http://lab.schalch.info/labdb";
+$adminEmail="thomas.schalch@unige.ch";
 ?>

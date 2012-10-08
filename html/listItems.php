@@ -9,7 +9,7 @@ include("listhead.php");
 	$action = "<script> window.addEvent('domready', function() {var myMenu = new MenuMatic({'matchWidthMode':False});});</script>";
 	print $action;
 	$zindex = 11;
-	$totalcost = 0;
+	$totalCost = 0;
 foreach ($rows as $row) {
 	#print "row: ";print_r($row); print "<br/>";
 	$id = $row['trackID'];
