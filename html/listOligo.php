@@ -1,7 +1,7 @@
 <?php
 $title = 'List of Oligos';
 $listItem = "oligo";  #used form javascript message box.
-$formaction = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}"; #action performed when "do it" button is pressed
+$formaction = "list_doit.php"; #action performed when "do it" button is pressed
 
 #SQL parameters for data retrieval:
 #column names (need to be specified for each table):
@@ -84,6 +84,7 @@ foreach ($rows as $row) {
 	printf("<td class=\"lists\" width=\"5%%\" align=\"center\">%6.1f</td>\n", $tm);
 	$orderDate = $row['orderDate'];
 	if (strlen($orderDate) > 8) $orderDate = substr($orderDate,0,8)."...";
+	print "<input type=\"hidden\" name=\"orderDate_$id\" value=\"${row['orderDate']}\"/>";
 	echo "<td class=\"lists\" width=\"5%\" align=\"center\">$orderDate";
 	print "<input type=\"hidden\" name=\"scale_$id\" value=\"${row['scale']}\"/>";
 	print "<input type=\"hidden\" name=\"purity_$id\" value=\"${row['purity']}\"/></td>\n";
@@ -103,6 +104,7 @@ Select ouput format: <select name="output">
 <option value="extractor">Sequence extractor</option>
 <option value="amplifx">AmplifX</option>
 <option value="sigma">Sigma Genosis</option>
+<option value="microsynth">Microsynth</option>
 <option value="vectornti">Vector NTI</option>
 <option value="finnzymes">Finnzymes Tm calculation</option>
 </select><br/>

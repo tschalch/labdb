@@ -628,7 +628,7 @@ function initProjects($noUserFilter, $noProjectFilter){
 			unset($_SESSION['project']);
 			unset($project);
 		}
-		if ($project){
+		if (isset($project)){
 			$_SESSION['project'] = $project;
 			$projectSelect = " (tracker.project = '$project')";
 		}
@@ -887,7 +887,7 @@ function deleteRecord($trackerID, $userid, $groupids){
 }
 
 function changePermission($trackerID, $newuser, $permission, $userid){
-	if (getRecord($trackerID, $userid, None, 'modify')){
+	if (getRecord($trackerID, $userid, null, 'modify')){
 		$q = "SELECT MAX(permission) FROM permissions
 			WHERE trackID=$trackerID AND permissions.userid=$newuser";
 		$r = pdo_query($q);
@@ -1109,7 +1109,7 @@ function listProcessor($actions){
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function showOptions(element){
-	(element.value =='2')?ChangeDisplayDiv(['permTable'], 'inline'):ChangeDisplayDiv(['permTable'], 'none');
+	(element.value =='2')?ChangeDisplayDiv(['permTable'], 'block'):ChangeDisplayDiv(['permTable'], 'none');
 	(element.value =='0')?ChangeDisplayDiv(['oligoOptions'], 'block'):ChangeDisplayDiv(['oligoOptions'], 'none');
 }
 // -->
@@ -1130,7 +1130,7 @@ function showOptions(element){
 	if (in_array(8, $actions)) print "<option value=\"8\">&nbsp;-Export for ordering</option>";
 ?>
 	</select>
-	<div id="permTable" name="permTable" style="display:none; margin-right:20px" ><table>
+	<div id="permTable" name="permTable" style="clear:both; display:none; margin-right:20px" ><table>
 		<tr>
 			<td/><td>None</td><td>Read</td><td>Write</td>
 		</tr>

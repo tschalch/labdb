@@ -2,7 +2,6 @@
 include_once("functions.php");
 include_once("accesscontrol.php");
 include_once("seq.inc.php");
-include_once("header.php");
 
 if(array_key_exists('selection', $_POST)){
 	$selection = $_POST['selection'];
@@ -35,7 +34,7 @@ if(array_key_exists('selection', $_POST)){
 	# change permissions
 	case 2:
 		$permission = $_POST['perm'];
-		$newuser = $_POST['_0_user'];
+		$newuser = $_POST['users_0_user'];
 		foreach($selection as $id){
 			changePermission($id, $newuser, $permission, $userid);
 		}
