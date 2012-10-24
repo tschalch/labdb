@@ -125,9 +125,11 @@ function printTextField($label, $field, $formParams, $default=null, $helpText=""
 function printID($formParams){
 	print "\n<div class=\"formRow idfield\"><div class=\"formLabel\">ID:</div>\n";
 	$fields = $formParams['fields'];
-	$value = ($fields['trackID'])? $fields['trackID']:"";
-	print "<div id=\"id\" class=\"displayField\" style=\"background-color: white;\">$value</div>
+	if (isset($fields['trackID'])){
+	    $value = ($fields['trackID'])? $fields['trackID']:"";
+	    print "<div id=\"id\" class=\"displayField\" style=\"background-color: white;\">$value</div>
 			<input type=\"hidden\" id=\"inp_id\" name=\"id\" value=\"$value\"/>\n";
+	}
 	print "</div>\n\n";
 	if ($value != ''){
 		printTimestamp($formParams);
@@ -306,7 +308,7 @@ function printSequenceField($label, $type, $field, $formParams, $area, $seqEdito
 		if ($type == 'DNA'){
 			print "<div>($seqLen bp)</div>";
 		}
-		if($type == 'oligo' or $type == 'DNA'){
+		if(($type == 'oligo' or $type == 'DNA') and isset($fields['trackID'])){
 			print "<div id=\"DNAinfo\" style=\"margin-top: 2px\">
 				<a href=\"sequence.php?table=$table&amp;field=$field
 				&amp;id=${fields['trackID']}&amp;process=ic\">Inverse Complement</a></div>";

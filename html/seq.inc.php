@@ -81,7 +81,7 @@ function formseq($seq){
 
 function fastaseq($seq, $lb, $lineLength){
 	$formseq = "";
-	$lineLength = isset($lineLength) ? $lineLength: 60;
+	$lineLength = (isset($lineLength) and $lineLength > 0) ? $lineLength: 60;
 	$seq = strtoupper ($seq);
 	$seq = remove_non_coding($seq);
 	$len = strlen($seq);
