@@ -9,7 +9,7 @@
 
 <body class="main">
 
-<table width="620" border="0" cellspacing="2" cellpadding="2" align="left">
+<table width="766" border="0" cellspacing="2" cellpadding="2" align="center">
 <tbody>
 
 <tr>
@@ -24,7 +24,7 @@
 <td class="description">Sequence Extractor generates a clickable restriction map and PCR primer map of a DNA sequence. Protein translations and intron/exon boundaries are also shown. Use Sequence Extractor to build DNA constructs <i>in silico</i>. Please read the list of <a href="features.html">program features</a> to learn more.
 <br />
 <br />
-<form method="post" action="https://lab.schalch.info/cgi-bin/seq_ext/se.pl">
+<form method="post" action="http://localhost/cgi-bin/seq_ext/se.pl">
 Paste a sequence into the text area below. Accepted formats are: <a href="raw_sample.html">raw</a>, <a href="genbank_sample.html">GenBank</a>, <a href="embl_sample.html">EMBL</a>, and <a href="fasta_sample.html">FASTA</a>.
 <br /><textarea name="sequenceRecord" rows="6" cols="81">
 LOCUS       U01668       4133 bp    DNA   circular  SYN       01-JUL-1997
@@ -367,9 +367,9 @@ gtaaaacgacggccagt M13 primer,
 gttttcccagtcacgac -40 primer,
 atttaggtgacactatag Sp6
 </textarea><br />
-<button type="submit">Submit</button>
-<button type="button" onclick="document.forms[0].elements[0].value = ' '; document.forms[0].elements[1].value = ' '">Clear</button>
-<button type="reset">Reset</button><br />
+<input type="submit" value="Submit" />
+<input type="button" value="Clear" onclick="document.forms[0].elements[0].value = ' '; document.forms[0].elements[1].value = ' '" />
+<input type="reset" value="Reset" />
 <br />
 
 <div class="link_bar">Advanced Options</div>

@@ -1210,6 +1210,7 @@ function escape_quotes($receive) {
 }
 
 function getRestrictionSites($enzymes, $dnaSequence){
+	include('config.php');
 	$output = array();
 	$sites = array();
 	global $userid;
@@ -1231,7 +1232,7 @@ function getRestrictionSites($enzymes, $dnaSequence){
 	// $enzymes;
 	$limit ='';
 	if (substr($enzymes, 0, 3) != 'all') $limit = "-limit N"; 
-	$cmd = "echo '$dnaSequence' | /usr/bin/restrict -warning Y -rformat excel $limit --commercial Y --filter --auto -sitelen $sitelen -enzymes $enzymes 2>&1";
+	$cmd = "echo '$dnaSequence' | $embossPath/restrict -warning Y -rformat excel $limit --commercial Y --filter --auto -sitelen $sitelen -enzymes $enzymes 2>&1";
 	//print "$cmd";
 	$tmp = exec($cmd, $output);
 	//print_r($output);

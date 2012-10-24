@@ -1,0 +1,27 @@
+Clickable Sequence Features (Version 2.0. Written by Paul Stothard. Last updated April 14, 2003)
+
+Clickable Sequence Features is an object-oriented program that converts GenBank, EMBL, FASTA, or RAW sequence files into an HTML figure showing the DNA sequence and translations described in the sequence record.  For FASTA and RAW sequences, the DNA sequence is translated in one or more reading frames, depending on the options chosen. In this version, restriction sites are also indicated (a useful feature for molecular biologists). JavaScript and text formatting information are included in the feature labels shown in the HTML figure. Clicking on two restriction sites displays the restriction fragment sequence in a new window. Pointing to a sequence feature displays information about the feature in the web browser's status bar. 
+
+Clickable Sequence Features can be modified to display other feature information. Viewing features with the coresponding DNA sequence can be useful for verifying the output of other programs. Such verification is important, since programming errors that affect feature assignment may not be apparent otherwise. Using this program I have found serious bugs in large scale bioinformatics projects. Clickable Sequence Features may also be useful for biologists, as they may want to transfer the DNA sequence marked with a particular feature to other programs, to use in PCR primer design for example.
+
+Clickable Sequence Features has been tested using Perl 5.6.0 for Windows and Linux. The JavaScript contained in the output produced by Clickable Sequence Features has been tested in Internet Explorer 4.0 and 5.0 (Windows), Netscape Communicator 4.6 (Windows), Internet Explorer 4.5 (Mac), Netscape Communicator 4.6 (Mac), and Netscape Communicator 4.6 (Linux).
+
+To use Clickable Sequence Features on Windows platforms (these instructions assume that you are familiar with Perl and that you have Perl installed on your machine):
+
+1. unzip click_feat.zip
+2. place the files you wish to analyze in the 'templates' folder. These files must end with .txt.
+3. run the click_feat.pl script.
+4. the resulting .html files should appear in the 'results' folder.
+5. several options can be adjusted by editing 'constants.pm'.
+
+
+To use Clickable Sequence Features on Unix platforms (these instructions assume that you are familiar with Perl and that you have Perl installed on your machine):
+
+1. extract the click_feat.tar archive.
+2. place the files you wish to analyze in the 'templates' folder. These files must end with .txt.
+3. run the click_feat.pl script.
+4. the resulting .html files should appear in the 'results' folder.
+5. several options can be adjusted by editing 'constants.pm'.
+
+
+
