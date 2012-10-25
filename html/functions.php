@@ -129,6 +129,9 @@ function printID($formParams){
 	    $value = ($fields['trackID'])? $fields['trackID']:"";
 	    print "<div id=\"id\" class=\"displayField\" style=\"background-color: white;\">$value</div>
 			<input type=\"hidden\" id=\"inp_id\" name=\"id\" value=\"$value\"/>\n";
+	} else {
+	    print "<div id=\"id\" class=\"displayField\" style=\"background-color: white;\"></div>
+		<input type=\"hidden\" id=\"inp_id\" name=\"id\" value=\"\"/>\n";
 	}
 	print "</div>\n\n";
 	if ($value != ''){
