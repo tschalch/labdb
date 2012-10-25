@@ -44,11 +44,16 @@ if ($output == 'vectornti'){
 	header( "Location: $labdbUrl/sequence_extractor/index.php" );
 } else {
     header('Content-type: text/fasta');
+    if (isset($selection[0])){
+	$id = $selection[0];
+	$order = $_POST["orderDate_$id"];
+	header("Content-Disposition: attachment; filename=\"${order}_oligoOrder.dat\"");
+    }
     $num = count($selection);
     $i = 0;
+    if ($output == 'microsynth') print "Oligo name,Sequence,Length,Purification,Scale,5' Modification,Inner Modification,3' Modification\n";
     foreach($selection as $id){
 	$data = $_POST["sequence_$id"];
-	$order = $_POST["orderDate_$id"];
 	$targetmatch = $_POST["targetmatch_$id"];
 	$name = $_POST["name_$id"];
 	$name = "${id}_$name";
@@ -63,7 +68,6 @@ if ($output == 'vectornti'){
 	$i++;
 	print $line;
     }
-    header("Content-Disposition: attachment; filename=\"${order}_oligoOrder.dat\"");
 }
 
 #include("footer.php");
