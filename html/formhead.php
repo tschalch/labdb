@@ -56,7 +56,9 @@ $formParams['fields'] = isset($fields) ?  $fields : Null;
 ?>
 <div id='title'><h2><?php echo "$title";?></h2></div>
 <?php
-echo "<form id=\"mainform\" name=\"mainform\" action=\"saveRecord.php?\" method=\"post\">\n";
+if (isset($submitFunction)){
+    echo "<form id=\"mainform\" name=\"mainform\" action=\"saveRecord.php?\" method=\"post\">\n";
+}
 if ($mode == 'modify'):
 ?>
 <script type="text/javascript">
@@ -107,5 +109,7 @@ window.addEvent('domready', function() {
 </script>
 <?php
 endif;
-print "<input type=\"hidden\" name=\"maintable\" value=\"$table\"/>\n";
+if (isset($table)){
+    print "<input type=\"hidden\" name=\"maintable\" value=\"$table\"/>\n";
+}
 ?>

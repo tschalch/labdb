@@ -110,7 +110,7 @@ $newid = pdo_query($sql);
 if (!$newid)
 	error('1A database error occurred in processing your '.
 	     'submission.\\nIf this error persists, please '.
-	     'contact $adminEmail.');
+	     "contact $adminEmail.");
     // Email the new password to the person.
     
 # setup groups
@@ -121,21 +121,17 @@ $sql = "INSERT INTO groups SET
 if (!pdo_query($sql))
 	error('2A database error occurred in processing your '.
 	     'submission.\\nIf this error persists, please '.
-	     'contact $adminEmail.');
+	     "contact $adminEmail.");
 
 $sql = "INSERT INTO groups SET
      userid = '$newid',
      belongsToGroup = '$_POST[group]',
-     defaultPermissions = 0;";
-$sql += "INSERT INTO groups SET
-     userid = '$newid',
-     belongsToGroup = '19',
-     defaultPermissions = 0;";
+     defaultPermissions = 1;";
 
 if (!pdo_query($sql))
 	error('3A database error occurred in processing your '.
 	     'submission.\\nIf this error persists, please '.
-	     'contact $adminEmail.');
+	     "contact $adminEmail.");
     // Email the new password to the person.
 
 

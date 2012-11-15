@@ -2,12 +2,13 @@
 #writes a list of selected records to wiki table format
 include_once("accesscontrol.php");
 include_once("functions.php");
+include("header.php");
 
 function unigePrintEntry($entry){
     global $orderTotal;
     $unigeString = "<tr>";
     $unigeString .= "<td>${entry['quantity']} x ${entry['unitMeas']}</td>";
-    $unigeString .= "<td>${entry['name']}</td>";
+    $unigeString .= "<td>".htmlspecialchars($entry['name']). "</td>";
     $unigeString .= "<td>${entry['orderNumber']}</td>";
     $priceInt = floor($entry['price']);
     $priceCents = round(100 * ($entry['price']-$priceInt));
@@ -35,7 +36,7 @@ if ($_GET["output"]=='unige' and $_GET["selection"]){
     $orderTotalCents = sprintf("%02d", round(100 * ($orderTotal - $orderTotalInt)));
     $htmlOutput .= "<tr><td/><td/><td/><td/><td/><td>$orderTotalInt</td><td>$orderTotalCents</td></tr>";
     $htmlOutput .= "</table>\n";
-    print "$htmlOutput\n";
+    echo "$htmlOutput\n";
 }
 
 ?>

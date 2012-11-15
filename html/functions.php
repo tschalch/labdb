@@ -13,6 +13,7 @@ function pdo_query($q){
 		$result = array();
 		$i = 0;
 	      	//print "query: $q <br/>";
+		$dbhq = "SET NAMES 'utf8';"; //fixes problems with Umlaute
 	      	$dbhq = $dbh->query($q);
 		//print_r($dbhq);
 	      	if (substr_count($q,'INSERT')){
