@@ -42,7 +42,7 @@
     <div id="RestNav">
     <a class="labnav" href="frmImport.php">Import datasets</a><br/><br/>
 
-    <a class="labnav" href="sequence_extractor">Sequence Extractor</a><br/>
+    <a class="labnav" href="sequence_extractor/index.php">Sequence Extractor</a><br/>
     <a class="labnav" href="../biophp_minitools/">BioPHP Minitools</a><br/>
     <a class="labnav" href="http://intranet.cshl.edu/purchasing/oligo.html">CSHL Sigma Genosis</a><br/><br/>
 
