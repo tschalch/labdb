@@ -51,7 +51,8 @@ if ($output == 'vectornti'){
     }
     $num = count($selection);
     $i = 0;
-    if ($output == 'microsynth') print "Oligo name,Sequence,Length,Purification,Scale,5' Modification,Inner Modification,3' Modification\n";
+    $head="Oligo name,Sequence,Sequence Length,Purification,Scale,5' Modification,Inner Modification (5),Inner Modification (6),Inner Modification (7),Inner Modification (8),3' Modification,,DES,HPL,PAG,HPD,GEN,0.04,0.2,1.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,";
+    if ($output == 'microsynth') print "$head\n";
     foreach($selection as $id){
 	$data = $_POST["sequence_$id"];
 	$targetmatch = $_POST["targetmatch_$id"];
