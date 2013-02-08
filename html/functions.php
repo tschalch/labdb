@@ -921,7 +921,7 @@ function getPermissionString($trackID){
 	foreach ($r as $perm){
 		if ($n > 0) $str.=", ";
 		$permstr = $permString[$perm['permission']];
-		$str = "${perm['fullname']}:$permstr";
+		$str .= "${perm['fullname']}:$permstr";
 		$n++;
 	}
 	return $str;
