@@ -339,7 +339,7 @@ cursor:pointer;
 }
  
 #log_res.ajax-loading {
-	background: url(img/spinner.gif) no-repeat left;
+	background: url(../img/spinner.gif) no-repeat left;
 }
 
 /* Sequence editor definitions */

@@ -19,7 +19,9 @@ foreach ($rows as $row) {
 	if($row['status']==4 and $status != 4){
 		print "<tr style=\"background-color: #DCDCDC;\">";
 	} elseif ($row['status']==1) {
-		print "<tr style=\"background-color: #FFF0F5;\">";
+		print "<tr style=\"background-color: #F8D3FF;\">";
+	} elseif ($row['billed']==0) {
+		print "<tr style=\"background-color: #FFFAD2;\">";
 	} else {
 		print "<tr>";
 	}
@@ -53,10 +55,10 @@ foreach ($rows as $row) {
     echo "Total Cost = \$ $totalCost"; 
     echo "</td></tr>";
 
-if ($status == 1){
+if (isset($status) and $status == 1){
 	listProcessor(array(3,4,5,8));
 } else {
-	listProcessor(array(6));
+	listProcessor(array(6,7,8,9));
 }
 ?>
 

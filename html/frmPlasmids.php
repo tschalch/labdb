@@ -72,7 +72,7 @@ printTextArea('Description', 'description',$formParams);
 printTextArea('Generation of plasmid', 'generation',$formParams);
 //restriction enzymes
 $helpText = "This field requires a comma separated liste of restriction enzymes.\
-	Alternatively, the enzymes available in our lab can be chosen by specifying leemorlab.\
+	Alternatively, the enzymes available in our lab can be chosen by specifying \"lab\" (all enzymes in box \"Lab Restriction Enzymes\").\
 	After the list of enzymes, arguments to the <a href=\\\"doc/emboss/restrict.html\\\">\\'restrict\\' command of the Emboss package</a> \
 	can be added.<br/><br/>\
 	Examples:<pre>\

@@ -7,7 +7,7 @@ function wikiPrintEntry($entry){
     global $userid, $groups;
     $wikiString = "| ${entry['trackID']} || ";
     $wikiString .= "{{labdburl|id=${entry['trackID']}|label=${entry['name']}}} || ";
-    if(isset($entry['PCRoligo1'])){
+    if(isset($entry['PCRoligo1']) and $entry['type']=='PCR'){
 	$tmstring="";
 	for ($i=1;$i<=2;$i++){
 	    $oligoID=$entry["PCRoligo$i"];
@@ -21,6 +21,11 @@ function wikiPrintEntry($entry){
 	$t = getRecord($entry['PCRtemplate'], $userid, $groups);
 	$wikiString .= "{{labdburl|id=${entry['PCRtemplate']}|label=${t['name']}}} (${entry['PCRtemplate']}) || ";
 	$wikiString .= CountATCG($entry['DNASequence'])." bp ";
+    } elseif ($entry['sampleType']==2){
+	$seq = $entry['sequence'];
+	$tm = $entry['tm'] ? $entry['tm'] : round(Tm($entry['targetmatch'],'bre',$entry['Saltconc']*1E-3, $entry['PCRconc']*1E-9), 1);
+	$wikiString .= "$seq || $tm ||";
+        $wikiString .= CountATCG($seq);
     }else{
 	$wikiString .= "${entry['description']}";
     }
@@ -38,8 +43,11 @@ if ($_GET["output"]=='wiki' and $_GET["selection"]){
 	$entry = getRecord($entry, $userid, $groups);
 	if (!$title){
 	    $title = "! ID !! Construct !! Description\n";
-	    if(isset($entry['PCRoligo1'])){
+	    if(isset($entry['PCRoligo1']) and $entry['type']=='PCR'){
 		$title = "! ID !! Construct !! Oligo 1 !! Oligo 2 !! Tm !! Template !! Product length\n";
+	    }
+	    if($entry['sampleType']==2){
+		$title = "! ID !! Construct !! Sequence !! Tm !! Length\n";
 	    }
 	    $wikiOutput .= $title;
 	}

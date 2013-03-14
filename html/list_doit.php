@@ -49,9 +49,10 @@ if(array_key_exists('selection', $_POST)){
 		break;
 	# set order placed
 	case 4:
+		$poNumber = escape_quotes($_POST['poNumber']);
 		foreach($selection as $id){
 			$q = "UPDATE tracker,inventory SET inventory.status=2, inventory.orderDate=NOW(),
-				tracker.changed=NOW()
+				tracker.changed=NOW(), inventory.poNumber='$poNumber'
 				WHERE tracker.trackID=$id AND tracker.sampleID=inventory.id
 				AND tracker.sampleType=(SELECT id FROM sampletypes WHERE st_name='item');";
 			pdo_query($q);
@@ -89,8 +90,22 @@ if(array_key_exists('selection', $_POST)){
 	    $selString = join(",", $selection);
 	    header( "Location: writeUnigeOrder.php?output=unige&selection=$selString" ) ;
 	    break;
+	# set billing date
+	case 9:
+	    foreach($selection as $id){
+		    $q = "UPDATE tracker,inventory SET inventory.billed=NOW(), tracker.changed=NOW() 
+			    WHERE tracker.trackID=$id AND tracker.sampleID=inventory.id
+			    AND tracker.sampleType=(SELECT id FROM sampletypes WHERE st_name='item');";
+		    pdo_query($q);
+	    }
+	    echo "Changed to 'billed'<br/><br/>";
+	    $redirect = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}";
+	    header("Location:$redirect");
+	    break;
 	}
 }
+
+
 #include("footer.php");
 
 
