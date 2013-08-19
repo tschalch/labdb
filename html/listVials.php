@@ -79,7 +79,7 @@ foreach ($rows as $row) {
 	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
 	$i++;
 }
-listProcessor(array(2,3));
+listProcessor(array(2,3,7));
 ?>
 
 </table>
