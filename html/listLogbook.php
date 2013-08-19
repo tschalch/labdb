@@ -34,6 +34,13 @@ $fields = array('date' => 'Date',
 $noProjectFilter = True;
 #toggle user/group filters on and off
 $noUserFilter = True;
+#Set Menu items
+?>
+<script type="text/javascript" >
+    var menu_items = ["new","edit","delete"];
+</script>
+
+<?php
 
 include("listhead.php");
 
@@ -54,13 +61,13 @@ foreach ($rows as $row) {
 	$permissions = array(9,9,9);
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
 	if($row['status']==4 and $status != 4){
-		print "<tr style=\"background-color: #DCDCDC;\">";
+		print "<tr class=\"lists data-row\" data-record_id=\"$id\" style=\"background-color: #DCDCDC;\">";
 	} elseif ($row['status']==1) {
-		print "<tr style=\"background-color: #FFF0F5;\">";
+		print "<tr class=\"lists data-row\" data-record_id=\"$id\" style=\"background-color: #FFF0F5;\">";
 	} else {
-		print "<tr>";
+		print "<tr class=\"lists data-row\" data-record_id=\"$id\">";
 	}
-	echo listActions($id, array("new","edit","delete"));
+	echo listActions($id);
 	echo "<td class=\"lists\" width=\5%\"><a href=\"editEntry.php?id=$id&mode=display\">${row['date']}</a></td>";
 	$instrument = $instruments[$row['instrumentID']]['name'];
 	echo "<td class=\"lists\" width=\"15%\">${instrument}</td>";
@@ -71,6 +78,7 @@ foreach ($rows as $row) {
 	echo "<td class=\"lists\" width=\"10%\">${row['colpresaf']}</td>";
 	echo "<td class=\"lists\" width=\"15%\">${row['remarks']}</td>";
 	echo "</tr>";
+	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
 	$i++;
 }
 

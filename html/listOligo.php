@@ -40,7 +40,13 @@ $noProjectFilter = False;
 #toggle user/group filters on and off
 $noUserFilter = False;
 
+#Set Menu items
+?>
+<script type="text/javascript" >
+    var menu_items = ["new","edit", "fasta", "vial", "delete"];
+</script>
 
+<?php
 include("listhead.php");
 $totalCost = 0;
 foreach ($rows as $row) {
@@ -48,7 +54,8 @@ foreach ($rows as $row) {
 	print "<tr>";
 	$edit = 0;
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
-	echo listActions($id, array("new","edit", "fasta", "vial", "delete") );
+	echo "<tr class=\"lists data-row\" data-record_id=\"$id\">";
+	echo listActions($id);
 	print "<td class=\"lists\" width=\"1%\" align=\"RIGHT\">$id</td>";
 	$name = $row['name'];
 	$nameTitle = $name;
@@ -89,6 +96,8 @@ foreach ($rows as $row) {
 	print "<input type=\"hidden\" name=\"scale_$id\" value=\"${row['scale']}\"/>";
 	print "<input type=\"hidden\" name=\"purity_$id\" value=\"${row['purity']}\"/></td>\n";
 	echo "</tr>\n";
+	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
+
 }
 ?>
 <tr><td colspan = "100"><?php 

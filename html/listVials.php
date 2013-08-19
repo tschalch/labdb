@@ -38,6 +38,13 @@ $box = $_GET['box'];
 $refid = $_GET['ref'];
 if ($box) $where .= " boxID=$box ";
 if ($refid) $where .= " ($table.sID='$refid')";
+#Set Menu items
+?>
+<script type="text/javascript" >
+    var menu_items = ["new","edit","delete"];
+</script>
+
+<?php
 
 include("listhead.php");
 
@@ -51,7 +58,8 @@ foreach ($rows as $row) {
 		$row['permGroup'],
 		$row['permOthers']);
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
-	echo listActions($id, array("new","edit", "delete"));
+	echo "<tr class=\"lists data-row\" data-record_id=\"$id\">";
+	echo listActions($id);
 	($row['name'])? $vname = $row['name'] : $vname = 'no name';
 	echo "<td class=\"lists\" width=\"15%\"><a href=\"editEntry.php?id=$id&mode=display\">$vname</a></td>";
 	echo "<td class=\"lists\" width=\3%\">${row['position']}</td>";
@@ -68,6 +76,7 @@ foreach ($rows as $row) {
 	echo "</td>\n";
 	echo "<td class=\"lists\" width=\5%\">${row['exists']}</td>";
 	echo "</tr>";
+	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
 	$i++;
 }
 listProcessor(array(2,3));

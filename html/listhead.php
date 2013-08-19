@@ -4,15 +4,19 @@ include_once("accesscontrol.php");
 include("header.php");
 include_once("functions.php");
 ?>
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
 
 <?php 
-include("listRightClickMenu.php");
 include("title_bar.php");
 include("navigation.php");
 ?>
+<script type="text/javascript" >
+    $(document).ready(function(){
+	$('.data-row').bind('click',showMenuInTableHead);
+     });
+</script>
 <div id="content">
 <script type="text/javascript" language="javascript">
     <!--
@@ -123,14 +127,14 @@ $noRows = getRecords($table, $userid, array('trackID'), $where, "", 1, $join);
 include("pageNav.php");
 if (isset($limit)) $order .= "$limit";
 $rows = getRecords($table, $userid, $columns, $where, $order, 0, $join);
+//print_r($columns);
 if (!isset($rows)) $rows = array();
-//print_r($rows);
 ?>
 <form name="mainform" onsubmit="if (document.mainform.SelAction.value==3) return deleteRecords();if (document.mainform.SelAction.value==4) return get_po_number();" 
 			action="<?php echo $formaction;?>" method="post">
 <input type="hidden" name="table" value="<?php echo $table; ?>"/>
 <table class="lists" >
-<tr>
+<tr id="table_head">
 <?php
 $selfAddress = "list.php?";
 $exclude = array("currUser","page");
@@ -150,3 +154,4 @@ foreach ($fields as $key => $field){
 }
 ?>
 </tr>
+

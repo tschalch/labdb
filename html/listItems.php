@@ -1,15 +1,18 @@
 <?php
 
 include("listItemsHeader.php");
+#Set Menu items
+?>
+
+<script type="text/javascript" >
+    var menu_items = ["new","edit", "delete"];
+</script>
+
+<?php
 include("listhead.php");
-	$actionID = "nav";
-	$action .= "<ul id=\"$actionID\"><li><a href=\"#\">Actions</a><ul class=\"nav\">\n";
-	$action .= "<li><a href=\"newEntry.php?id=$id&amp;mode=modify\">New entry based on this one</a></li>\n";
-	$action .= "</ul></li></ul>\n";
-	$action = "<script> window.addEvent('domready', function() {var myMenu = new MenuMatic({'matchWidthMode':False});});</script>";
-	print $action;
-	$zindex = 11;
-	$totalCost = 0;
+$zindex = 11;
+$totalCost = 0;
+//print_r($rows);
 foreach ($rows as $row) {
 	#print "row: ";print_r($row); print "<br/>";
 	$id = $row['trackID'];
@@ -25,8 +28,8 @@ foreach ($rows as $row) {
 	} else {
 		print "<tr>";
 	}
-	echo listActions($id, array("new","edit","delete"));
-	$zindex += 1;
+	echo "<tr class=\"lists data-row\" data-record_id=\"$id\"/>";
+	echo listActions($id);
 	print "<td class=\"lists\" width=\"1%\" align=\"RIGHT\">$id</td>";
 	echo "<td class=\"lists\" width=\"15%\"><a href=\"editEntry.php?id=$id&mode=display\">${row['name']}</a></td>";
 	echo "<td class=\"lists\" width=\10%\">${row['supplier']}</td>";
@@ -47,6 +50,7 @@ foreach ($rows as $row) {
 		echo "<a href=\"editEntry.php?id=${row['location']}&amp;mode=display\"> ${loc['name']}</a>";
 	echo "</td>";
 	echo "</tr>";
+	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
 	$i++;
 }
     echo "<tr><td colspan = \"100\">";

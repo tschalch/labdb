@@ -1,3 +1,28 @@
+function showMenuInTableHead(e){
+    var id = $(e.currentTarget).data('record_id');
+    var items = {};
+    items["new"] = $("<span class=\"menu-item\"><a style=\"\" href=\"newEntry.php?id="+id+"&amp;mode=modify\"> <img style=\"padding-right:5px;\" title=\"New Entry\" title=\"new\"src=\"img/copy.png\" /> New Entry </a></span>");
+    items["edit"] = $("<span class=\"menu-item\"><a style=\"\" href=\"editEntry.php?id="+id+"&amp;mode=modify\"> <img style=\"padding-right:5px;\" title=\"Edit record\" title=\"edit\"src=\"img/b_edit.png\" /> Edit </a></span>");
+    items["fasta"] = $("<span class=\"menu-item\"><a style=\"\" href=\"fasta.php?id="+id+"\"> <img style=\"padding-right:5px;\" title=\"Get fasta file\" title=\"edit\"src=\"img/File.ico\" /> Fasta file </a></span>");
+    items["delete"] = $("<span class=\"menu-item\"><a style=\"cursor:pointer;\" onclick=\"deleteRecord(this, "+id+");\"> <img style=\"padding-right:5px;\" src=\"img/b_drop.png\" /> Delete </a></span>");
+    items["vial"] = $("<span class=\"menu-item\"><a href=\"newEntry.php?form=frmVial&amp;mode=modify&amp;template="+id+"\"> <img style=\"\" title=\"New vial based on this record.\"src=\"img/vial.png\" /> New Vial </a></span>");
+
+    $('.lists tr').css('background','none');
+    $('.menu').html('');
+    var row =  $(e.currentTarget).closest('tr');
+    row.css('background','LightGray');
+    var menu = $("#menu_"+id);
+    menu.html('');
+    var menu_row = $("<td colspan=\"100\"></td>");
+    for (var i = 0; i < menu_items.length; i++){
+	var item = items[menu_items[i]]
+	if (item){
+	    menu_row.append(item);
+	}
+    }
+    menu.append(menu_row);
+}
+ 
 function AddFragmentField(type, removeOthers){
 	//alert("type: "+type);
 	trs=document.getElementsByTagName("div");

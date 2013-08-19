@@ -15,6 +15,25 @@ if (isset($_GET['template'])){
 }
 
 include("formhead.php");
+?>
+<script type="text/javascript">
+window.addEvent('domready', function() {
+    window.fields = [
+	<?php
+	$fieldname = "document.mainform.${table}_0_";
+	print "${fieldname}name, ";
+    ?>];
+    window.NoFields = [
+	<?php
+	print "";
+	?>];
+    window.DateFields = [
+	<?php 
+	    print "\"${table}_0_date\", ";
+	?>];
+});
+</script>
+<?php
 
 
 //print_r($fields);
@@ -22,25 +41,7 @@ if ($mode == 'modify'){
     ?>
     <script type="text/javascript">
     <!--
-    
-    function validate_form ( )
-    {
-	valid = true;
-	field = $('name');
-	if ( field.get('value') == "" ){
-	    oldStyle = field.get("styles");
-	    field.style.border  = "1px solid #FF6633";
-	    valid = false;
-	} else {
-	    field.style.border  = "1px solid gray";
-	}
-	if (!checkDate("<?php print "${table}_0_date";?>")){
-	    valid = false;
-	}
-	if (!valid) alert ( "Form contains errors. Please correct or complete where marked." );
-	return valid;
-    }
-    
+        
     window.addEvent('domready', function() {
 	    var addcmbx = function (event){
 		    //prevent the page from changing

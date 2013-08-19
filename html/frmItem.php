@@ -5,59 +5,36 @@ $table = 'inventory';
 $formParams = array('table'=>$table, 'mode'=>$mode);
 $submitFunction = "validate_form()";
 $noUserFilter = true;
+
 include("formhead.php");
+?>
+<script type="text/javascript">
+window.addEvent('domready', function() {
+    window.fields = [
+	<?php
+	$fieldname = "document.mainform.${table}_0_";
+	print "${fieldname}price, ${fieldname}name, ${fieldname}quantity,
+	    ${fieldname}unitMeas, ${fieldname}status, ${fieldname}orderNumber,
+	    ${fieldname}supplier";
+    ?>];
+    window.NoFields = [
+	<?php
+	print "${fieldname}price, ${fieldname}status";
+	?>];
+    window.DateFields = [
+	<?php 
+	    print "\"${table}_0_orderDate\", \"${table}_0_received\", \"${table}_0_billed\"";
+	?>];
+});
+</script>
+<?php
+
 if(isset($duplicate) and $duplicate){
         $fields['status'] = 0;
 	$formParams['fields']['orderDate'] = '0000-00-00';
 	$formParams['fields']['received'] = '0000-00-00';
 	$formParams['fields']['funding'] = '';
 }
-?>
-<script type="text/javascript">
-<!--
-function validate_form ( )
-{
-    valid = true;
-    field = $(document.mainform.<?php print "${table}_0_name";?>);
-    if ( field.value == "" ){
-	field.style.border  = "1px solid #FF6633";
-        valid = false;
-    }
-    var fields = [
-        <?php
-        $fieldname = "document.mainform.${table}_0_";
-        print "${fieldname}price, ${fieldname}name, ${fieldname}quantity,
-                ${fieldname}unitMeas, ${fieldname}status, ${fieldname}orderNumber,
-                 ${fieldname}supplier";
-        ?>];
-    for (var i=0; i<fields.length; i++){
-        fields[i].style.border  = "";
-        if (fields[i].value.length < 1){
-            fields[i].style.border  = "1px solid #FF6633";
-            valid = false;
-        }
-    }
-    var NoFields = [
-        <?php
-        print "${fieldname}price, ${fieldname}status";
-        ?>];
-    for (var i=0; i<NoFields.length; i++){
-        NoFields[i].style.border  = "";
-        if (isNaN(NoFields[i].value) | (NoFields[i].value.length < 1)){
-            NoFields[i].style.border  = "1px solid #FF6633";
-            valid = false;
-        }
-    }
-    if (!checkDate("<?php print "${table}_0_orderDate";?>") | !checkDate("<?php print "${table}_0_received";?>") | !checkDate("<?php print "${table}_0_billed";?>")){
-	valid = false;
-    }
-    if (!valid) alert ( "Form contains errors. Please correct or complete where marked." );
-    return valid;
-}
-
-//-->
-</script>
-<?php
 printID($formParams);
 printTextField('Item name', 'name', $formParams);
 printTextArea('Description', 'description', $formParams);
