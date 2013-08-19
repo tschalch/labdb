@@ -10,6 +10,19 @@ include("listItemsHeader.php");
 
 <?php
 include("listhead.php");
+
+#color rows
+?>
+<script type="text/javascript" >
+window.addEvent('domready', function() {
+    $('.lists tr').each(function(i){
+    $(this).css('background-color', '');
+    var color =  $(this).data('color');
+    if (undefined != color) $(this).css('background-color', color);
+    });
+});
+</script>
+<?php
 $zindex = 11;
 $totalCost = 0;
 //print_r($rows);
@@ -20,15 +33,14 @@ foreach ($rows as $row) {
 	$permissions = array(9,9,9);
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
 	if($row['status']==4 and $status != 4){
-		print "<tr style=\"background-color: #DCDCDC;\">";
+		print "<tr class=\"lists data-row\" data-record_id=\"$id\" data-color=\"#DCDCDC\">";
 	} elseif ($row['status']==1) {
-		print "<tr style=\"background-color: #F8D3FF;\">";
+		print "<tr class=\"lists data-row\" data-record_id=\"$id\" data-color=\"#F8D3FF\">";
 	} elseif ($row['billed']==0) {
-		print "<tr style=\"background-color: #FFFAD2;\">";
+		print "<tr class=\"lists data-row\" data-record_id=\"$id\" data-color=\"#FFFAD2\">";
 	} else {
-		print "<tr>";
+		print "<tr class=\"lists data-row\" data-record_id=\"$id\">";
 	}
-	echo "<tr class=\"lists data-row\" data-record_id=\"$id\"/>";
 	echo listActions($id);
 	print "<td class=\"lists\" width=\"1%\" align=\"RIGHT\">$id</td>";
 	echo "<td class=\"lists\" width=\"15%\"><a href=\"editEntry.php?id=$id&mode=display\">${row['name']}</a></td>";

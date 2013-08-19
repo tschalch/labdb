@@ -7,10 +7,14 @@ function showMenuInTableHead(e){
     items["delete"] = $("<span class=\"menu-item\"><a style=\"cursor:pointer;\" onclick=\"deleteRecord(this, "+id+");\"> <img style=\"padding-right:5px;\" src=\"img/b_drop.png\" /> Delete </a></span>");
     items["vial"] = $("<span class=\"menu-item\"><a href=\"newEntry.php?form=frmVial&amp;mode=modify&amp;template="+id+"\"> <img style=\"\" title=\"New vial based on this record.\"src=\"img/vial.png\" /> New Vial </a></span>");
 
-    $('.lists tr').css('background','none');
+    $('.lists tr').each(function(i){
+	$(this).css('background-color', '');
+	var color =  $(this).data('color');
+	if (undefined != color) $(this).css('background-color', color);
+    });
     $('.menu').html('');
     var row =  $(e.currentTarget).closest('tr');
-    row.css('background','LightGray');
+    row.css('background-color','LightGray');
     var menu = $("#menu_"+id);
     menu.html('');
     var menu_row = $("<td colspan=\"100\"></td>");
