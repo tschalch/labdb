@@ -126,7 +126,7 @@ $rows = getRecords($table, $userid, $columns, $where, $order, 0, $join);
 if (!isset($rows)) $rows = array();
 //print_r($rows);
 ?>
-<form name="mainform" onsubmit="if (document.mainform.SelAction.value==3) return deleteRecords();" 
+<form name="mainform" onsubmit="if (document.mainform.SelAction.value==3) return deleteRecords();if (document.mainform.SelAction.value==4) return get_po_number();" 
 			action="<?php echo $formaction;?>" method="post">
 <input type="hidden" name="table" value="<?php echo $table; ?>"/>
 <table class="lists" >

@@ -9,7 +9,7 @@ $columns = array('inventory.orderDate', 'inventory.name', 'inventory.description
 		 'inventory.orderNumber', 'inventory.casNumber', 'inventory.unitMeas',
 		 'inventory.price', 'inventory.orderDate', 'inventory.received',
 		 'inventory.funding', 'inventory.manufacturer', 'inventory.supplier',
-		 'inventory.location', 'inventory.status',
+		 'inventory.location', 'inventory.status','inventory.billed',
 		 'tracker.trackID', 'tracker.owner','tracker.permOwner', 'inventory.quantity',
 		 'user.userid'
 		 );

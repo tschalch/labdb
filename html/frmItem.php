@@ -48,7 +48,7 @@ function validate_form ( )
             valid = false;
         }
     }
-    if (!checkDate("<?php print "${table}_0_orderDate";?>") | !checkDate("<?php print "${table}_0_received";?>")){
+    if (!checkDate("<?php print "${table}_0_orderDate";?>") | !checkDate("<?php print "${table}_0_received";?>") | !checkDate("<?php print "${table}_0_billed";?>")){
 	valid = false;
     }
     if (!valid) alert ( "Form contains errors. Please correct or complete where marked." );
@@ -61,6 +61,7 @@ function validate_form ( )
 printID($formParams);
 printTextField('Item name', 'name', $formParams);
 printTextArea('Description', 'description', $formParams);
+printLinkField('Link','www', $formParams);
 $lcol = array('tracker.trackID','locations.name');
 $locations = getRecords('locations', $userid, $lcol, '', "name");
 printComboBox("Location",'location', $formParams, $locations, (isset($fields['location']) ? $fields['location']: null));
@@ -101,6 +102,7 @@ printTextField('How many?', 'quantity', $formParams);
 printTextField('Unit Measure', 'unitMeas', $formParams);
 printTextField('Price per Unit in $', 'price', $formParams);
 printTextField('Funding source', 'funding', $formParams);
+printTextField('P.O. number', 'poNumber', $formParams);
 printDateField('Order date', 'orderDate', $formParams);
 printDateField('Date received', 'received', $formParams);
 $statusChoices = pdo_query("SELECT statusNr AS trackID, statusName AS name FROM itemstatus;");
@@ -109,6 +111,7 @@ if (isset($fields['status']) and $fields['status'] > 2){
     unset($statusChoices[1]);
 }
 printComboBox("Status", 'status', $formParams, $statusChoices, (isset($fields['status']) ? $fields['status'] : null));
+printDateField("Billed on", 'billed', $formParams);
 $typeChoices = array(array("trackID"=>0, "name"=>"None"), array("trackID"=>1, "name"=>"Instrument"), array("trackID"=>2, "name"=>"Column"));
 printComboBox("Use in Log as", 'type', $formParams, $typeChoices, (isset($fields['type']) ? $fields['type'] : null));
 printSubmitButton($formParams, $button);

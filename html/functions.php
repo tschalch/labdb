@@ -2,7 +2,7 @@
 #database functions
 include('seq.inc.php');
 include('protein.inc.php');
-
+date_default_timezone_set('Europe/Berlin');
 
 function pdo_query($q){
 	try {
@@ -193,7 +193,6 @@ function printCheckbox($label, $field, $formParams){
 	$value = 1;
 	if ($fields[$field]) $checked = "checked";
 	if($mode == "modify"){
-		if($checked) print "<input type=\"hidden\" name=\"${table}_0_inStock\" value=\"0\"/>";
 		print "<div class=\"formField\"><input type=\"checkbox\" 
 			name=\"${table}_0_$field\" class=\"radiobox\" value=\"$value\" $checked/></div>";
 	}	
@@ -211,8 +210,8 @@ function printLinkField($label, $field, $formParams){
 	$mode = $formParams['mode'];
 	print "<div class=\"formRow\"><div class=\"formLabel\">$label:</div>";
 	if($mode == "modify"){
-		print "<div class=\"formField\"><input type=\"text\" 
-			name=\"${table}_0_$field\" class=\"textfield\" value=\"$fields[$field]\"></input></div>";
+		print "<div class=\"formField\"><input id=\"$field\" type=\"text\" 
+			name=\"${table}_0_$field\" class=\"textfield\" value=\"$fields[$field]\"/></div>";
 	}	
 	if($mode == "display"){
 		print "<div class=\"displayField\"><a href=\"$fields[$field]\">$fields[$field]</a></div>";
@@ -918,6 +917,7 @@ function getPermissionString($trackID){
 	$r = pdo_query($q);
 	$permString = array('None','Read','Write');
 	$n=0;
+	$str = '';
 	foreach ($r as $perm){
 		if ($n > 0) $str.=", ";
 		$permstr = $permString[$perm['permission']];
@@ -1118,6 +1118,15 @@ function showOptions(element){
 	(element.value =='2')?ChangeDisplayDiv(['permTable'], 'block'):ChangeDisplayDiv(['permTable'], 'none');
 	(element.value =='0')?ChangeDisplayDiv(['oligoOptions'], 'block'):ChangeDisplayDiv(['oligoOptions'], 'none');
 }
+
+function get_po_number(){
+    var ponumber=prompt("Please enter PO number if you have one for these items.");
+    if (ponumber!=null && ponumber!="") {
+	document.mainform.poNumber.value = ponumber;
+    }
+    return true;
+}
+
 // -->
 </SCRIPT>
 <tr><td colspan = "100"><input type="checkbox" name="allbox" value="1"/ onclick="selectAll();"> select all</td></tr>
@@ -1134,6 +1143,7 @@ function showOptions(element){
 	if (in_array(6, $actions)) print "<option value=\"6\">&nbsp;-Item finished</option>";
 	if (in_array(7, $actions)) print "<option value=\"7\">&nbsp;-Export in mediawiki format</option>";
 	if (in_array(8, $actions)) print "<option value=\"8\">&nbsp;-Export for ordering</option>";
+	if (in_array(9, $actions)) print "<option value=\"9\">&nbsp;-Mark as billed</option>";
 ?>
 	</select>
 	<div id="permTable" name="permTable" style="clear:both; display:none; margin-right:20px" ><table>
@@ -1155,6 +1165,7 @@ function showOptions(element){
 			<td><input type="radio" name="perm" value="2"></td>
 		</tr>
 	</table></div>
+	<input id="poNumber" type="hidden" name="poNumber"/>
 </td></tr>
 <tr><td colspan = "8"><input type="Submit" value="Do it"></td></tr>
 <?php
@@ -1223,26 +1234,34 @@ function getRestrictionSites($enzymes, $dnaSequence){
 	global $noUserFilter;
 	$sitelen = 4;
 	//print $enzymes;
-	if(strpos($enzymes, "leemorlab") === 0){
+	$lab_key = "lab"; //keyword used to specify all enzymes available in Lab Enzymes box.
+	if(strpos($enzymes, $lab_key) === 0){
 		$noUserFilter = True;
 		$enzys = getRecords('vials', $userid, array('vials.name'), " trackBoxes.name='Lab Enzymes' ", '', 0, " LEFT JOIN trackBoxes ON vials.boxID=trackBoxes.tID ");
 		$noUserFilter = False;
 		if (sizeof($enzys) > 0){
 			$enzymeList = '';
 			foreach($enzys as $enzyme){
+				$enzyme = str_replace(" ", "", $enzyme);
 				$enzymeList .= "${enzyme[0]},";
 			}
-			$enzymes = substr($enzymeList, 0, strlen($enzymeList)-1).substr($enzymes,9, strlen($enzymes));
+			$enzymes = substr($enzymeList, 0, strlen($enzymeList)-1).substr($enzymes,strlen($lab_key), strlen($enzymes));
+			$enzymes =  escapeshellcmd($enzymes);
 		}
 	}
 	// $enzymes;
 	$limit ='';
+	if ($enzymes==Null | $enzymes=='') return "new Array()";
 	if (substr($enzymes, 0, 3) != 'all') $limit = "-limit N"; 
-	$cmd = "echo '$dnaSequence' | $embossPath/restrict -warning Y -rformat excel $limit --commercial Y --filter --auto -sitelen $sitelen -enzymes $enzymes 2>&1";
-	//print "$cmd";
+	$cmd = "echo '$dnaSequence' | $embossPath/restrict -error Y -rformat excel $limit --commercial Y --filter --auto -sitelen $sitelen -enzymes $enzymes 2>&1";
+	//print "$cmd<br/>";
 	$tmp = exec($cmd, $output);
+	$pos = strpos($tmp,"Died");
+	if ($tmp == Null | $tmp == '' | $pos !== false){
+	    print "<script type='text/javascript'>alert('Problem with restriction sites! No restriction sites are displayed.');</script>";
+	}
 	//print_r($output);
-	//print $tmp;
+	print "Tmp: $tmp<br/>Pos: $pos<br/>";
 	foreach($output as $line){
 		if (substr($line, 0, 1)==  "#") continue;
 		//print "$line<br/>";

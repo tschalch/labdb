@@ -6,7 +6,7 @@ include("extractData.php");
 
 $id = $_POST['id'];
 //print_r($data);
-print_r($FILES);
+//print_r($FILES);
 
 foreach ($data as $table => $datasets){
 	if ($table == 'none') continue;
@@ -44,7 +44,7 @@ foreach ($data as $table => $datasets){
 		}
 		//print "id:$id,";
 		if ($id){
-			updateRecord($id, $dataset, $userid, $groups);
+			updateRecord($id, $dataset, $userid, Null);
 		} else {
 			$id = newRecord($table, $dataset, $userid, $permissions);
 		}

@@ -127,6 +127,6 @@ Select template for Sequence Extractor:
 </select>
 </div>
 </td></tr>
-<?php listProcessor(array(0,2,3));?>
+<?php listProcessor(array(0,2,3,7));?>
 </table>
 </form>
