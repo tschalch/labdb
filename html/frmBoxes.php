@@ -1,10 +1,30 @@
 <?php
-$submitFunction = "true";
+$submitFunction = "validate_form()";
 $titleName = "Box";
 $mode = $_GET['mode'];
 $table = 'boxes';
 $formParams = array('table'=>$table, 'mode'=>$mode);
 include("formhead.php");
+?>
+<script type="text/javascript">
+window.addEvent('domready', function() {
+    window.fields = [
+	<?php
+	$fieldname = "document.mainform.${table}_0_";
+	print "${fieldname}name, ";
+    ?>];
+    window.NoFields = [
+	<?php
+	print "";
+	?>];
+    window.DateFields = [
+	<?php 
+	    print "";
+	?>];
+});
+</script>
+<?php
+
 printID($formParams);
 printTextField('Box name', 'name', $formParams);
 printTextField('Location', 'location', $formParams);

@@ -7,7 +7,11 @@ if (array_key_exists('page',$_GET)){
 
 if ($pageNr != 'all'){
 	$rowsPerPage = 25;
-	$noRows = $noRows[0][0];
+	if (isset($noRows[0][0])){
+	    $noRows = $noRows[0][0];
+	} else {
+	    $noRows = 0;
+	}
 	$noPages = ceil($noRows/$rowsPerPage);
 	$noDisplayed = 10;
 	$lowLimit = round($pageNr - $noDisplayed / 2) - 1;

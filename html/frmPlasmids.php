@@ -1,12 +1,31 @@
 <?php
 $table = "plasmids";
 $titleName = "Plasmid";
-$submitFunction = "true";
+$submitFunction = "validate_form()";
 $mode = $_GET['mode'];
 if (!$mode) $mode = 'display';
 $formParams = array('table'=>$table,'mode'=>$mode);
 
 include("formhead.php");
+?>
+<script type="text/javascript">
+window.addEvent('domready', function() {
+    window.fields = [
+	<?php
+	$fieldname = "document.mainform.${table}_0_";
+	print "${fieldname}name, ";
+    ?>];
+    window.NoFields = [
+	<?php
+	print "";
+	?>];
+    window.DateFields = [
+	<?php 
+	    print "";
+	?>];
+});
+</script>
+<?php
 
 # get choices for fragment comboboxes
 $types = array('Plasmid Backbone'=>'backbone','Gene Fragment'=>'gene','PCR Product'=>'PCR');

@@ -4,9 +4,29 @@ $mode = $_GET['mode'];
 if (!$mode) $mode = 'display';
 $formParams = array('table'=>'oligos','mode'=>$mode);
 $titleName = "Oligo";
-$submitFunction = "true";
+$submitFunction = "validate_form()";
 
 include("formhead.php");
+?>
+<script type="text/javascript">
+window.addEvent('domready', function() {
+    window.fields = [
+	<?php
+	$fieldname = "document.mainform.${table}_0_";
+	print "${fieldname}name, ";
+    ?>];
+    window.NoFields = [
+	<?php
+	print "";
+	?>];
+    window.DateFields = [
+	<?php 
+	    print "";
+	?>];
+});
+</script>
+<?php
+
 printID($formParams);
 printTextField('Oligo Name', 'name', $formParams);
 printProjectFields($formParams);

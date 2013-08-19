@@ -106,7 +106,43 @@ window.addEvent('domready', function() {
 		history.back();
 	});
 });
+
+<!--
+function validate_form ( )
+{
+    valid = true;
+    field = $(document.mainform.<?php print "${table}_0_name";?>);
+    if ( field.value == "" ){
+	field.style.border  = "1px solid #FF6633";
+        valid = false;
+    }
+    for (var i=0; i<fields.length; i++){
+        window.fields[i].style.border  = "";
+        if (window.fields[i].value.length < 1){
+            window.fields[i].style.border  = "1px solid #FF6633";
+            valid = false;
+        }
+    }
+    for (var i=0; i<NoFields.length; i++){
+        window.NoFields[i].style.border  = "";
+        if (isNaN(window.NoFields[i].value) | (window.NoFields[i].value.length < 1)){
+            window.NoFields[i].style.border  = "1px solid #FF6633";
+            valid = false;
+        }
+    }
+
+    for (var i=0; i<window.DateFields.length; i++){
+	if (!checkDate(window.DateFields[i])){
+	valid = false;
+	}
+    }
+    if (!valid) alert ( "Form contains errors. Please correct or complete where marked." );
+    return valid;
+}
+
+//-->
 </script>
+
 <?php
 endif;
 if (isset($table)){

@@ -3,9 +3,29 @@ $table = 'fragments';
 $mode = $_GET['mode'];
 $formParams = array('table'=>'fragments', 'mode'=>$mode);
 $noUserFilter = False;
-$submitFunction = "true";
+$submitFunction = "validate_form()";
 #determine type of building block and set title
 include("formhead.php");
+?>
+<script type="text/javascript">
+window.addEvent('domready', function() {
+    window.fields = [
+	<?php
+	$fieldname = "document.mainform.${table}_0_";
+	print "${fieldname}name, ";
+    ?>];
+    window.NoFields = [
+	<?php
+	print "";
+	?>];
+    window.DateFields = [
+	<?php 
+	    print "";
+	?>];
+});
+</script>
+<?php
+
 $fields['type']? $type=$fields['type']:$type = $_GET['type'];
 switch ($type){
 	case 'gene':

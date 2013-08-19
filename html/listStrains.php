@@ -29,6 +29,13 @@ $fields = array('trackID' => 'ID',
 $noProjectFilter = False;
 #toggle user/group filters on and off
 $noUserFilter = False;
+#Set Menu items
+?>
+<script type="text/javascript" >
+    var menu_items = ["new","edit", "vial", "delete"];
+</script>
+
+<?php
 
 include("listhead.php");
 
@@ -51,7 +58,8 @@ foreach ($rows as $row) {
 		$row['permGroup'],
 		$row['permOthers']);
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
-	echo listActions($id, array("new","edit", "vial", "delete") );
+	echo "<tr class=\"lists data-row\" data-record_id=\"$id\">";
+	echo listActions($id);
 	print "<td class=\"lists\" width=\"1%\" align=\"RIGHT\">$id</td>";
 	print "<td class=\"lists\" width=\"10%\">
 	      <a href=\"editEntry.php?id=$id&amp;mode=display\">${row['name']}</a></td>";
@@ -62,6 +70,7 @@ foreach ($rows as $row) {
 	printPlasmids($id, $conxs);
 	echo "</td>";
 	echo "</tr>";
+	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
 	$i++;
 }
 listProcessor(array(2,3));

@@ -28,4 +28,4 @@ if (!$noProjectFilter){
 
 </form>	
 
-<h2 style="clear: both; margin: 0; padding: 10px 0 10px 0"><?php echo "$title";?></h2>
+<h2 style="clear: both; margin: 0; padding: 10px 0 10px 0"><?php if (isset($title)) echo "$title";?></h2>

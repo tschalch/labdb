@@ -11,7 +11,7 @@ echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\"
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title><?php if ($title) print "$title - ";?>Lab Database</title>
+	<title><?php if (isset($title)) print "$title - ";?>Lab Database</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="Content-Script-Type" content="text/javascript" />
 
