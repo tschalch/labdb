@@ -20,15 +20,14 @@ foreach ($rows as $row) {
 	$permissions = array(9,9,9);
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
 	if($row['status']==4 and $status != 4){
-		print "<tr style=\"background-color: #DCDCDC;\">";
+		print "<tr class=\"lists data-row\" data-record_id=\"$id\" style=\"background-color: #DCDCDC;\">";
 	} elseif ($row['status']==1) {
-		print "<tr style=\"background-color: #F8D3FF;\">";
+		print "<tr class=\"lists data-row\" data-record_id=\"$id\" style=\"background-color: #F8D3FF;\">";
 	} elseif ($row['billed']==0) {
-		print "<tr style=\"background-color: #FFFAD2;\">";
+		print "<tr class=\"lists data-row\" data-record_id=\"$id\" style=\"background-color: #FFFAD2;\">";
 	} else {
-		print "<tr>";
+		print "<tr class=\"lists data-row\" data-record_id=\"$id\">";
 	}
-	echo "<tr class=\"lists data-row\" data-record_id=\"$id\"/>";
 	echo listActions($id);
 	print "<td class=\"lists\" width=\"1%\" align=\"RIGHT\">$id</td>";
 	echo "<td class=\"lists\" width=\"15%\"><a href=\"editEntry.php?id=$id&mode=display\">${row['name']}</a></td>";
