@@ -30,9 +30,10 @@ window.addEvent('domready', function() {
 <?php
 
 if(isset($duplicate) and $duplicate){
-        $fields['status'] = 0;
+        $fields['status'] = 1;
 	$formParams['fields']['orderDate'] = '0000-00-00';
 	$formParams['fields']['received'] = '0000-00-00';
+	$formParams['fields']['billed'] = '0000-00-00';
 	$formParams['fields']['funding'] = '';
 }
 printID($formParams);
