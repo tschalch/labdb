@@ -1,11 +1,11 @@
 function showMenuInTableHead(e){
     var id = $(e.currentTarget).data('record_id');
     var items = {};
-    items["new"] = $("<span class=\"menu-item\"><a style=\"\" href=\"newEntry.php?id="+id+"&amp;mode=modify\"> <img style=\"padding-right:5px;\" title=\"New Entry\" title=\"new\"src=\"img/copy.png\" /> New Entry </a></span>");
-    items["edit"] = $("<span class=\"menu-item\"><a style=\"\" href=\"editEntry.php?id="+id+"&amp;mode=modify\"> <img style=\"padding-right:5px;\" title=\"Edit record\" title=\"edit\"src=\"img/b_edit.png\" /> Edit </a></span>");
-    items["fasta"] = $("<span class=\"menu-item\"><a style=\"\" href=\"fasta.php?id="+id+"\"> <img style=\"padding-right:5px;\" title=\"Get fasta file\" title=\"edit\"src=\"img/File.ico\" /> Fasta file </a></span>");
-    items["delete"] = $("<span class=\"menu-item\"><a style=\"cursor:pointer;\" onclick=\"deleteRecord(this, "+id+");\"> <img style=\"padding-right:5px;\" src=\"img/b_drop.png\" /> Delete </a></span>");
-    items["vial"] = $("<span class=\"menu-item\"><a href=\"newEntry.php?form=frmVial&amp;mode=modify&amp;template="+id+"\"> <img style=\"\" title=\"New vial based on this record.\"src=\"img/vial.png\" /> New Vial </a></span>");
+    items["new"] = $("<span class=\"menu-item\"><img width=\"24px\" title=\"New Entry\" title=\"new\"src=\"img/add-item.png\" /><a class=\"menu-link\" style=\"\" href=\"newEntry.php?id="+id+"&amp;mode=modify\">  New Entry </a></span>");
+    items["edit"] = $("<span class=\"menu-item\"><img width=\"24px\" title=\"Edit record\" title=\"edit\"src=\"img/edit.png\" /><a class=\"menu-link\" style=\"\" href=\"editEntry.php?id="+id+"&amp;mode=modify\">  Edit </a></span>");
+    items["fasta"] = $("<span class=\"menu-item\"><img width=\"24px\" title=\"Get fasta file\" title=\"edit\"src=\"img/download.png\" /><a class=\"menu-link\" style=\"\" href=\"fasta.php?id="+id+"\">  Fasta file </a></span>");
+    items["delete"] = $("<span class=\"menu-item\"><img width=\"24px\" src=\"img/delete-item.png\" /><a class=\"menu-link\" style=\"cursor:pointer;\" onclick=\"deleteRecord(this, "+id+");\">  Delete </a></span>");
+    items["vial"] = $("<span class=\"menu-item\"><img width=\"24px\" style=\"\" title=\"New vial based on this record.\"src=\"img/lab.png\" /><a class=\"menu-link\" href=\"newEntry.php?form=frmVial&amp;mode=modify&amp;template="+id+"\">  New Vial </a></span>");
 
     $('.lists tr').each(function(i){
 	$(this).css('background-color', '');

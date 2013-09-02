@@ -516,7 +516,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` VALUES(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '', 'default user with administrator privileges', 0);
 INSERT INTO `user` VALUES(2, 'defaultGroup', '', 'Default Group', '', NULL, 1);
-
+INSERT INTO `groups` VALUES('', 1, 2, 2);
 -- --------------------------------------------------------
 
 --

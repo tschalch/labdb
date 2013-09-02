@@ -466,8 +466,8 @@ border-left:1px solid #ccc;margin-top:-28px;background:#fff;}
 .lists tr:hover td {background-color: #eee;}
 .menu td {padding: 4px;}
 table {font-size: 1em}
-.menu-item {margin: 0 4px 0 4px;}
-
+.menu-item {margin: 0 4px 0 4px; position : relative; height : 2em; display : inline-block; width : 7em}
+.menu-link {position:absolute;top:50%;margin-top:-0.66em;height:2em;}
 @media print {
     #content{
 	width: 100%;
