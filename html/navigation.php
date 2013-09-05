@@ -1,6 +1,6 @@
 <div id="labnav">
     <div id="Inventory" class="labnavBox">
-    <a class="labnav" href="inventory.php">Lab Inventory</a><br/>
+    <a class="labnav" href="list.php?list=listItems">Lab Inventory</a><br/>
     <a class="labnav" href="list.php?list=listItems&amp;status=1">Items to/on order</a><br/>
     <a class="labnav" href="list.php?list=listItems&amp;status=4">Finished items</a><br/>
     <a class="labnav" href="newEntry.php?form=frmItem&amp;mode=modify">.. Add Item</a><br/>
