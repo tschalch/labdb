@@ -3,5 +3,4 @@ config.php
 *.swp
 *~
 temp/
-img/
 output/
