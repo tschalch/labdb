@@ -25,7 +25,7 @@ function wikiPrintEntry($entry){
 	$seq = $entry['sequence'];
 	$tm = $entry['tm'] ? $entry['tm'] : round(Tm($entry['targetmatch'],'bre',$entry['Saltconc']*1E-3, $entry['PCRconc']*1E-9), 1);
 	$wikiString .= "$seq || $tm ||";
-        $wikiString .= CountATCG($seq);
+        $wikiString .= seqlen($seq);
     }else{
 	$wikiString .= "${entry['description']}";
     }

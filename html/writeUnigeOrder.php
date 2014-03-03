@@ -8,7 +8,7 @@ function unigePrintEntry($entry){
     global $orderTotal;
     $unigeString = "<tr>";
     $unigeString .= "<td>${entry['quantity']} x ${entry['unitMeas']}</td>";
-    $unigeString .= "<td>".htmlspecialchars($entry['name']). "</td>";
+    $unigeString .= "<td>".$entry['name']. "</td>";
     $unigeString .= "<td>${entry['orderNumber']}</td>";
     $priceInt = floor($entry['price']);
     $priceCents = round(100 * ($entry['price']-$priceInt));

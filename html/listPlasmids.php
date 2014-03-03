@@ -65,7 +65,7 @@ foreach ($rows as $row) {
 	echo "<td class=\"lists\" width=\"20%\">";
 		printFragments('gene',$conxs);
 	echo "</td>";
-	echo "<td class=\"lists seq\" width=\"10%\"><a href=\"sequence.php?table=plasmids&field=sequence&id=$id\">".CountATCG($row['sequence'])." bp</a></td>";
+	echo "<td class=\"lists seq\" width=\"10%\"><a href=\"sequence.php?table=plasmids&field=sequence&id=$id\">".seqlen($row['sequence'])." bp</a></td>";
 	echo "</tr>";
 	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
 }
