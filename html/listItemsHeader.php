@@ -21,6 +21,7 @@ $searchfields = $columns;
 $defaultOrder ="inventory.name";
 
 # customize sql query to status-specific display of items
+$status = null;
 if (array_key_exists('status', $_GET)){
     $status = $_GET['status'];
     switch($status){

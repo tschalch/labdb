@@ -6,6 +6,7 @@ $noUserFilter = False;
 $submitFunction = "validate_form()";
 #determine type of building block and set title
 include("formhead.php");
+
 ?>
 <script type="text/javascript">
 window.addEvent('domready', function() {

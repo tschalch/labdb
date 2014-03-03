@@ -54,6 +54,7 @@ foreach ($rows as $row) {
 	$totalCost += $cost;
 	$stat = getStatus($row['status']);
 	echo "<td class=\"lists\" width=\"10%\">$stat</td>";
+	$date = '';
 	if ($row['orderDate']!='0000-00-00' and $row['orderDate']) $date = date("m/d/Y",strtotime($row['orderDate']));
 	echo "<td class=\"lists\" width=\10%\">$date</td>";
 	$date = '';
@@ -63,7 +64,6 @@ foreach ($rows as $row) {
 	echo "</td>";
 	echo "</tr>";
 	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
-	$i++;
 }
     echo "<tr><td colspan = \"100\">";
     $noItems = count($rows);

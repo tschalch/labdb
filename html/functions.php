@@ -299,7 +299,7 @@ function printSequenceField($label, $type, $field, $formParams, $area, $seqEdito
 	$mode = $formParams['mode'];
 	$seq = $fields[$field];
 	if(($type == 'oligo' or $type == 'DNA')){
-		$seqLen = CountATCG($seq);
+		$seqLen = seqlen($seq);
 	}
 	$label = "$label:";
 
@@ -765,7 +765,7 @@ function printProjectFields($formParams){
 	printComboBox('Project', 'project', $formParams, $projects, $row['project']);
 	#setupProjects();
 } 
-function listActions($id, $actions){
+function listActions($id){
     	$action = "<td class=\"lists\" width=\"1%\">";
 	$action .= "<input type=\"checkbox\" name=\"selection[]\" value=\"$id\"/>\n";
 	$actionID = "nav";
@@ -1081,6 +1081,38 @@ function get_po_number(){
 	document.mainform.poNumber.value = ponumber;
     }
     return true;
+}
+
+function purgeUnchecked(){
+    var inputs =  document.getElementsByTagName("input");
+    var checkCount = 0;
+    for(var i=0; i < inputs.length; i++){
+	var cbx = inputs[i];
+	if (cbx.name == "selection[]" && !cbx.checked){
+		disableRow(cbx.value, true);
+	}
+	if (cbx.name == "selection[]" && cbx.checked){
+	    disableRow(cbx.value, false);
+	    checkCount += 1;
+	}
+    }
+    if (checkCount > 100){
+       alert("More than 100 items selected. Process will likely fail!");
+    }
+}
+
+function disableRow(rowID, disabled){
+    var trs = document.getElementsByTagName("tr");
+    for(var i=0; i < trs.length; i++){
+	var tr = trs[i];
+	if (tr.dataset.record_id == rowID){
+	    var inps =  tr.getElementsByTagName("input");
+		for(var j=0; j < inps.length; j++){
+		    inps[j].disabled = disabled;
+	    }
+	}
+    }
+    
 }
 
 // -->

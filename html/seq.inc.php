@@ -30,6 +30,11 @@ function CountATCG($c){
         return $cg;
         }
 
+function seqlen($seq){
+    $seq = remove_non_coding($seq);
+    return strlen($seq);
+}
+
 function complement($seq, $moltype)
 {
     if (isset($moltype) == FALSE) {

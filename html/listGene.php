@@ -133,7 +133,7 @@ if($category == 'PCR'){
 	print "<td class=\"lists seq\" width=\"10%\"><a href=\"editEntry.php?id=${row['PCRtemplate']}&amp;mode=display\">".$template['name']." (".$row['PCRtemplate'].")</a></td>";
 }
 
-	echo "<td class=\"lists seq\" width=\"10%\"><a href=\"sequence.php?field=DNASequence&amp;id=$id\">".CountATCG($row['DNASequence'])." bp</a></td>";
+	echo "<td class=\"lists seq\" width=\"10%\"><a href=\"sequence.php?field=DNASequence&amp;id=$id\">".seqlen($row['DNASequence'])." bp</a></td>";
 $proteinSequence = remove_non_coding_prot($row['proteinSequence']);
 	if($category == 'gene'){
 		echo "<td class=\"lists seq\" width=\"5%\"><a href=\"protein_properties.php?id=$id\">"

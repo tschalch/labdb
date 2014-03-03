@@ -95,6 +95,7 @@ foreach ($rows as $row) {
 	echo "<td class=\"lists\" width=\"5%\" align=\"center\">$orderDate";
 	print "<input type=\"hidden\" name=\"scale_$id\" value=\"${row['scale']}\"/>";
 	print "<input type=\"hidden\" name=\"purity_$id\" value=\"${row['purity']}\"/></td>\n";
+	print "<input type=\"hidden\" name=\"mods_$id\" value=\"${row['modifications']}\"/></td>\n";
 	echo "</tr>\n";
 	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
 

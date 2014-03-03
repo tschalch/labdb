@@ -137,7 +137,7 @@ function aminoacid_content($seq) {
                      "K"=>0,"M"=>0,"F"=>0,"P"=>0,"S"=>0,"T"=>0,"W"=>0,"Y"=>0,"V"=>0,"X"=>0,"*"=>0);
         for($i=0; $i<strlen($seq);$i++){
                 $aa=substr($seq,$i,1);
-                $array[$aa]++;
+                if(array_key_exists($aa, $array)) $array[$aa]++;
         }
         return $array;
 }

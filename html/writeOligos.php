@@ -61,9 +61,10 @@ if ($output == 'vectornti'){
 	$scale = $_POST["scale_$id"];
 	$purification = $_POST["purity_$id"];
 	$length = strlen($data);
+	$mods = $_POST["mods_$id"];
 	if ($output == 'amplifx') $line = "$data\t$name\n";
 	if ($output == 'sigma') $line = "$name,$data,$scale,$purification\n";
-	if ($output == 'microsynth') $line = "$name,$data,$length,$purification,$scale,\n";
+	if ($output == 'microsynth') $line = "$name,$data,$length,$purification,$scale,$mods\n";
 	if ($output == 'extractor') $line = "$data $name,\n";
 	if ($output == 'finnzymes') $line = "$name $targetmatch,\n";
 	$i++;
