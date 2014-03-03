@@ -43,8 +43,9 @@
     <a class="labnav" href="frmImport.php">Import datasets</a><br/><br/>
 
     <a class="labnav" href="sequence_extractor/index.php">Sequence Extractor</a><br/>
-    <a class="labnav" href="../biophp_minitools/">BioPHP Minitools</a><br/>
-    <a class="labnav" href="http://intranet.cshl.edu/purchasing/oligo.html">CSHL Sigma Genosis</a><br/><br/>
+    <a class="labnav" href="/sms2/index.html">Sequence Maniuplation Suite</a><br/>
+    <a class="labnav" href="/primer3plus/primer3plus.cgi">Primer3Plus</a><br/>
+    <br/>
 
     <?php if(isset($userid)){
 	    print "<a class=\"labnav\" href=\"logout.php\">Logout $username</a><br/>";

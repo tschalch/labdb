@@ -403,9 +403,13 @@ function getComboBox($field, $table, $mode, $choices, $match, $action=null, $lin
 				$redchoices[$choice['trackID']]=$choice['name'];
 			}
 		}
-		if ($link and isset($match) and $match){
+		if ($link and isset($match) and $match ){
 			$cmbBox .= "<a href=\"editEntry.php?id=$match&amp;mode=display\"> ${redchoices[$match]}</a>";
+		} elseif ( isset($match) and $match){
+			 $cmbBox .= "${redchoices[$match]}";
 		}
+		//$cmbBox = "</div>";
+			
 	}
 	return $cmbBox;
 }

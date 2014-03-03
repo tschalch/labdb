@@ -40,12 +40,14 @@ function complement($seq, $moltype)
     $dna_complements = array('A' => 'T',
                              'T' => 'A',
                              'G' => 'C',
-                             'C' => 'G');
+                             'C' => 'G',
+                             'N' => 'N');
 
     $rna_complements = array('A' => 'U',
                              'U' => 'A',
                              'G' => 'C',
-                             'C' => 'G');
+                             'C' => 'G',
+                             'N' => 'N');
 
     $moltype = strtoupper($moltype);
     if ($moltype == 'DNA') {
