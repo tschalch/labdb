@@ -751,10 +751,13 @@ function printCloseAddFragmentButton($formParams, $id){
 function printOligoData($formParams, $field){
 	$row = $formParams['fields'];
 	$sequence = $row[$field];
-	$tm = sprintf("%6.1f",Tm($sequence,'bre',$row['Saltconc']*1E-3, $row['PCRconc']*1E-9));
+	$tm = Tm($sequence,'bre',$row['Saltconc']*1E-3, $row['PCRconc']*1E-9);
+	if (is_numeric($tm)){
+	    $tm = sprintf("%6.1f", $tm);
+	}
 	if (CountATCG($sequence)) $gc = sprintf("%6.1f",CountCG($sequence) / CountATCG($sequence) * 100);
 	$len = strlen($sequence);
-	print "<div style=\"\">($len bp, Tm: $tm&#176;C; GC: $gc%)</div>";
+	print "<div style=\"\">($len bp, Tm: $tm &deg;C; GC: $gc%)</div>";
 }
 
 function printProjectFields($formParams){

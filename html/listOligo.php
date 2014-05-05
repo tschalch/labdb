@@ -88,7 +88,10 @@ foreach ($rows as $row) {
 	$totalCost += $cost;
 	echo "<td class=\"lists\" width=\"5%\" align=\"center\">$cost</td>\n";
 	$tm = $row['tm'] ? $row['tm'] : Tm($row['targetmatch'],'bre',$row['Saltconc']*1E-3, $row['PCRconc']*1E-9);
-	printf("<td class=\"lists\" width=\"5%%\" align=\"center\">%6.1f</td>\n", $tm);
+	if (is_numeric($tm)){
+	    $tm = sprintf("%6.1f", $tm);
+	}
+	print "<td class=\"lists\" width=\"5%%\" align=\"center\">$tm</td>\n";
 	$orderDate = $row['orderDate'];
 	if (strlen($orderDate) > 8) $orderDate = substr($orderDate,0,8)."...";
 	print "<input type=\"hidden\" name=\"orderDate_$id\" value=\"${row['orderDate']}\"/>";
