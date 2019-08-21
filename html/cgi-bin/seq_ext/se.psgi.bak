@@ -1,0 +1,6 @@
+use CGI::Emulate::PSGI;
+CGI::Emulate::PSGI->handler(sub {
+	local %ENV = (%ENV, CGI::Emulate::PSGI->emulate_environment($env));
+	do "se.pl";
+	CGI::initialize_globals() if &CGI::initialize_globals;	
+});
