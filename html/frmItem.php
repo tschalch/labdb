@@ -77,11 +77,12 @@ window.addEvent('domready', function() {
 </script>
 <?php
 endif;
+include('config.php');
 printTextField('Catalogue number', 'orderNumber', $formParams);
 printTextField('CAS number', 'casNumber', $formParams);
 printTextField('How many?', 'quantity', $formParams);
 printTextField('Unit Measure', 'unitMeas', $formParams);
-printTextField('Price per Unit in $', 'price', $formParams);
+printTextField("Price per Unit in $currency", 'price', $formParams);
 printTextField('Funding source', 'funding', $formParams);
 printTextField('P.O. number', 'poNumber', $formParams);
 printDateField('Order date', 'orderDate', $formParams);
