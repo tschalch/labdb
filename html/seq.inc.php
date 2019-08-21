@@ -30,6 +30,11 @@ function CountATCG($c){
         return $cg;
         }
 
+function seqlen($seq){
+    $seq = remove_non_coding($seq);
+    return strlen($seq);
+}
+
 function complement($seq, $moltype)
 {
     if (isset($moltype) == FALSE) {
@@ -40,12 +45,14 @@ function complement($seq, $moltype)
     $dna_complements = array('A' => 'T',
                              'T' => 'A',
                              'G' => 'C',
-                             'C' => 'G');
+                             'C' => 'G',
+                             'N' => 'N');
 
     $rna_complements = array('A' => 'U',
                              'U' => 'A',
                              'G' => 'C',
-                             'C' => 'G');
+                             'C' => 'G',
+                             'N' => 'N');
 
     $moltype = strtoupper($moltype);
     if ($moltype == 'DNA') {
@@ -217,7 +224,13 @@ function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
 {
     // Sanity checks
     if (!$sequence) {
-        return false;  // should throw an exception
+        return "NoSeq";  // should throw an exception
+    }
+    if ($salt <= 0) {
+        return "ChkSalt";  // should throw an exception
+    }
+    if ($concentration <= 0) {
+        return "ChkConc";  // should throw an exception
     }
     $sequence=strtoupper ($sequence);
     // handy to have the string length

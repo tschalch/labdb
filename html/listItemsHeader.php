@@ -5,11 +5,11 @@ $formaction = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}"; #action perfo
 #SQL parameters for data retrieval:
 #column names (need to be specified for each table):
 $table = "inventory";
-$columns = array('inventory.orderDate', 'inventory.name', 'inventory.description',
+$columns = array('inventory.orderDate', 'inventory.name', 'inventory.description', 'inventory.files',
 		 'inventory.orderNumber', 'inventory.casNumber', 'inventory.unitMeas',
 		 'inventory.price', 'inventory.orderDate', 'inventory.received',
 		 'inventory.funding', 'inventory.manufacturer', 'inventory.supplier',
-		 'inventory.location', 'inventory.status',
+		 'inventory.location', 'inventory.status','inventory.billed','inventory.poNumber',
 		 'tracker.trackID', 'tracker.owner','tracker.permOwner', 'inventory.quantity',
 		 'user.userid'
 		 );
@@ -18,9 +18,13 @@ $columns = array('inventory.orderDate', 'inventory.name', 'inventory.description
 //$join = "LEFT JOIN locations ON inventory.location=locations.id ";
 #array of fields that is going to be searched for the term entered in the search... box
 $searchfields = $columns;
-$defaultOrder ="inventory.name";
+$defaultOrder ="inventory.id DESC";
 
 # customize sql query to status-specific display of items
+$status = null;
+$title = "Lab Inventory";
+$orderInstructions = "<div style=\"margin-bottom:0.5em;\"><a id=\"orderHelpToggle\" href=\"#\"> Ordering Instructions </a><div id=\"orderHelp\"></div></div>";
+
 if (array_key_exists('status', $_GET)){
     $status = $_GET['status'];
     switch($status){
@@ -53,7 +57,8 @@ if (array_key_exists('column', $_GET)){
 
 #array of query field => table heading
 $fields = array('trackID' => 'ID',
-		'name' => 'Item',
+		'sampleID' => 'Item',
+		'name' => 'Name',
 		'supplier' => 'Supplier',
 		'orderNumber' => 'Cat #',
 		'casNumber' => 'cas #',
@@ -69,4 +74,9 @@ $noProjectFilter = True;
 #toggle user/group filters on and off
 $noUserFilter = True;
 
+$helpText = "<ol>\
+<li>Search the database for previous orders using item ID or keywords.</li> \
+<li>If a previously ordered item is found, chose \"New Entry\" that appears below the item when you click on it. This will generate an identical item that is ready to be ordered by simply saving it.</li> \
+<li>If no previously ordered item exists, use \"Add Item\" in the navigation menue to enter all the necessary detail and save it wish the status set to \'to be ordered\'.</li>\
+</ol> "
 ?>

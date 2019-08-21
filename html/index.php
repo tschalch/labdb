@@ -9,7 +9,7 @@ include("title_bar.php");
 include("navigation.php");
 ?>
 <div id="content">
-	This site stores information about chemicals, clones and so on.</p>
+<p>	This site stores information about chemicals, clones and so on.</p>
          <p><form method="get" action="
  	<?php print "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}";
         ?>">
@@ -17,7 +17,7 @@ include("navigation.php");
 			<h2>Quick Search:</h2>
 	   </div>
 	   <div class="frontPageRow">
-		<input style="width: 40em;" type="text" value="<?php print $_GET['serachTerm']?>" name="serachTerm"/>
+		<input id="searchField" type="text" value="<?php if ( isset ($_GET['serachTerm'])) print $_GET['serachTerm']; ?>" name="serachTerm"/>
 	   </div>
             <div class="frontPageRow">
 		<input type="submit" value="search" />
@@ -25,7 +25,7 @@ include("navigation.php");
         </form></p>
          
 <?php
-	if ($_GET['serachTerm'] and $_GET['serachTerm'] != ""){
+	if ( isset($_GET['serachTerm']) and $_GET['serachTerm'] != ""){
 	    $searchwords = explode (" ", $_GET['serachTerm']);
             $searchString = implode("+",$searchwords);
             $sql = "SELECT `st_name`, sampletypes.plural, `table`,`list` FROM sampletypes";
@@ -34,8 +34,11 @@ include("navigation.php");
             $found = array();
             foreach($tables as $table){
                 $t = $table['table'];
+			    $hexIDSQL = getHexIDSQL($t);
                 $where = '';
                 $searchfields = array("$t.name", "$t.description", "sampletypes.st_name", "tracker.trackID");
+				$columns = $searchfields;
+				$columns[] = getHexIDSQL($t)." as hexID";
                 if (isset($searchwords)){
                        $where .= "(";
                        $i=0;
@@ -43,6 +46,7 @@ include("navigation.php");
                        foreach ($searchwords as $searchword){
                                $j=0;
                                $jnum = count($searchfields);
+							   $where .= " $hexIDSQL LIKE '%$searchword%' OR ";
                                foreach ($searchfields as $sfield){
                                        $where .= " $sfield LIKE '%$searchword%'";
                                        $j++;
@@ -58,14 +62,15 @@ include("navigation.php");
                }
                //print "where: $where";
                $noUserFilter = True;
-               $results = getRecords($t, $userid, $searchfields, $where);
+               $results = getRecords($t, $userid, $columns, $where);
                 if (sizeof($results)){
                    $found[$t] = $results;
                    print "<a href=\"list.php?list=${table['list']}&searchword=$searchString\"><h2 class=\"qs\">${table["plural"]}</h2></a>";
                    foreach($results as $record){
                         $description = '';
                         if ($record['description'] !='') $description = "${record['description']}<br/>";
-                       print "<div class=\"qsh3\"><a class=\"qsh3\" href=\"editEntry.php?id=${record['trackID']}&mode=display\">${record['trackID']}: ${record['name']}</a>
+                       print "<div class=\"qsh3\"><a class=\"qsh3\" href=\"editEntry.php?id=${record['trackID']}&mode=display\">${record['hexID']}: ${record['name']}</a>
+                       <a class=\"\" href=\"editEntry.php?id=${record['trackID']}&mode=modify\">[edit]</a>
                            <p>$description</p>
                            </div>";
                    }

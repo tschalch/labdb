@@ -6,7 +6,7 @@ $formaction = "list_doit.php"; #action performed when "do it" button is pressed
 #SQL parameters for data retrieval:
 #column names (need to be specified for each table):
 $table = "oligos";
-$columns = array('oligos.name', 'oligos.description', 'oligos.sequence',
+$columns = array('oligos.name', 'oligos.id', 'oligos.description', 'oligos.sequence',
 		 'oligos.supplier', 'oligos.scale', 'oligos.modifications',
 		 'oligos.purity', 'oligos.bpPrice', 'oligos.orderDate',
 		 'tracker.trackID', 'tracker.owner','tracker.permOwner',
@@ -17,11 +17,12 @@ $columns = array('oligos.name', 'oligos.description', 'oligos.sequence',
 $join = "";
 #array of fields that is going to be searched for the term entered in the search... box
 $searchfields = $columns;
-$defaultOrder ="oligos.name";
+$defaultOrder ="oligos.id DESC";
 #End SQL parameters
 
 #array of query field => table heading
 $fields = array('trackID' => 'ID',
+		'hexID' => 'Oligo',
 		'name' => 'Name',
 		'description' => 'Description',
 		'sequence' => 'Sequence',
@@ -40,16 +41,25 @@ $noProjectFilter = False;
 #toggle user/group filters on and off
 $noUserFilter = False;
 
+#Set Menu items
+?>
+<script type="text/javascript" >
+    var menu_items = ["new","edit", "fasta", "vial", "delete"];
+</script>
 
+<?php
 include("listhead.php");
 $totalCost = 0;
 foreach ($rows as $row) {
 	$id = $row['trackID'];
+	$oligoid = $row['hexID'];
 	print "<tr>";
 	$edit = 0;
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
-	echo listActions($id, array("new","edit", "fasta", "vial", "delete") );
-	print "<td class=\"lists\" width=\"1%\" align=\"RIGHT\">$id</td>";
+	echo "<tr class=\"lists data-row\" data-record_id=\"$id\">";
+	echo listActions($id, $oligoid);
+	print "<td class=\"lists dbid\" width=\"1%\" align=\"RIGHT\">$id</td>";
+	print "<td class=\"lists\" width=\"1%\" >$oligoid</td>";
 	$name = $row['name'];
 	$nameTitle = $name;
 	if (strlen($name) > 20){
@@ -80,15 +90,22 @@ foreach ($rows as $row) {
 	$cost = strlen($row['sequence']) * $row['bpPrice'];
 	$totalCost += $cost;
 	echo "<td class=\"lists\" width=\"5%\" align=\"center\">$cost</td>\n";
-	$tm = $row['tm'] ? $row['tm'] : Tm($row['targetmatch'],'bre',$row['Saltconc']*1E-3, $row['PCRconc']*1E-9);
-	printf("<td class=\"lists\" width=\"5%%\" align=\"center\">%6.1f</td>\n", $tm);
+	$tmUser = $row['tm'] ? $row['tm']."(user)/":""; 
+	$tm= Tm($row['targetmatch'],'bre',$row['Saltconc']*1E-3, $row['PCRconc']*1E-9);
+	if (is_numeric($tm)){
+	    $tm = sprintf("%6.1f", $tm);
+	}
+	print "<td class=\"lists\" width=\"5%%\" align=\"center\">$tmUser$tm</td>\n";
 	$orderDate = $row['orderDate'];
 	if (strlen($orderDate) > 8) $orderDate = substr($orderDate,0,8)."...";
 	print "<input type=\"hidden\" name=\"orderDate_$id\" value=\"${row['orderDate']}\"/>";
 	echo "<td class=\"lists\" width=\"5%\" align=\"center\">$orderDate";
 	print "<input type=\"hidden\" name=\"scale_$id\" value=\"${row['scale']}\"/>";
 	print "<input type=\"hidden\" name=\"purity_$id\" value=\"${row['purity']}\"/></td>\n";
+	print "<input type=\"hidden\" name=\"mods_$id\" value=\"${row['modifications']}\"/></td>\n";
 	echo "</tr>\n";
+	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
+
 }
 ?>
 <tr><td colspan = "100"><?php 
@@ -127,6 +144,6 @@ Select template for Sequence Extractor:
 </select>
 </div>
 </td></tr>
-<?php listProcessor(array(0,2,3));?>
+<?php listProcessor(array(0,2,3,7));?>
 </table>
 </form>

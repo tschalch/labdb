@@ -14,21 +14,29 @@ $columns = array('strains.name', 'strains.description', 'strains.organism',
 $join = "";
 #array of fields that is going to be searched for the term entered in the search... box
 $searchfields = $columns;
-$defaultOrder ="strains.name";
+$defaultOrder ="strains.id DESC";
 #End SQL parameters
 
 #array of query field => table heading
-$fields = array('trackID' => 'ID',
+$fields = array('trackID' => 'dbID',
+		'hexID' => 'Strain',
 		'strains.name' => 'Name',
 		'organism' => 'Organism',
-		'strain' => 'Strain',
+		'strain' => 'Genotype',
 		'strains.description' => 'Description',
-		'1' => 'Plasmids');
+		'1' => 'Building blocks');
 
 #toggle Project combobox on and off
 $noProjectFilter = False;
 #toggle user/group filters on and off
 $noUserFilter = False;
+#Set Menu items
+?>
+<script type="text/javascript" >
+    var menu_items = ["new","edit", "vial", "delete"];
+</script>
+
+<?php
 
 include("listhead.php");
 
@@ -43,40 +51,45 @@ if($plds){
 #print_r($rows);
 foreach ($rows as $row) {
 	#print "row: ";print_r($row); print "<br/>";
-	$id = $row['trackID'];
-	$conxs = getConnections($id);
+	$dbid = $row['trackID'];
+	$strainid = $row['hexID'];
+	$conxs = getConnections($dbid);
 	$edit = 0;
-	$permissions = array(
-		$row['permOwner'],
-		$row['permGroup'],
-		$row['permOthers']);
-	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
-	echo listActions($id, array("new","edit", "vial", "delete") );
-	print "<td class=\"lists\" width=\"1%\" align=\"RIGHT\">$id</td>";
+	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($dbid, $userid)>1) $edit = 1;
+	echo "<tr class=\"lists data-row\" data-record_id=\"$dbid\">";
+	echo listActions($dbid, $strainid);
+	print "<td class=\"lists dbid\" width=\"1%\" align=\"RIGHT\">$dbid</td>";
+	print "<td class=\"lists\" width=\"1%\" >$strainid</td>";
 	print "<td class=\"lists\" width=\"10%\">
-	      <a href=\"editEntry.php?id=$id&amp;mode=display\">${row['name']}</a></td>";
-	echo "<td class=\"lists\" width=\"30%\">${row['organism']}</td>";
-	echo "<td class=\"lists\" width=\"30%\">${row['strain']}</td>";
-	echo "<td class=\"lists\" width=\"20%\">${row['description']}</td>";
+	      <a href=\"editEntry.php?id=$dbid&amp;mode=display\">${row['name']}</a></td>";
+	echo "<td class=\"lists\" width=\"20%\">${row['organism']}</td>";
+	echo "<td class=\"lists\" width=\"20%\">${row['strain']}</td>";
+	echo "<td class=\"lists\" width=\"40%\">${row['description']}</td>";
 	echo "<td class=\"lists\" width=\"10%\">";
-	printPlasmids($id, $conxs);
+	printPlasmids($dbid, $conxs);
 	echo "</td>";
 	echo "</tr>";
+	echo "<tr class=\"menu\" id=\"menu_$dbid\"></tr>";
 	$i++;
 }
-listProcessor(array(2,3));
+listProcessor(array(2,3,7));
 
 function printPlasmids($sID, $conxs){
 	if (!$conxs) return;
 	global $userid, $plasmids;
 	$n = sizeof($conxs);
 	$i = 1;
+	$out = "";
 	foreach ($conxs as $c){
-		 $trackID = $c['record'];
-		 $fname = $plasmids[$trackID];
-		 $out .= "<a href=\"editEntry.php?id=$trackID&mode=display\">$fname</a>";
-		 if($i < $n) $out .= ", ";
-		 $i++;
+		if (array_key_exists('record', $c)){
+			$trackID = $c['record'];
+			$parent = getRecord($trackID, $userid);
+			$fname = $parent['name'];
+			$type = array_key_exists('type',$parent) ? $parent['type']: $parent['st_name'];
+			$out .= "<a title=\"$type\" href=\"editEntry.php?id=$trackID&mode=display\">$fname</a>";
+			if($i < $n) $out .= ", ";
+			$i++;
+		}
 	}
 	print $out;
 }

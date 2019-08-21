@@ -22,29 +22,31 @@ $fields = array('Name' => 'Name',
 		'Description' => 'Description');
 
 #toggle Project combobox on and off
-$noProjectFilter = False;
+$noProjectFilter = True;
 #toggle user/group filters on and off
-$noUserFilter = False;
+$noUserFilter = True;
+#Set Menu items
+?>
+<script type="text/javascript" >
+    var menu_items = ["new","edit","delete"];
+</script>
 
+<?php
 include("listhead.php");
 #print_r($rows);
 foreach ($rows as $row) {
 	#print "row: ";print_r($row); print "<br/>";
 	$id = $row['trackID'];
-	$edit = 0;
-	$permissions = array(
-		$row['permOwner'],
-		$row['permGroup'],
-		$row['permOthers']);
-	if (($row['owner']==$userid and $row['permOwner']>1)  or getPermissions($id,$userid)) $edit = 1;
-	echo listActions($id, array("new","edit","delete") );
+	echo "<tr class=\"lists data-row\" data-record_id=\"$id\">";
+	echo listActions($id, null );
 	echo "<td class=\"lists\" width=\"20%\">
 		<a href=\"list.php?list=listVials&box=$id\">${row['name']}</a></td>";
 	echo "<td class=\"lists\" width=\"20%\">${row['location']}</td>";
 	echo "<td class=\"lists\" width=\"30%\">${row['description']}</td>";
 	echo "</tr>";
+	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
 	$i++;
 }
-listProcessor(array(1,2,3));
+listProcessor(array(1,2,3,7));
 print "</table>";
-php?>
+?>

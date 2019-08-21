@@ -49,14 +49,19 @@ if(array_key_exists('selection', $_POST)){
 		break;
 	# set order placed
 	case 4:
-		foreach($selection as $id){
-			$q = "UPDATE tracker,inventory SET inventory.status=2, inventory.orderDate=NOW(),
-				tracker.changed=NOW()
-				WHERE tracker.trackID=$id AND tracker.sampleID=inventory.id
-				AND tracker.sampleType=(SELECT id FROM sampletypes WHERE st_name='item');";
-			pdo_query($q);
-		}
-		#print $q;
+        $poNumber = escape_quotes($_POST['poNumber']);
+        $setpo = "";
+        if ($poNumber != ''){
+            $setpo = ", inventory.poNumber='$poNumber'";
+        }
+        foreach($selection as $id){
+            $q = "UPDATE tracker,inventory SET inventory.status=2, inventory.orderDate=NOW(),
+                tracker.changed=NOW() $setpo
+                WHERE tracker.trackID=$id AND tracker.sampleID=inventory.id
+                AND tracker.sampleType=(SELECT id FROM sampletypes WHERE st_name='item');";
+            pdo_query($q);
+        }
+        #print $q;
 		echo "Status changed to 'order placed'<br/><br/>";
 		break;
 	# set order received
@@ -89,8 +94,22 @@ if(array_key_exists('selection', $_POST)){
 	    $selString = join(",", $selection);
 	    header( "Location: writeUnigeOrder.php?output=unige&selection=$selString" ) ;
 	    break;
+	# set billing date
+	case 9:
+	    foreach($selection as $id){
+		    $q = "UPDATE tracker,inventory SET inventory.billed=NOW(), tracker.changed=NOW() 
+			    WHERE tracker.trackID=$id AND tracker.sampleID=inventory.id
+			    AND tracker.sampleType=(SELECT id FROM sampletypes WHERE st_name='item');";
+		    pdo_query($q);
+	    }
+	    echo "Changed to 'billed'<br/><br/>";
+	    $redirect = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}";
+	    header("Location:$redirect");
+	    break;
 	}
 }
+
+
 #include("footer.php");
 
 

@@ -1,6 +1,5 @@
 body { 	font-family: arial, verdana, sans-serif;
 	font-size : 0.8em }
-p { margin-left: 20px }
 
 .sequence {	font-size : 125%;
                 position: relative;
@@ -10,11 +9,12 @@ p { margin-left: 20px }
 		line-height: 100%;
 		width: 50em;
                 }
+div.login {padding: 0.5em;}
 
 .search{
 	font-size : 50%;
 	text-align: left;
-	float: left;
+  margin-top: 2em;
 }
 .project{
 	text-align: left;
@@ -40,8 +40,9 @@ img {border:0}
 
 TABLE.lists {
 	border-collapse: collapse;
-	width: 1010px;
+  width: 100%
 	border: 1px solid black;
+  font-size:1em;
 	}
 TD.lists{
 	border-width: 1px;
@@ -58,6 +59,9 @@ TH.lists{
 	background-color: white;
 	padding:0.2em;
 	}
+
+table td.dbid {color: gray}
+
 textarea.form {
 	width:100%;
 	border: 1px solid #B8B8B8;
@@ -67,8 +71,8 @@ textarea.list {width: 100%}
 
 body {
 	margin: 0;
-	padding: 10px;
-	width: 1200px;
+	padding: 1%;
+	max-width: 1200px;
 }
 
 div.PCR{
@@ -122,12 +126,16 @@ div.formRowHelp {
 } 
 
 div.frontPageRow {
-  width:75%;
   text-align:center;
   overflow: hidden;
 /*  padding-left: 100px;*/
   padding: 0.5em 0 0.5em 0;
   }
+
+.frontPageRow #searchField {
+  width:90%;
+  max-width: 40em;
+}
 
 div.idfield{
   color: gray;
@@ -137,8 +145,8 @@ div.idfield{
 div.formLabel {
   float: left;
   clear: left;
-  width: 190px;
-  padding: 0 10px 0 0;
+  width: 18%;
+  padding: 0 2% 0 0;
   display: inline;
   min-height: 20px;
   }
@@ -148,8 +156,8 @@ div.formLabel {
 } 
 
 div.formField {
-  width: 808px;
-  margin-left: 200px;
+  width: 79%;
+  margin-left: 20%;
   text-align: left;
   background-color: white;
   padding:  0em 0em 0em 0px;
@@ -157,13 +165,13 @@ div.formField {
   }
   
 #leftToMap div.formField {
-  width: 350px;
+  width: 470px;
   margin-left: 140px;
 } 
 
 div.displayField{
-  width: 808px;
-  margin-left: 200px;
+  width: 79%;
+  margin-left: 20%;
   text-align: left;
   /*background-color: #FFCCFF;*/
   background-color: white;
@@ -172,7 +180,7 @@ div.displayField{
   }
 
 #leftToMap div.displayField{
-  width: 350px;
+  width: 480px;
   margin-left: 140px;
   }
 
@@ -259,10 +267,9 @@ input.datefield{
 }
 
 #content{
-  padding: 0px 0px 0px 10px;
-  width: 1010px;
+  padding: 1%;
+  width: 98%;
   float:left;
-  margin-left: 180px;
 }
 
 #footer
@@ -300,9 +307,9 @@ cursor:pointer;
 
 #mainform #mapBox {
         border:1px solid #000; 
-        float:right;
-        width:500px;
+        width: 500px;
 	margin-bottom: 1em;
+  display: inline-block;
         }
 
 .button {
@@ -314,10 +321,6 @@ cursor:pointer;
 }
 
 .submitButtons {
-	-moz-border-radius-bottomleft:5px;
-	-moz-border-radius-bottomright:5px;
-	-moz-border-radius-topleft:5px;
-	-moz-border-radius-topright:5px;
 	border: 2px solid #483D8B;
 	padding: 4px;
 	background-color: #B0C4DE;
@@ -330,7 +333,9 @@ cursor:pointer;
 
 
 #mainform #leftToMap {
-        width:500px;
+
+  float: left;
+        width:670px;
         }
 
 #log_res {
@@ -339,7 +344,7 @@ cursor:pointer;
 }
  
 #log_res.ajax-loading {
-	background: url(img/spinner.gif) no-repeat left;
+	background: url(../img/spinner.gif) no-repeat left;
 }
 
 /* Sequence editor definitions */
@@ -380,10 +385,6 @@ cursor:pointer;
 }
 
 .labnavBox {
-	-moz-border-radius-bottomleft:10px;
-	-moz-border-radius-bottomright:10px;
-	-moz-border-radius-topleft:10px;
-	-moz-border-radius-topright:10px;
 	overflow-x:auto;
 	padding:10px;
 	width: 150px;
@@ -433,7 +434,6 @@ h2.qs{
 	width: 120px;
 	height: 10px;
 	background: #eee;
-	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border: 2px solid #ccc;
 }
@@ -441,7 +441,6 @@ h2.qs{
 	background: #000;
 	width: 10px;
 	height: 10px;
-	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 }
 div.orfSize {
@@ -456,14 +455,11 @@ div.orfSize {
 
 .fragmentField {width: 35%; float: left}
 
-/*righclick menu*/
-.vmenu{border:1px solid #aaa; padding: 4px; position:absolute;background:#fff; opacity:0.9;display:none;font-size:0.75em;}
-.vmenu .first_li span{width:100px;display:block;padding:5px 10px;cursor:pointer}
-.vmenu .inner_li{display:none;margin-left:120px;position:absolute;border:1px solid #aaa;
-border-left:1px solid #ccc;margin-top:-28px;background:#fff;}
-.vmenu .sep_li{border-top: 1px ridge #aaa;margin:5px 0}
-.vmenu .fill_title{font-size:11px;font-weight:bold;/height:15px;/overflow:hidden;word-wrap:break-word;}
-.lists tr:hover td {background-color: #eee;}
+/*list menu*/
+.menu td {padding: 4px;}
+table {font-size: 1em}
+.menu-item {margin: 0 4px 0 4px; position : relative; height : 2em; display : inline-block; width : 7em}
+.menu-link {position:absolute;top:50%;margin-top:-0.66em;height:2em;}
 @media print {
     #content{
 	width: 100%;
@@ -474,3 +470,28 @@ border-left:1px solid #ccc;margin-top:-28px;background:#fff;}
     a{color: black}
 }
 
+@media all and (max-width: 768px), only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1024px), only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1024px), only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 1024px), only screen and (min-device-pixel-ratio: 2) and (max-width: 1024px), only screen and (min-resolution: 192dpi) and (max-width: 1024px), only screen and (min-resolution: 2dppx) and (max-width: 1024px) {
+  
+  div.displayField, div.formField{
+    margin-left: 0;
+    clear: left;
+    width: 99%;
+    padding-top: 0.2em;
+    padding-left: 0.2em;
+  }
+
+  div.formLabel{
+    width: 100%;
+    background-color: lightgray;
+    padding-top: 0.2em;
+    padding-left: 0.2em;
+}
+#leftToMap div.formLabel {
+  width: 100%;
+} 
+#mainform #leftToMap, #leftToMap div.formField, #leftToMap div.displayField {
+  width: 100%;
+  margin-left: 0px;
+} 
+
+}

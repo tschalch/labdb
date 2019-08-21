@@ -51,18 +51,22 @@ if ($output == 'vectornti'){
     }
     $num = count($selection);
     $i = 0;
-    if ($output == 'microsynth') print "Oligo name,Sequence,Length,Purification,Scale,5' Modification,Inner Modification,3' Modification\n";
+    $head="Oligo name,Sequence,Sequence Length,Purification,Scale,5' Modification,Inner Modification (5),Inner Modification (6),Inner Modification (7),Inner Modification (8),3' Modification,,DES,HPL,PAG,HPD,GEN,0.04,0.2,1.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,";
+    if ($output == 'microsynth') print "$head\n";
     foreach($selection as $id){
 	$data = $_POST["sequence_$id"];
 	$targetmatch = $_POST["targetmatch_$id"];
 	$name = $_POST["name_$id"];
-	$name = "${id}_$name";
+	$hexID = $_POST["hexID_$id"];
+	#$name = "${hexID}_${id}_$name";
+	$name = substr(${hexID}, 2)."_$name";
 	$scale = $_POST["scale_$id"];
 	$purification = $_POST["purity_$id"];
 	$length = strlen($data);
+	$mods = $_POST["mods_$id"];
 	if ($output == 'amplifx') $line = "$data\t$name\n";
 	if ($output == 'sigma') $line = "$name,$data,$scale,$purification\n";
-	if ($output == 'microsynth') $line = "$name,$data,$length,$purification,$scale,\n";
+	if ($output == 'microsynth') $line = "$name,$data,$length,$purification,$scale,$mods\n";
 	if ($output == 'extractor') $line = "$data $name,\n";
 	if ($output == 'finnzymes') $line = "$name $targetmatch,\n";
 	$i++;

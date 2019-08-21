@@ -3,52 +3,92 @@
 include("accesscontrol.php");
 include_once("functions.php");
 include("extractData.php");
+include('config.php');
 
 $id = $_POST['id'];
 //print_r($data);
-print_r($FILES);
+//print_r($FILES);
 
 foreach ($data as $table => $datasets){
-	if ($table == 'none') continue;
-	if ($table == 'connections'){
-		$cnxs = getConnections($id);
-		foreach ($datasets as $dataset){
-			//print_r($dataset);
-			if($dataset['connID']>-1){
-				$uq = getUpdateQuery($dataset, 'connections', $dataset['connID']);
-				pdo_query($uq);
-				$newCnxs = array();
-				foreach($cnxs as $con){
-					if ($con['connID']!=$dataset['connID']) $newCnxs[] = ($con);
-				}
-				$cnxs = $newCnxs;
-			} else {
-				unset($dataset['connID']);
-				$dataset['belongsTo'] = $id;
-				$query = getInsertQuery($dataset, 'connections', '');
-				//print "$query\n";
-				pdo_query($query);
-			}
-		}
-		foreach($cnxs as $con){
-			$qd = "DELETE FROM `connections` WHERE connID=${con['connID']}";
-			pdo_query($qd);
-		}
-		continue;
-	}
-	foreach ($datasets as $dataset){
-		if (sizeof($_FILES) > 0){
-			foreach ($_FILES as $file){
-				UploadFiles($file);
-			}
-		}
-		//print "id:$id,";
-		if ($id){
-			updateRecord($id, $dataset, $userid, $groups);
-		} else {
-			$id = newRecord($table, $dataset, $userid, $permissions);
-		}
-	}
+    if ($table == 'none') continue;
+    if ($table == 'connections'){
+        $cnxs = getConnections($id);
+        foreach ($datasets as $dataset){
+            //print_r($dataset);
+            if($dataset['connID']>-1){
+                $uq = getUpdateQuery($dataset, 'connections', $dataset['connID']);
+                //print "$uq\n";
+                pdo_query($uq);
+                $newCnxs = array();
+                foreach($cnxs as $con){
+                    if ($con['connID']!=$dataset['connID']) $newCnxs[] = ($con);
+                }
+                $cnxs = $newCnxs;
+            } else {
+                unset($dataset['connID']);
+                $dataset['belongsTo'] = $id;
+                $query = getInsertQuery($dataset, 'connections', '');
+                //print "$query\n";
+                pdo_query($query);
+            }
+        }
+        foreach($cnxs as $con){
+            $qd = "DELETE FROM `connections` WHERE connID=${con['connID']}";
+            pdo_query($qd);
+        }
+        continue;
+    }
+    foreach ($datasets as $dataset){
+        if (sizeof($_FILES) > 0){
+            foreach ($_FILES as $file){
+                UploadFiles($file);
+            }
+        }
+        //print "id:$id,";
+        if ($id){
+            updateRecord($id, $dataset, $userid, Null);
+            if($table == "inventory" && $dataset['status'] == 1 && $useremail != $adminEmail){
+                $message = "Hi!
+
+Item on order has been been changed:
+
+-> New item: ${dataset['name']} $labdbUrl/editEntry.php?id=$id&mode=modify
+-> Items on order: $labdbUrl/list.php?list=listItems&status=1
+
+labdb ";
+
+                $sendmailparams = "-r $adminEmail";
+                $headers = array(
+                    'From' => "From: $adminEmail",
+                    'Reply-To' => "Reply-To: $adminEmail",
+                    'X-Mailer' => 'X-Mail: PHP/' . phpversion()
+                );
+                mail("$adminEmail","Item on order has been changed",
+                    $message, implode("\n", $headers), $sendmailparams);
+            }
+        } else {
+            $id = newRecord($table, $dataset, $userid, $permissions);
+            if($table == "inventory" && $dataset['status'] == 1){
+                $message = "Hi!
+
+A new item has been been put on order:
+
+-> New item: ${dataset['name']} $labdbUrl/editEntry.php?id=$id&mode=modify
+-> Items on order: $labdbUrl/list.php?list=listItems&status=1
+
+labdb ";
+
+                $sendmailparams = "-r $adminEmail";
+                $headers = array(
+                    'From' => "From: $adminEmail",
+                    'Reply-To' => "Reply-To: $adminEmail",
+                    'X-Mailer' => 'X-Mail: PHP/' . phpversion()
+                );
+                mail("$adminEmail","New item on order",
+                    $message, implode("\n", $headers), $sendmailparams);
+            }
+        }
+    }
 }
 print "$id";
 ?>

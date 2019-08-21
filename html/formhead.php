@@ -2,7 +2,7 @@
 include_once("accesscontrol.php");
 #$noUserFilter = True;
 if ((isset($edit) and $edit) or (isset($duplicate) and $duplicate)){
-if(isset($form)){
+	if(isset($form)){
 		$query="SELECT `$table`.*, tracker.*, sampletypes.`table`, sampletypes.`form`, sampletypes.st_name AS stName FROM `$table` LEFT JOIN tracker ON $table.id=tracker.sampleID LEFT JOIN sampletypes ON sampletypes.`table`='$table' WHERE $table.id='$id' AND tracker.sampleType=sampletypes.id AND tracker.owner=$userid ";
 		#print $query;
 		$rows = pdo_query($query);
@@ -11,11 +11,14 @@ if(isset($form)){
 		$row = getRecord($id, $userid);
 	}
 	#print_r($row);
-	if (isset($duplicate) and $duplicate) unset($row['trackID']);
+	if (isset($duplicate) and $duplicate){
+		$id = $row['trackID'];
+		unset($row['trackID']);
+	}
 	foreach ($row as $key => $field){
 		$fields[$key] = $field;
 	}
-	$id = $fields['trackID'];
+	if(array_key_exists('trackID',$fields)) $id = $fields['trackID'];
 	if ($mode == 'display'){
 		$title = "$titleName ${fields['name']}";
 	} else {
@@ -62,6 +65,7 @@ if (isset($submitFunction)){
 if ($mode == 'modify'):
 ?>
 <script type="text/javascript">
+var frm_submitted = false;
 window.addEvent('domready', function() {
 	$('mainform').addEvent('submit', function(e) {
 		//Prevents the default submit event from loading a new page.
@@ -75,7 +79,9 @@ window.addEvent('domready', function() {
 				log.removeClass('ajax-loading');
 				$('id').set('html', response);
 				$('inp_id').set('value', response);
-				//$('title').set('html', "<h2>Edit "+$('name').get('value')+"<\/h2>");				
+				//$('title').set('html', "<h2>Edit "+$('name').get('value')+"<\/h2>");			    
+				//return
+        frm_submitted = true;
 				if (goBack) {
 					history.back();
 				} else {
@@ -106,7 +112,112 @@ window.addEvent('domready', function() {
 		history.back();
 	});
 });
+
+window.addEventListener('beforeunload', function(e) {
+  var myPageIsDirty = FormChanges('mainform').length; //you implement this logic...
+  if (frm_submitted) return;
+  if(myPageIsDirty > 0) {
+    //following two lines will cause the browser to ask the user if they
+    //want to leave. The text of this dialog is controlled by the browser.
+    e.preventDefault(); //per the standard
+    e.returnValue = ''; //required for Chrome
+  }
+  //else: user is allowed to leave without a warning dialog
+});
+
+// from Craig Buttler https://www.sitepoint.com/detect-html-form-changes/
+function FormChanges(form) {
+  if (typeof form == "string") form = document.getElementById(form);
+  if (!form || !form.nodeName || form.nodeName.toLowerCase() != "form") return null;
+  var changed = [], n, c, def, o, ol, opt;
+  for (var e = 0, el = form.elements.length; e < el; e++) {
+    n = form.elements[e];
+    c = false;
+    switch (n.nodeName.toLowerCase()) {
+  // select boxes
+    case "select":
+      def = 0;
+      for (o = 0, ol = n.options.length; o < ol; o++) {
+        opt = n.options[o];
+        c = c || (opt.selected != opt.defaultSelected);
+        if (opt.defaultSelected) def = o;
+      }
+      if (c && !n.multiple) c = (def != n.selectedIndex);
+      break;
+      // input / textarea
+    case "textarea":
+    case "input":
+
+      switch (n.type.toLowerCase()) {
+        case "checkbox":
+        case "radio":
+          // checkbox / radio
+          c = (n.checked != n.defaultChecked);
+          break;
+        default:
+          // standard values
+          c = (n.value != n.defaultValue);
+          break;
+      }
+      break;
+    }
+    if (c) changed.push(n);
+  }
+  return changed;
+}
+
+<!--
+function validate_form ( )
+{
+    valid = true;
+    field = $(document.mainform.<?php print "${table}_0_name";?>);
+    if ( field.value == "" ){
+	field.style.border  = "1px solid #FF6633";
+        valid = false;
+    }
+    for (var i=0; i<fields.length; i++){
+        window.fields[i].style.border  = "";
+        if (window.fields[i].value.length < 1){
+            window.fields[i].style.border  = "1px solid #FF6633";
+            valid = false;
+        }
+    }
+    for (var i=0; i<NoFields.length; i++){
+        window.NoFields[i].style.border  = "";
+        if (isNaN(window.NoFields[i].value) | (window.NoFields[i].value.length < 1)){
+            window.NoFields[i].style.border  = "1px solid #FF6633";
+            valid = false;
+        }
+    }
+
+    for (var i=0; i<window.DateFields.length; i++){
+	if (!checkDate(window.DateFields[i])){
+	valid = false;
+	}
+    }
+    if (!valid) alert ( "Form contains errors. Please correct or complete where marked." );
+
+    if (typeof(MaxLenFields) != "undefined"){
+        var msg = '';
+        for (var i=0; i<MaxLenFields.length; i++){
+            window.MaxLenFields[i]['name'].style.border  = "";
+            if ((window.MaxLenFields[i]['name'].value.length > MaxLenFields[i]['maxLen']) | +
+                (window.MaxLenFields[i]['name'].value.length < MaxLenFields[i]['minLen']) ) 
+            {
+                window.MaxLenFields[i]['name'].style.border  = "1px solid #FF6633";
+                ( msg += "- " + MaxLenFields[i]['msg'] + "\n" );
+                valid = false;
+            }
+        }
+        if (msg!='') alert ( msg );
+    }
+
+    return valid;
+}
+
+//-->
 </script>
+
 <?php
 endif;
 if (isset($table)){

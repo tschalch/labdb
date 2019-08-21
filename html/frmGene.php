@@ -3,9 +3,30 @@ $table = 'fragments';
 $mode = $_GET['mode'];
 $formParams = array('table'=>'fragments', 'mode'=>$mode);
 $noUserFilter = False;
-$submitFunction = "true";
+$submitFunction = "validate_form()";
 #determine type of building block and set title
 include("formhead.php");
+
+?>
+<script type="text/javascript">
+window.addEvent('domready', function() {
+    window.fields = [
+	<?php
+	$fieldname = "document.mainform.${table}_0_";
+	print "${fieldname}name, ";
+    ?>];
+    window.NoFields = [
+	<?php
+	print "";
+	?>];
+    window.DateFields = [
+	<?php 
+	    print "";
+	?>];
+});
+</script>
+<?php
+
 $fields['type']? $type=$fields['type']:$type = $_GET['type'];
 switch ($type){
 	case 'gene':
@@ -23,6 +44,7 @@ print "<input type=\"hidden\" value=\"$type\" name=\"${table}_0_type\"/>";
 #form fields
 #print_r($fields);echo "<br/>";
 printID($formParams);
+printTypeID($formParams, "Building block ID");
 printTextField('Name', 'name',$formParams);
 printProjectFields($formParams);
 if ($type == 'PCR') printTextField('Reaction', 'reaction',$formParams);
@@ -127,7 +149,7 @@ function printPCRFields($formParams){
 			    new Autocompleter.labdb("template", 'autocomplete.php', {
 				'postData': {
 				'field': 'name', // send additional POST data, check the PHP code
-				'table': 'plasmids',
+				'table': 'plasmids ',
 				'extended': '1',
 				},
 			    });

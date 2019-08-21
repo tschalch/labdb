@@ -2,7 +2,7 @@
 #database functions
 include('seq.inc.php');
 include('protein.inc.php');
-
+date_default_timezone_set('Europe/Berlin');
 
 function pdo_query($q){
 	try {
@@ -107,7 +107,7 @@ function printTextField($label, $field, $formParams, $default=null, $helpText=""
 		}
 	print "</div>\n";
 	if($mode == "modify"){
-		$value = ($fields[$field])?$fields[$field]:$default;
+		$value = (key_exists($field, $fields))?$fields[$field]:$default;
 		print "<div class=\"formField\"><input type=\"text\" id=\"$field\"
 			name=\"${table}_0_$field\" class=\"textfield\" value=\"$value\"/></div>";
 		if($helpText != ""){
@@ -123,6 +123,213 @@ function printTextField($label, $field, $formParams, $default=null, $helpText=""
 	print "</div>\n\n";
 }
 
+
+function printHazards($label, $field, $formParams){
+	$table = $formParams['table'];
+	$fields = $formParams['fields'];
+	$mode = $formParams['mode'];
+
+?> 
+<style> 
+img.GHS-picto { max-height: 6em; opacity: 0.1; display: none; } 
+</style> 
+<script>
+function showHazardSelector(el){
+  var hsymbols = $$('img');
+  if (el.checked){
+    $('hazardDisclaimer').set('html','Harzard signals are given for convenience and may not be accurate. Check COSSH and MSDS for details.');
+    $$('img.GHS-picto').each(function (h){
+      h.setStyle('display', 'inline');
+    });
+  }else{
+    $$('img.GHS-picto').each(function (h){
+      h.setStyle('display', 'none');
+    $('hazardDisclaimer').set('html','Hazards not specified. Please check COSHH and MSDS.');
+    });
+    showHazards();
+  }
+}
+
+function showHazards(){
+  var hazards = JSON.decode($('hazard_field').get('value'));
+  for (var h in hazards){
+    if (hazards[h] == 1) {
+      $('GHS-'+h).setStyle('opacity', 1);
+      $('GHS-'+h).setStyle('display', 'inline');
+      $('hazardDisclaimer').set('html','Harzard signals are given for convenience and may not be accurate. Check COSSH and MSDS for details.');
+    }
+  }
+}
+
+function toggleHazard(el){
+  var hazards = JSON.decode($('hazard_field').get('value'));
+  var haz = el.getProperty('data-hazard');
+  if (hazards[haz] == 1) {
+    hazards[haz] = 0;
+  } else {
+    hazards[haz] = 1;
+  }
+  $$('img.GHS-picto').each(function (h){
+    h.setStyle('opacity', '0.1');
+  });
+  $('hazard_field').set('value', JSON.encode(hazards));
+  showHazards();
+}
+
+window.addEvent('domready', function(){
+  showHazards();
+});
+</script>
+
+<?php
+	print "\n<div class=\"formRow\"><div class=\"formLabel\">$label:";
+	if($mode == "modify"){
+    print "<input type=\"checkbox\" name=\"hasHazard\" onClick=\"showHazardSelector(this)\" >";
+    $onclick = "\"toggleHazard(this)\"";
+  }
+	print "</div>\n";
+  print "<div class=\"formField\"> \n";
+  print "<div id=\"hazardDisclaimer\">Hazards not specified. Please check COSHH and MSDS.</div>";
+  print "<div id=\"hazardSymbols\"> \n";
+  print "<img id=\"GHS-toxic\" data-hazard=\"toxic\" onClick=$onclick title=\"Toxic\" class=\"GHS-picto\" src=\"img/GHS-pictogram-skull.svg\"> \n";
+  print "<img id=\"GHS-harmful\" data-hazard=\"harmful\" onClick=$onclick title=\"Harmfull\" class=\"GHS-picto\" src=\"img/GHS-pictogram-exclam.svg\"> \n";
+  print "<img id=\"GHS-health-hazard\" data-hazard=\"health-hazard\" onClick=$onclick title=\"Health Hazard\" class=\"GHS-picto\" src=\"img/GHS-pictogram-silhouette.svg\"> \n";
+  print "<img id=\"GHS-env-hazard\" data-hazard=\"env-hazard\" onClick=$onclick title=\"Environmental Hazard\" class=\"GHS-picto\" src=\"img/GHS-pictogram-pollu.svg\"> \n";
+  print "<img id=\"GHS-explosive\" data-hazard=\"explosive\" onClick=$onclick title=\"Explosive\" class=\"GHS-picto\" src=\"img/GHS-pictogram-explos.svg\"> \n";
+  print "<img id=\"GHS-flammable\" data-hazard=\"flammable\" onClick=$onclick title=\"Flammable\" class=\"GHS-picto\" src=\"img/GHS-pictogram-flamme.svg\"> \n";
+  print "<img id=\"GHS-oxidizing\" data-hazard=\"oxidizing\" onClick=$onclick title=\"Oxidizing\" class=\"GHS-picto\" src=\"img/GHS-pictogram-rondflam.svg\"> \n";
+  print "<img id=\"GHS-corrosive\" data-hazard=\"corrosive\" onClick=$onclick title=\"Corrosive\" class=\"GHS-picto\" src=\"img/GHS-pictogram-acid.svg\"> \n";
+  print "<img id=\"GHS-compressed-gas\" data-hazard=\"compressed-gas\" onClick=$onclick title=\"Compressed Gas\" class=\"GHS-picto\" src=\"img/GHS-pictogram-bottle.svg\"> \n";
+  print "<img id=\"GHS-nohazard\" data-hazard=\"nohazard\" onClick=$onclick title=\"non-hazardous\" class=\"GHS-picto\" src=\"img/GHS-pictogram-nonhazardous.svg\"> \n";
+  
+  $value = (key_exists($field, $fields) && $fields[$field] != "")?$fields[$field]:"{}";
+  print "<input id=\"hazard_field\" type=\"hidden\" name=\"${table}_0_$field\" value=\"$value\" />";
+	print "</div>\n";
+	print "</div>\n";
+	print "</div>\n";
+}
+
+function printUploadField($label, $field, $formParams){
+	$table = $formParams['table'];
+	$fields = $formParams['fields'];
+
+
+	print "\n<div class=\"formRow\"><div class=\"formLabel\">$label:";
+	print "</div>\n";
+	if (isset($fields['trackID'])){
+	    $trackID = ($fields['trackID'])? $fields['trackID']:"";
+  }
+
+	$mode = $formParams['mode'];
+  $html = '<div class="formField"><div id="filestore"></div>';
+	if($mode == "modify"){
+  $html = '<div id="filestore-row" class="formField"><div id="filestore"></div>';
+  $html .= ' <span></span><input type="file" name="file" id="file" />
+    <span>Description: </span><input id="file_description" type="text" name="filedesc" />
+        <button type="button" id="btn">Upload</button>
+        </div>';
+  }
+  $value = (key_exists($field, $fields) && $fields[$field] != "")?$fields[$field]:"{}";
+  $html .= "<input id=\"files_field\" type=\"hidden\" name=\"${table}_0_$field\" value=\"$value\" />";
+  $html .= '</div>';
+  print $html;
+?>
+<script src="js/File.Upload.js"></script>
+<style> div.filerow > div {display:inline-block;}
+  #filestore-row {border: 0.5px solid gray; padding: 0.2em;}
+</style>
+<script>
+
+function removeFile(el){
+  var fileStore = JSON.decode($('files_field').get('value'));
+  var fileid = el.getProperty('data-fileid');
+  delete fileStore.files[fileid];
+  $('files_field').set('value', JSON.encode(fileStore));
+  showFiles();
+}
+
+function showFiles(){
+  var fileStore = JSON.decode($('files_field').get('value'));
+  var files_string = "";
+  for (var f in fileStore.files){
+    var filename = fileStore.files[f].filename;
+    var description = fileStore.files[f].description;
+    files_string += `<div data-file-id="${f}">
+     <div class="filerow"><div id="desc-${f}">${description}:</div> <div id="file-${f}"><a href="/uploads/${filename}" target="blank">${filename}</a></div>
+    <?php if ($mode == "modify") print '<img onClick="removeFile(this);" data-fileid="${f}" style="display:inline; margin: 0.2em; cursor: pointer; vertical-align: middle; height:1.5em;" title="delete" alt="delete" src="img/delete-item.png" />'?>
+    </div></div>`;
+  }
+  $('filestore').set('html', files_string);
+}
+
+function addFile(response){
+  response = JSON.parse(response);
+  if (typeof(response.jsonError) !== "undefined"){
+    alert("Problem with upload (jsonError): " + response.jsonError);
+    return;
+  }
+  if (typeof(response.fileError) !== "undefined"){
+    if (response.fileError == "FileExists") {
+      var retVal = confirm("File of that name already exists. The existing copy will be attached instead, OK?");
+      if (retVal == false){
+        return;
+      }
+    }
+    if (response.fileError == "FileExtensionError") {
+      alert("File type not supported. Please upload .pdf, .doc(x) or .xls(x) files.");
+      return;
+    }
+  }
+  var fileStore = JSON.decode($('files_field').get('value'));
+  if (typeof(fileStore.pointer) === "undefined") fileStore.pointer = 0;
+  var pointer = fileStore.pointer + 1;
+  if (typeof(fileStore.files) === "undefined") fileStore.files = {};
+  var files = fileStore.files;
+  files[pointer] = response ;
+  fileStore.pointer = pointer;
+  $('files_field').set('value', JSON.encode(fileStore));
+  showFiles();
+}
+
+</script>
+<script>
+window.addEvent('domready', function(){
+  showFiles();
+	$("btn").addEvent('click', function(){
+    var file_desc = $('file_description').get('value');
+    var files = $('file').get('value');
+    if (file_desc == '' || files == ''){
+      alert("File or file description missing! Please enter a short description of the file");
+    }
+    if (file_desc == ''){
+      $('file_description').setStyle('outline','solid 1px red');
+      return;
+    };
+    if (files == ''){
+      $('file').setStyle('outline','solid 1px red');
+      return;
+    };
+		var upload = new File.Upload({
+			url: 'ajaxupload.php',
+			data: {
+            file_desc:  $('file_description').get('value')
+			},
+			images: ['file'],
+			onComplete: function(response){
+				console.log(response);
+        addFile(response);
+        $('file_description').setStyle('outline','none');
+        $('file').setStyle('outline','none');
+			}
+		});
+		
+		upload.send();
+	});
+});
+</script>
+<?php       
+}
+
 function printID($formParams){
 	print "\n<div class=\"formRow idfield\"><div class=\"formLabel\">ID:</div>\n";
 	$fields = $formParams['fields'];
@@ -131,6 +338,7 @@ function printID($formParams){
 	    print "<div id=\"id\" class=\"displayField\" style=\"background-color: white;\">$value</div>
 			<input type=\"hidden\" id=\"inp_id\" name=\"id\" value=\"$value\"/>\n";
 	} else {
+		$value = '';
 	    print "<div id=\"id\" class=\"displayField\" style=\"background-color: white;\"></div>
 		<input type=\"hidden\" id=\"inp_id\" name=\"id\" value=\"\"/>\n";
 	}
@@ -138,6 +346,20 @@ function printID($formParams){
 	if ($value != ''){
 		printTimestamp($formParams);
 	}
+}
+
+function printTypeID($formParams, $idName){
+	print "\n<div class=\"formRow idfield\"><div class=\"formLabel\">$idName:</div>\n";
+	$fields = $formParams['fields'];
+	if (isset($fields['hexID'])){
+	    $value = ($fields['hexID'])? $fields['hexID']:"";
+	    print "<div id=\"hexID\" class=\"displayField\" style=\"background-color: white;\">$value</div>
+			<input type=\"hidden\" id=\"inp_hexID\" name=\"hexID\" value=\"$value\"/>\n";
+	} else {
+	    print "<div id=\"hexID\" class=\"displayField\" style=\"background-color: white;\"></div>
+		<input type=\"hidden\" id=\"inp_hexID\" name=\"hexID\" value=\"\"/>\n";
+	}
+	print "</div>\n\n";
 }
 
 function printTimestamp($formParams){
@@ -169,7 +391,7 @@ function printDateField($label, $field, $formParams, $default=null){
 	#print_r(getdate(date("Y-m-d",$fields[$field])));
 	print "<div class=\"formRow\"><div class=\"formLabel\">$label:</div>";
 	if($mode == "modify"){
-		$value = ($fields[$field])?$fields[$field]:$default;
+		$value = (key_exists($field, $fields))?$fields[$field]:$default;
 		print "<div class=\"formField\">
 			<input type=\"text\" id=\"${table}_0_${field}_m\" class=\"datefield\" size=\"3\" value=\"${date['mon']}\"/>
 			<input type=\"text\" id=\"${table}_0_${field}_d\" class=\"datefield\" size=\"3\" value=\"${date['mday']}\"/>
@@ -193,7 +415,6 @@ function printCheckbox($label, $field, $formParams){
 	$value = 1;
 	if ($fields[$field]) $checked = "checked";
 	if($mode == "modify"){
-		if($checked) print "<input type=\"hidden\" name=\"${table}_0_inStock\" value=\"0\"/>";
 		print "<div class=\"formField\"><input type=\"checkbox\" 
 			name=\"${table}_0_$field\" class=\"radiobox\" value=\"$value\" $checked/></div>";
 	}	
@@ -211,8 +432,8 @@ function printLinkField($label, $field, $formParams){
 	$mode = $formParams['mode'];
 	print "<div class=\"formRow\"><div class=\"formLabel\">$label:</div>";
 	if($mode == "modify"){
-		print "<div class=\"formField\"><input type=\"text\" 
-			name=\"${table}_0_$field\" class=\"textfield\" value=\"$fields[$field]\"></input></div>";
+		print "<div class=\"formField\"><input id=\"$field\" type=\"text\" 
+			name=\"${table}_0_$field\" class=\"textfield\" value=\"$fields[$field]\"/></div>";
 	}	
 	if($mode == "display"){
 		print "<div class=\"displayField\"><a href=\"$fields[$field]\">$fields[$field]</a></div>";
@@ -265,6 +486,7 @@ function printTextArea($label, $field, $formParams){
 	$table = $formParams['table'];
 	$fields = $formParams['fields'];
 	$mode = $formParams['mode'];
+	if (!key_exists($field, $fields)) $fields[$field] = '';
 	print "<div class=\"formRow\"><div class=\"formLabel\">$label:</div>\n";
 	if($mode == "modify"){
 		print "<div class=\"formField\"><textarea name=\"${table}_0_$field\" class=\"form\">$fields[$field]</textarea></div>\n";
@@ -300,7 +522,7 @@ function printSequenceField($label, $type, $field, $formParams, $area, $seqEdito
 	$mode = $formParams['mode'];
 	$seq = $fields[$field];
 	if(($type == 'oligo' or $type == 'DNA')){
-		$seqLen = CountATCG($seq);
+		$seqLen = seqlen($seq);
 	}
 	$label = "$label:";
 
@@ -404,9 +626,13 @@ function getComboBox($field, $table, $mode, $choices, $match, $action=null, $lin
 				$redchoices[$choice['trackID']]=$choice['name'];
 			}
 		}
-		if ($link and isset($match) and $match){
+		if ($link and isset($match) and $match ){
 			$cmbBox .= "<a href=\"editEntry.php?id=$match&amp;mode=display\"> ${redchoices[$match]}</a>";
+		} elseif ( isset($match) and $match){
+			 $cmbBox .= "${redchoices[$match]}";
 		}
+		//$cmbBox = "</div>";
+			
 	}
 	return $cmbBox;
 }
@@ -479,7 +705,7 @@ function getCrossCombobox($connection, $table, $type, $fcounter, $mode, $userid)
 	    print ">$fname</option>\n";
 	}
     print "</select>\n\n";
-    if($type == 'gene'){
+    if($table == 'plasmids'){
 	print "<input style=\"width: 10%; float: left;\" name=\"connections_${fcounter}_start\" value=\"${connection['start']}\"/>\n";
 	print "<input style=\"width: 10%; float: left;\" name=\"connections_${fcounter}_end\" value=\"${connection['end']}\"/>\n";
 	print "<select style=\"width: 10%; float: left;\" name=\"connections_${fcounter}_direction\">\n";
@@ -495,7 +721,7 @@ function getCrossCombobox($connection, $table, $type, $fcounter, $mode, $userid)
     }
 	print "<input type=\"hidden\" name=\"connections_${fcounter}_connID\" value=\"${connection['connID']}\"/>\n";
     print "<img onClick=\"$(this).getParent().getParent().destroy()\"
-		style=\"float: left; display:inline; margin: 0.2em; cursor: pointer; vertical-align: middle\" alt=\"delete\" src=\"img/b_drop.png\" />";
+		style=\"float: left; display:inline; margin: 0.2em; cursor: pointer; vertical-align: middle\" alt=\"delete\" src=\"img/delete-item.png\" />";
     print "<div style=\"padding: 0 0 0.5em 0;\"></div>\n";
 	print "</div>\n";
     print "</div>\n\n";
@@ -533,8 +759,9 @@ function getCrossAutoselectField($connection, $table, $type, $fcounter, $mode, $
     $elementID = $name;
 
     getAutoselectField($table, $mode, $elementID, $name, $fid, 'fragmentField');
+	//print_r($connection);
 
-    if($type == 'gene'){
+    if($fragment['type'] == 'gene' || $fragment['type'] == 'PCR' || $connection['connID'] == -1){
 	print "<input style=\"width: 10%; float: left;\" name=\"connections_${fcounter}_start\" value=\"${connection['start']}\"/>\n";
 	print "<input style=\"width: 10%; float: left;\" name=\"connections_${fcounter}_end\" value=\"${connection['end']}\"/>\n";
 	print "<select style=\"width: 10%; float: left;\" name=\"connections_${fcounter}_direction\">\n";
@@ -547,11 +774,11 @@ function getCrossAutoselectField($connection, $table, $type, $fcounter, $mode, $
 		    print ">$dname</option>\n";
 	    }
 	    print "</select>\n";
-    }
+	}
 
     print "<input type=\"hidden\" name=\"connections_${fcounter}_connID\" value=\"${connection['connID']}\"/>\n";
     print "<img onClick=\"destroyFrag(this)\"
-		style=\"float: left; display:inline; margin: 0.2em; cursor: pointer; vertical-align: middle\" alt=\"delete\" src=\"img/b_drop.png\" />";
+		style=\"float: left; display:inline; margin: 0.2em; cursor: pointer; vertical-align: middle; height:1.5em;\" title=\"delete\" alt=\"delete\" src=\"img/delete-item.png\" />";
     print "<div style=\"padding: 0 0 0.5em 0;\"></div>\n";
 	print "</div>\n";
     print "</div>\n\n";
@@ -582,7 +809,7 @@ function getAutoselectField($table, $mode, $elementID, $post_name, $trackID, $cl
     <?php
 }
 
-function printCrossCombobxs($id, $types, $fcounter, $formParams){
+function printCrossCombobxs($id, $types, $fcounter, $formParams, $unlink=False){
 	$table = $formParams['table'];
 	$mode = $formParams['mode'];
 	global $userid;
@@ -593,8 +820,8 @@ function printCrossCombobxs($id, $types, $fcounter, $formParams){
 	} else {
 		print "<div style=\"display:none\">\n";
 	}
-	foreach ($types as $type){
-		print "<div id=\"$type\" style=\"display: inline; color: #4682B4; margin-right: 1em;  height:2em; cursor:pointer\">Add $type</div>\n";
+	foreach ($types as $name=>$table){
+		print "<div id=\"$name\" data-table=\"$table\" style=\"display: inline; color: #4682B4; margin-right: 1em;  height:2em; cursor:pointer\">Add $name</div>\n";
 	}
 	print "<div style=\"padding: 0 0 0.5em 0;\"></div>\n";
 	print "</div>\n";
@@ -614,7 +841,8 @@ function printCrossCombobxs($id, $types, $fcounter, $formParams){
 		//	print "</div>\n";
 		//}
 		foreach ($cnxs as $c){
-			getCrossAutoselectField($c, Null, Null, $fcounter, $mode, $userid);
+			if ($unlink == True) $c['connID'] = -1;
+			getCrossAutoselectField($c, $table, Null, $fcounter, $mode, $userid);
 			$fcounter++;
 		}
 	}
@@ -748,10 +976,13 @@ function printCloseAddFragmentButton($formParams, $id){
 function printOligoData($formParams, $field){
 	$row = $formParams['fields'];
 	$sequence = $row[$field];
-	$tm = sprintf("%6.1f",Tm($sequence,'bre',$row['Saltconc']*1E-3, $row['PCRconc']*1E-9));
+	$tm = Tm($sequence,'bre',$row['Saltconc']*1E-3, $row['PCRconc']*1E-9);
+	if (is_numeric($tm)){
+	    $tm = sprintf("%6.1f", $tm);
+	}
 	if (CountATCG($sequence)) $gc = sprintf("%6.1f",CountCG($sequence) / CountATCG($sequence) * 100);
 	$len = strlen($sequence);
-	print "<div style=\"\">($len bp, Tm: $tm&#176;C; GC: $gc%)</div>";
+	print "<div style=\"\">($len bp, Tm: $tm &deg;C; GC: $gc%)</div>";
 }
 
 function printProjectFields($formParams){
@@ -762,58 +993,11 @@ function printProjectFields($formParams){
 	printComboBox('Project', 'project', $formParams, $projects, $row['project']);
 	#setupProjects();
 } 
-function listActions($id, $actions){
-    	$action = "<td class=\"lists\" width=\"1%\">";
+function listActions($id, $hexID){
+   	$action = "<td class=\"lists\" width=\"1%\">";
 	$action .= "<input type=\"checkbox\" name=\"selection[]\" value=\"$id\"/>\n";
+	$action .= "<input type=\"hidden\" name=\"hexID_$id\" value=\"$hexID\"/>\n";
 	$actionID = "nav";
-	$catalog = array();
-	$catalog["new"] = "<div><a href=\"newEntry.php?id=$id&amp;mode=modify\">
-	    <img style=\"padding-right:5px;\" title=\"New record based on this one\" src=\"img/copy.png\" />
-	    New
-	    </a></div>\n";
-	$catalog["edit"] = "<div><a style=\"\" href=\"editEntry.php?id=$id&amp;mode=modify\">
-		<img style=\"padding-right:5px;\" title=\"Edit record\" title=\"edit\"src=\"img/b_edit.png\" />
-		Edit
-	    </a></div>";
-	$catalog["fasta"] = "<div><a style=\"\" href=\"fasta.php?id=$id\">
-		<img style=\"padding-right:5px;\" title=\"Get fasta file\" title=\"edit\"src=\"img/File.ico\" />
-		Fasta file
-	    </a></div>";
-	$catalog["delete"] = "<div><a style=\"cursor:pointer;\" onclick=\"deleteRecord(this, $id);\">
-	    <img style=\"padding-right:5px;\" src=\"img/b_drop.png\" />
-		    Delete
-	    </a></div>";
-	$catalog["vial"] = "<div><a href=\"newEntry.php?form=frmVial&amp;mode=modify&amp;template=$id\">
-	    <img style=\"\" title=\"New vial based on this record.\"src=\"img/vial.png\" />
-		New Vial
-	    </a></div>";
-
-	$action .= "<div class=\"vmenu\">";
-	foreach ($actions as $a){
-	    $action .= $catalog[$a];
-	}
-	$action .= "</div></td>\n";
-	return $action;
-	
-	$action .= "<td class=\"lists\" style=\"text-align:center;\" width=\"2%\">";
-	$spacerSize = 20;
-	if ($edit) $spacerSize += 20;
-	if ($vial) $spacerSize += 20;
-	$action .= "<img style=\"float:left\" src=\"img/point.jpg\" width=\"${spacerSize}px\" height=\"0px\"/>";
-	$action .= "<a style=\"\" href=\"newEntry.php?id=$id&amp;mode=modify\">
-		  <img style=\"\" title=\"New record based on this one\" src=\"img/copy.png\" /></a>";
-	if ($edit){
-#			    <a style=\"display:inline\" href=\"\" onclick=\"deleteRecord($id);\"><img 
-#			    style=\"display:inline\" alt=\"delete\" src=\"img/b_drop.png\" /></a>";
-#		($public)? $perm = "img/unlock-icon.jpg" : $perm = "img/lock-icon.jpg";
-		$action .= "<a style=\"\" href=\"editEntry.php?id=$id&amp;mode=modify\">
-			  <img style=\"\" title=\"Edit record\" title=\"edit\"src=\"img/b_edit.png\" /></a>";
-#		$action .= "<img style=\"display:inline\" onclick=\"changePermission($id);\" hspace=\"1px\" alt=\"lock/unlock record\"src=\"$perm\"/>";
-	}
-	if ($vial){
-		$action .= "<a href=\"newEntry.php?form=frmVial&amp;mode=modify&amp;template=$id\">
-		<img style=\"\" title=\"New vial based on this record.\"src=\"img/vial.png\" /></a>";
-	}
 	$action .= "</td>\n";
 	return $action;
 }
@@ -847,7 +1031,7 @@ function getSampleType($trackerID){
 	$q1 = "SELECT sampletypes.* FROM tracker INNER JOIN sampletypes ON sampletypes.id=tracker.sampleType WHERE trackID=$trackerID";
 	#print "$q1";
 	$r1 = pdo_query($q1);
-	#print_r($r1);
+	//print_r($r1);
 	if($r1) return $r1[0];
 }
 
@@ -869,6 +1053,7 @@ function getRecord($trackerID, $userid, $mode='display'){
 		$q2 = "SELECT MAX(permission) AS maxpermission, tracker.*, $table.*, sampletypes.*,
 		       DATE_FORMAT(tracker.created,'%m/%d/%y') AS createDate,
 		       DATE_FORMAT(tracker.changed,'%m/%d/%y') AS changeDate, user.userid AS username,
+			   CONCAT(sampletypes.st_code, '.', LPAD(CONV($table.id, 10, 36), 3, '0')) as hexID,
 		       user.fullname FROM permissions
 		       LEFT JOIN tracker ON tracker.trackID=permissions.trackID
 		       LEFT JOIN sampletypes ON sampletypes.id=tracker.sampleType 
@@ -918,10 +1103,11 @@ function getPermissionString($trackID){
 	$r = pdo_query($q);
 	$permString = array('None','Read','Write');
 	$n=0;
+	$str = '';
 	foreach ($r as $perm){
 		if ($n > 0) $str.=", ";
 		$permstr = $permString[$perm['permission']];
-		$str = "${perm['fullname']}:$permstr";
+		$str .= "${perm['fullname']}:$permstr";
 		$n++;
 	}
 	return $str;
@@ -935,7 +1121,11 @@ function getPermissions($trackID, $userid){
 	return $r[0][0];
 }
 
-function getRecords($table, $userid, $columns, $where='', $order='', $count = 0, $join=''){
+function getHexIDSQL($table){
+	return "CONCAT(sampletypes.st_code, '.', LPAD(CONV($table.id, 10, 36), 3, '0'))";
+}
+
+function getRecords($table, $userid, $columns, $where='', $order='', $count = 0, $join='', $noTrack=0){
 	global $_SESSION;
 	global $noUserFilter;
 	$currUid = $_SESSION['currUser'];
@@ -962,7 +1152,7 @@ function getRecords($table, $userid, $columns, $where='', $order='', $count = 0,
 			$i += 1;
 		}
 	}
-	$q1 .= "FROM permissions
+	$q1 .= ", $table.id FROM permissions
   	        JOIN groups ON groups.userid=$userid
 		JOIN tracker ON permissions.trackID = tracker.trackID
 		JOIN user ON user.ID=tracker.owner
@@ -972,11 +1162,28 @@ function getRecords($table, $userid, $columns, $where='', $order='', $count = 0,
 		is NULL";
 	if ($where) $q1 .= " AND $where";
 	$q1 .= " ORDER BY ";
-	$order? $q1 .= "$order" : $q1 .= "$table.id";
+	$order? $q1 .= "$order" : $q1 .= "$table.id DESC";
 	if($count){
 		$q1 .= ") AS foo";
 	}
-	//print "<br/>$q1<br/>";
+
+    if($noTrack){
+		$q1 = "SELECT DISTINCT ";
+		$n = sizeof($columns);
+		$i = 1;
+		foreach($columns AS $col){
+			$q1 .= "$col";
+			($i < $n)? $q1 .=", ":$q1 .=" ";
+			$i += 1;
+		}
+        $q1 .= " FROM $table";
+        if ($where) $q1 .= " WHERE $where";
+        $q1 .= " ORDER BY ";
+        $order? $q1 .= "$order" : $q1 .= "$col DESC";
+        $q1 .= ";";
+    }
+
+	#print "<br/>$q1<br/>";
 	$r1 = pdo_query($q1);
 	if(isset($r1) & is_array($r1)){
 	    return $r1;
@@ -986,15 +1193,10 @@ function getRecords($table, $userid, $columns, $where='', $order='', $count = 0,
 }
 
 function newRecord($table, $ds, $userid){
-	include('config.php');
-	$link = mysql_connect($host, $username, $password);
-	if (!$link) {
-	    die('Could not connect: ' . mysql_error());
-	}
-	$project = $ds['project'];
-	$subProject = $ds['subProject'];
+	$project = ($ds['project'] == '' ? -1 : $ds['project']);
+	#$subProject = ($ds['subProject'] == '' ? -1 : $ds['subProject']);
 	unset($ds['project']);
-	unset($ds['subProject']);
+	#unset($ds['subProject']);
 	$stq = "SELECT * FROM sampletypes WHERE `table`='$table'";
 	#print $stq;
 	$str = pdo_query($stq);
@@ -1019,12 +1221,12 @@ function newRecord($table, $ds, $userid){
 		if($cnt <> $end) $iq .= ", ";
 	}
 	$iq .= ")";
-	#print $iq;
+	//print "$iq<br/>";
 	$sampleID = pdo_query($iq);
 	# insert query for tracker
-	$iq = "INSERT INTO tracker (sampleID, sampleType, project, subProject, created, owner, permOwner)";
-	$iq .= " VALUES ($sampleID, $st, '$project', '$subProject', NOW(), $userid, 2)";
-	//print $iq;
+	$iq = "INSERT INTO tracker (sampleID, sampleType, project, created, owner, permOwner, deleted, permGroup, permOthers)";
+	$iq .= " VALUES ($sampleID, $st, '$project', NOW(), $userid, 2, '0-0-0', 2, 0)";
+	//print "$iq<br/>;
 	$newTrackID = pdo_query($iq);
 	# setup permissions
 	$gq = "SELECT * FROM groups JOIN user ON belongsToGroup=user.id WHERE groups.userid=$userid AND user.groupType!=3;";
@@ -1059,17 +1261,11 @@ function newRecord($table, $ds, $userid){
 		 #print "$aiq<br/>";
 	pdo_query($aiq);
 	#insert read permission for this group
-	mysql_close($link);
 	return $newTrackID;
 }
 
 
 function updateRecord($trackerID, $ds, $userid, $groupids){
-	include('config.php');
-	$link = mysql_connect($host, $username, $password);
-	if (!$link) {
-	    die('Could not connect: ' . mysql_error());
-	}
 	$table = getTable($trackerID);
 	$uq = "UPDATE `$table`, `tracker` SET ";
 	#print_r($ds);
@@ -1080,8 +1276,8 @@ function updateRecord($trackerID, $ds, $userid, $groupids){
 	$uq .= ", tracker.changed=NOW() ";
 	$uq .= "WHERE tracker.sampleID=`$table`.id AND trackID='$trackerID';";
 	//print "$uq <br/>";
-	$r = pdo_query($uq);
-	mysql_close($link);
+	//$r = pdo_query($uq);
+	pdo_query($uq);
 }
 
 function getConnections($trackerID){
@@ -1118,6 +1314,47 @@ function showOptions(element){
 	(element.value =='2')?ChangeDisplayDiv(['permTable'], 'block'):ChangeDisplayDiv(['permTable'], 'none');
 	(element.value =='0')?ChangeDisplayDiv(['oligoOptions'], 'block'):ChangeDisplayDiv(['oligoOptions'], 'none');
 }
+
+function get_po_number(){
+    var ponumber=prompt("Please enter PO number if you have one for these items.");
+    if (ponumber!=null && ponumber!="") {
+	document.mainform.poNumber.value = ponumber;
+    }
+    return true;
+}
+
+function purgeUnchecked(){
+    var inputs =  document.getElementsByTagName("input");
+    var checkCount = 0;
+    for(var i=0; i < inputs.length; i++){
+	var cbx = inputs[i];
+	if (cbx.name == "selection[]" && !cbx.checked){
+		disableRow(cbx.value, true);
+	}
+	if (cbx.name == "selection[]" && cbx.checked){
+	    disableRow(cbx.value, false);
+	    checkCount += 1;
+	}
+    }
+    if (checkCount > 100){
+       alert("More than 100 items selected. Process will likely fail!");
+    }
+}
+
+function disableRow(rowID, disabled){
+    var trs = document.getElementsByTagName("tr");
+    for(var i=0; i < trs.length; i++){
+	var tr = trs[i];
+	if (tr.dataset.record_id == rowID){
+	    var inps =  tr.getElementsByTagName("input");
+		for(var j=0; j < inps.length; j++){
+		    inps[j].disabled = disabled;
+	    }
+	}
+    }
+    
+}
+
 // -->
 </SCRIPT>
 <tr><td colspan = "100"><input type="checkbox" name="allbox" value="1"/ onclick="selectAll();"> select all</td></tr>
@@ -1134,6 +1371,7 @@ function showOptions(element){
 	if (in_array(6, $actions)) print "<option value=\"6\">&nbsp;-Item finished</option>";
 	if (in_array(7, $actions)) print "<option value=\"7\">&nbsp;-Export in mediawiki format</option>";
 	if (in_array(8, $actions)) print "<option value=\"8\">&nbsp;-Export for ordering</option>";
+	if (in_array(9, $actions)) print "<option value=\"9\">&nbsp;-Mark as billed</option>";
 ?>
 	</select>
 	<div id="permTable" name="permTable" style="clear:both; display:none; margin-right:20px" ><table>
@@ -1155,6 +1393,7 @@ function showOptions(element){
 			<td><input type="radio" name="perm" value="2"></td>
 		</tr>
 	</table></div>
+	<input id="poNumber" type="hidden" name="poNumber"/>
 </td></tr>
 <tr><td colspan = "8"><input type="Submit" value="Do it"></td></tr>
 <?php
@@ -1217,46 +1456,58 @@ function escape_quotes($receive) {
 
 function getRestrictionSites($enzymes, $dnaSequence){
 	include('config.php');
+  include('lib/restriction_digest.php');
+  $digestion = digestDNA( array("sequence" => $dnaSequence) );
 	$output = array();
 	$sites = array();
 	global $userid;
 	global $noUserFilter;
 	$sitelen = 4;
 	//print $enzymes;
-	if(strpos($enzymes, "leemorlab") === 0){
+	$lab_key = "lab"; //keyword used to specify all enzymes available in Lab Enzymes box.
+  $enzymes = explode(" ", $enzymes);
+	if(strpos($enzymes[0], $lab_key) === 0){
 		$noUserFilter = True;
-		$enzys = getRecords('vials', $userid, array('vials.name'), " trackBoxes.name='Lab Enzymes' ", '', 0, " LEFT JOIN trackBoxes ON vials.boxID=trackBoxes.tID ");
+		$enzys = getRecords('vials', $userid, array('vials.name'), " trackboxes.name='Lab Enzymes' ", '', 0, " LEFT JOIN trackboxes ON vials.boxID=trackboxes.tID ");
 		$noUserFilter = False;
 		if (sizeof($enzys) > 0){
-			$enzymeList = '';
+			$enzymeList = [];
 			foreach($enzys as $enzyme){
-				$enzymeList .= "${enzyme[0]},";
+				$arr = explode(' ',trim($enzyme[0]));
+				$enzyme = $arr[0];
+				$enzymeList[] = $enzyme;
 			}
-			$enzymes = substr($enzymeList, 0, strlen($enzymeList)-1).substr($enzymes,9, strlen($enzymes));
+			#print_r($enzymeList);
 		}
-	}
+  } else {
+    $enzymeList = explode(",", $enzymes[0]);
+  }
 	// $enzymes;
 	$limit ='';
-	if (substr($enzymes, 0, 3) != 'all') $limit = "-limit N"; 
-	$cmd = "echo '$dnaSequence' | $embossPath/restrict -warning Y -rformat excel $limit --commercial Y --filter --auto -sitelen $sitelen -enzymes $enzymes 2>&1";
-	//print "$cmd";
-	$tmp = exec($cmd, $output);
-	//print_r($output);
-	//print $tmp;
-	foreach($output as $line){
-		if (substr($line, 0, 1)==  "#") continue;
-		//print "$line<br/>";
-		$line = explode("\t", trim($line));
-		//print_r($line);
-		if (is_numeric($line[0])){
-			$cutsite = $line[5] - 1;
-			$sites[] = ("['${line[3]}', $cutsite, {'background-color': \"white\",
-				    fill: \"black\", \"font-size\": '8', \"font-family\": \"Verdana\",
-				    cursor:\"pointer\", 'text-anchor' : \"middle\"}]");
-		}
+	if (substr($enzymes, 0, 3) != 'all') $limit = "-limit Y"; 
+	if ( $digestion == Null || $digestion == '' ){
+	    print "<script type='text/javascript'>alert('Problem with restriction sites! No restriction sites are displayed.');</script>";
 	}
-	$sites = "new Array(". implode(',', $sites) .")";
-	//print $sites;
+	//print "Tmp: $tmp<br/>Pos: $pos<br/>";
+  if ($maxPos = array_search('-max', $enzymes)){
+    $maxCuts = $enzymes[ $maxPos + 1]; 
+  } else {
+    $maxCuts = 100;
+  }
+  $sites = "new Array(";
+  foreach($digestion[0] as $enzyme => $cuts ){
+    //print $enzyme;
+    if (in_array($enzyme, $enzymeList) && sizeof($cuts['cuts']) <= $maxCuts ) {
+      foreach($cuts['cuts'] as $site => $dunno){
+        $sites .= "['$enzyme', '$site', {'background-color': \"white\",
+          fill: \"black\", \"font-size\": '8', \"font-family\": \"Verdana\",
+          cursor:\"pointer\", 'text-anchor' : \"middle\"}],";
+        //print "<pre>$sites</pre>";
+      }
+    }
+  }
+	$sites .= ")";
+	print "<pre>"; $sites;
 	return $sites;
 }
 

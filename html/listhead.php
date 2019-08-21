@@ -4,15 +4,18 @@ include_once("accesscontrol.php");
 include("header.php");
 include_once("functions.php");
 ?>
-
 </head>
 <body>
 
 <?php 
-include("listRightClickMenu.php");
 include("title_bar.php");
 include("navigation.php");
 ?>
+<script type="text/javascript" >
+    window.addEvent('domready', function() {
+	$$('.data-row').addEvent('click',showMenuInTableHead);
+     });
+</script>
 <div id="content">
 <script type="text/javascript" language="javascript">
     <!--
@@ -22,9 +25,11 @@ include("navigation.php");
 </script>
 <?php
 include_once("listTitle.php");
+if (isset($orderInstructions)) print $orderInstructions;
 include("list_doit.php");
 $searchfields[] = 'user.fullname';
 $columns[] = 'user.fullname';
+$columns[] = getHexIDSQL($table)." as hexID";
 
 if (isset($category)){
 	echo   "<div id=\"navcontainer\">
@@ -61,6 +66,7 @@ if (!isset($query)){
 #	$query .= " WHERE (tracker.`sampleType` = sampletypes.id) ";
 #	//if(($searchwords and $searchfields) or ($category) or ($projectSelect)) $query .= " WHERE";
 	if ($_GET['searchword'] and $_GET['searchword'] != " Search..."){
+		#print $_GET['searchword'];  
 		$searchwords = explode (" ", $_GET['searchword']);
 	}
 	if (isset($searchwords) and isset($searchfields)){
@@ -75,8 +81,10 @@ if (!isset($query)){
 			print" \"$searchword\"";
                         $j=0;
                         $jnum = count($searchfields);
+			$hexIDSQL = getHexIDSQL($table);
+			$where .= " $hexIDSQL LIKE '%$searchword%' OR ";
 			foreach ($searchfields as $sfield){
-                                $s = explode(" ",  $sfield);
+				$s = explode(" ",  $sfield);
 				$where .= " ${s[0]} LIKE '%$searchword%'";
 				$j++;
 				if ($j < $jnum) $where .= " OR";
@@ -116,28 +124,32 @@ if (!isset($query)){
 	if (array_key_exists('order', $_GET)) $order = " ${_GET['order']}";
 }
 //
-//print "where: $where <br/>";
+#print "where: $where <br/>";
 #$rows = pdo_query($query);
 if (!isset($join)) $join = '';
 $noRows = getRecords($table, $userid, array('trackID'), $where, "", 1, $join);
 include("pageNav.php");
 if (isset($limit)) $order .= "$limit";
 $rows = getRecords($table, $userid, $columns, $where, $order, 0, $join);
+//print_r($columns);
 if (!isset($rows)) $rows = array();
-//print_r($rows);
 ?>
-<form name="mainform" onsubmit="if (document.mainform.SelAction.value==3) return deleteRecords();" 
-			action="<?php echo $formaction;?>" method="post">
+<form name="mainform" onsubmit="
+	if (document.mainform.SelAction.value==3) return deleteRecords();
+	if (document.mainform.SelAction.value==4) return get_po_number();
+	purgeUnchecked();" 
+	action="<?php echo $formaction;?>" method="post">
+
 <input type="hidden" name="table" value="<?php echo $table; ?>"/>
 <table class="lists" >
-<tr>
+<tr id="table_head">
 <?php
 $selfAddress = "list.php?";
 $exclude = array("currUser","page");
 foreach($_GET as $key => $value){
 	if (!in_array($key, $exclude)){
             #print "Search: $searchlist";
-		$selfAddress .= "$key=$value&";
+		$selfAddress .= "$key=".urlencode($value)."&";
 	}
 }
 
@@ -145,8 +157,14 @@ echo "<th/>";
 foreach ($fields as $key => $field){
 	print "<th class=\"lists\" >";
 	if(is_string($field)) echo "$field ";
-	if(is_string($key)) echo "<a href=\"$selfAddress&order=$key\"><img src=\"img/up.png\"/></a><a href=\"$selfAddress&order=$key DESC\"><img src=\"img/down.png\"/></a>";
+	if(is_string($key)){
+		if($key == 'position'){
+			$key = "IF($key REGEXP '^[A-Z]', CONCAT( LEFT($key, 1), LPAD(SUBSTRING($key, 2), 20, '0')), CONCAT( '@', LPAD($key, 20, '0')))";
+		}
+	   echo "<a href=\"$selfAddress&order=$key\"><img src=\"img/up.png\"/></a><a href=\"$selfAddress&order=$key DESC\"><img src=\"img/down.png\"/></a>";
+	}
 	print "</th>";
 }
 ?>
 </tr>
+

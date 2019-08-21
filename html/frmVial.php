@@ -9,12 +9,31 @@ $formParams = array('table'=>$table, 'mode'=>$mode);
 if (isset($_GET['template'])){
     $template = $_GET['template'];
     $template = getRecord($template,$userid);
-    $fields['name'] = "${template['trackID']} ${template['name']}";
+    $fields['name'] = "${template['hexID']} ${template['name']}";
     $fields['project'] = $template['project'];
     $fields['sID'] = $template['trackID'];
 }
 
 include("formhead.php");
+?>
+<script type="text/javascript">
+window.addEvent('domready', function() {
+    window.fields = [
+	<?php
+	$fieldname = "document.mainform.${table}_0_";
+	print "${fieldname}name, ";
+    ?>];
+    window.NoFields = [
+	<?php
+	print "";
+	?>];
+    window.DateFields = [
+	<?php 
+	    print "\"${table}_0_date\", ";
+	?>];
+});
+</script>
+<?php
 
 
 //print_r($fields);
@@ -22,25 +41,7 @@ if ($mode == 'modify'){
     ?>
     <script type="text/javascript">
     <!--
-    
-    function validate_form ( )
-    {
-	valid = true;
-	field = $('name');
-	if ( field.get('value') == "" ){
-	    oldStyle = field.get("styles");
-	    field.style.border  = "1px solid #FF6633";
-	    valid = false;
-	} else {
-	    field.style.border  = "1px solid gray";
-	}
-	if (!checkDate("<?php print "${table}_0_date";?>")){
-	    valid = false;
-	}
-	if (!valid) alert ( "Form contains errors. Please correct or complete where marked." );
-	return valid;
-    }
-    
+        
     window.addEvent('domready', function() {
 	    var addcmbx = function (event){
 		    //prevent the page from changing
@@ -97,15 +98,15 @@ printTextField('Created by', 'creator', $formParams);
 	$script .= "// -->\n";
 	$script .= "</script>\n";
 	print $script;
-	if (isset($fields['sID'])){
-                $r1 = getSampleType($fields['sID']);
+	if (key_exists('sID', $fields)){
+		$r1 = getSampleType($fields['sID']);
 		$st = $r1[0];
-                //print "stID".$st['id'];
+		//print "stID".$st['id'];
 	} else {
-		$st = array();
+		$st = '';
 	}
         print "<div id =\"typeChoice\" class=\"formRow\"><div class=\"formLabel\">Select Type:</div>";
-        print getComboBox('Type', '', $mode, $sampleTypes, $st['id'], '', False);
+        print getComboBox('', '', $mode, $sampleTypes, $st, '', False);
         print "</div></div>\n";
 #	if ($id){
 #		//get sample table
@@ -133,7 +134,7 @@ printTextField('Created by', 'creator', $formParams);
 			#$choices = pdo_query($q);
 			$cols = array('tracker.trackID',"CONCAT($sTable.name,' (id: ',tracker.trackID,')') AS name");
 			$choices = getRecords($sTable, $userid, $cols);
-			if ($type['id'] == $st['id']){
+			if (key_exists('id', $type) & $type['id'] == $st){
 				$fstyle = "display:block;";
 			} else {
 				$fstyle = "display:none;";
@@ -151,6 +152,7 @@ printTextField('Created by', 'creator', $formParams);
 $cols = array('tracker.trackID','boxes.name');
 $choices = getRecords('boxes', $userid, $cols);
 #print_r($choices);
+if (!key_exists('boxID', $fields)) $fields['boxID'] = '';
 printComboBox("Storage Box",'boxID', $formParams, $choices, $fields['boxID'],'','frmBoxes');
 printTextField('Position', 'position', $formParams);
 printSubmitButton($formParams,$button);

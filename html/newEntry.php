@@ -4,7 +4,7 @@ include("accesscontrol.php");
 $new = true;
 $id = isset($_GET['id']) ? $_GET['id']: null;
 if($id){
-	$row = getRecord($id, $userid, $groups);
+	$row = getRecord($id, $userid);
 	$form1 = $row['form'];
 	$duplicate = true;
 } else {

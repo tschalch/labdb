@@ -9,14 +9,14 @@ $formaction = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}"; #action perfo
 $table = "vials";
 $columns = array('vials.name', 'vials.description', 'vials.position',
                  'vials.sID', 'vials.boxID', 'vials.exists', 'vials.date',
-                 'trackBoxes.boxName',
+                 'trackboxes.boxName',
 		 'tracker.trackID', 'tracker.owner','tracker.permOwner'
 		 );
 # optional join expressions to connect to more data
-$join = "LEFT JOIN trackBoxes ON vials.boxID=trackBoxes.tID ";
+$join = "LEFT JOIN trackboxes ON vials.boxID=trackboxes.tID ";
 #array of fields that is going to be searched for the term entered in the search... box
 $searchfields = $columns;
-$defaultOrder ="vials.position";
+$defaultOrder ="IF(vials.position REGEXP '^[A-Z]', CONCAT( LEFT(vials.position, 1), LPAD(SUBSTRING(vials.position, 2), 20, '0')), CONCAT( '@', LPAD(vials.position, 20, '0')))";
 #End SQL parameters
 
 #array of query field => table heading
@@ -29,15 +29,28 @@ $fields = array('vials.name' => 'Label',
                 'exists' => 'On Stock');
 
 #toggle Project combobox on and off
-$noProjectFilter = False;
+$noProjectFilter = True;
 #toggle user/group filters on and off
-$noUserFilter = False;
+$noUserFilter = True;
 
 #filter by box
-$box = $_GET['box'];
-$refid = $_GET['ref'];
-if ($box) $where .= " boxID=$box ";
-if ($refid) $where .= " ($table.sID='$refid')";
+
+if (!isset($where)) $where = "";
+if (array_key_exists('box', $_GET)) {
+	$box = $_GET['box'];
+	$where .= " boxID=$box ";
+}
+if (array_key_exists('ref', $_GET)) {
+	$refid = $_GET['ref'];
+	$where .= " ($table.sID='$refid')";
+}
+#Set Menu items
+?>
+<script type="text/javascript" >
+    var menu_items = ["new","edit","delete"];
+</script>
+
+<?php
 
 include("listhead.php");
 
@@ -46,12 +59,9 @@ foreach ($rows as $row) {
 	$id = $row['trackID'];
 	$edit = 0;
 	$edit = 0;
-	$permissions = array(
-		$row['permOwner'],
-		$row['permGroup'],
-		$row['permOthers']);
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
-	echo listActions($id, array("new","edit", "delete"));
+	echo "<tr class=\"lists data-row\" data-record_id=\"$id\">";
+	echo listActions($id, null);
 	($row['name'])? $vname = $row['name'] : $vname = 'no name';
 	echo "<td class=\"lists\" width=\"15%\"><a href=\"editEntry.php?id=$id&mode=display\">$vname</a></td>";
 	echo "<td class=\"lists\" width=\3%\">${row['position']}</td>";
@@ -59,7 +69,7 @@ foreach ($rows as $row) {
 	echo "<td class=\"lists\" width=\"25%\">${row['description']}</td>";
 	echo "<td class=\"lists\" width=\"15%\">";
 	if ($row['sID']){
-		$sample = getRecord($row['sID'], $userid, $groups);
+		$sample = getRecord($row['sID'], $userid);
   		print "<a href=\"editEntry.php?id=${row['sID']}&mode=display\"> ${sample['name']}</a>";
 		}
 	echo "</td>";
@@ -68,9 +78,9 @@ foreach ($rows as $row) {
 	echo "</td>\n";
 	echo "<td class=\"lists\" width=\5%\">${row['exists']}</td>";
 	echo "</tr>";
-	$i++;
+	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
 }
-listProcessor(array(2,3));
+listProcessor(array(2,3,7));
 ?>
 
 </table>

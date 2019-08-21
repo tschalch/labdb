@@ -1,15 +1,49 @@
 <?php
 $table = "plasmids";
 $titleName = "Plasmid";
-$submitFunction = "true";
+$submitFunction = "validate_form()";
 $mode = $_GET['mode'];
 if (!$mode) $mode = 'display';
 $formParams = array('table'=>$table,'mode'=>$mode);
 
 include("formhead.php");
+?>
+<script type="text/javascript">
+//<![CDATA[
+window.addEvent('domready', function() {
+     new Autocompleter.Request.HTML('resistance', 'autocomplete.php', {
+		'postData': {
+		    'field': 'resistance', // send additional POST data, check the PHP code
+		    'table': 'plasmids',
+		    'extended': 0,
+		}
+    });
+});
+//]]>
+</script>
+<?php
+?>
+<script type="text/javascript">
+window.addEvent('domready', function() {
+    window.fields = [
+	<?php
+	$fieldname = "document.mainform.${table}_0_";
+	print "${fieldname}name, ";
+    ?>];
+    window.NoFields = [
+	<?php
+	print "";
+	?>];
+    window.DateFields = [
+	<?php 
+	    print "";
+	?>];
+});
+</script>
+<?php
 
 # get choices for fragment comboboxes
-$types = array('Plasmid Backbone'=>'backbone','Gene Fragment'=>'gene','PCR Product'=>'PCR');
+$types = array('backbone'=>'fragments','gene'=>'fragments','PCR'=>'fragments');
 #print_r($choices);
 #get the associated fragments
 #if($formParams['fields']){
@@ -17,7 +51,27 @@ $types = array('Plasmid Backbone'=>'backbone','Gene Fragment'=>'gene','PCR Produ
 #	$rows = pdo_query($tquery);
 #}
 /*menu*/
-print "<div style=\"clear:both;\"><div id=\"mapBox\">\n";
+print "<div id=\"leftToMap\">\n";
+printID($formParams);
+printTypeID($formParams, "Plasmid ID");
+printTextField('Name', 'name',$formParams);
+printProjectFields($formParams);
+printTextArea('Description', 'description',$formParams);
+printTextField('Resistance', 'resistance',$formParams);
+printTextArea('Generation of plasmid', 'generation',$formParams);
+//restriction enzymes
+$helpText = "This field requires a comma separated liste of restriction enzymes.\
+	Alternatively, the enzymes available in our lab can be chosen by specifying \"lab\" (all enzymes in box \"Lab Restriction Enzymes\").\
+	After the list of enzymes, arguments to the <a href=\\\"doc/emboss/restrict.html\\\">\\'restrict\\' command of the Emboss package</a> \
+	can be added.<br/><br/>\
+	Examples:<pre>\
+		PstI,BamHI\\n\
+		lab -max 2 -min 1</pre>";
+printTextField('Enzymes', 'enzymes',$formParams, null, $helpText);
+$fcounter = printCrossCombobxs($id, $types, 0, $formParams);
+printReferenceLink('Freezer', 'Freezer locations', $id, 'vial', $formParams);
+print "</div>\n";
+print "<div id=\"mapBox\">\n";
 ?>
 <div style="background-color: gray; height: 1em; padding: 0px 0px 20px 0px"><ul id="nav">
 	<li><a href="#">Graph</a>
@@ -64,24 +118,6 @@ print "<div id=\"map\"></div>
 			<div class=\"orfSize\">Minimum ORF size:</div>
 		</div>
 	</div>\n";
-print "<div id=\"leftToMap\">\n";
-printID($formParams);
-printTextField('Name', 'name',$formParams);
-printProjectFields($formParams);
-printTextArea('Description', 'description',$formParams);
-printTextArea('Generation of plasmid', 'generation',$formParams);
-//restriction enzymes
-$helpText = "This field requires a comma separated liste of restriction enzymes.\
-	Alternatively, the enzymes available in our lab can be chosen by specifying leemorlab.\
-	After the list of enzymes, arguments to the <a href=\\\"doc/emboss/restrict.html\\\">\\'restrict\\' command of the Emboss package</a> \
-	can be added.<br/><br/>\
-	Examples:<pre>\
-		PstI,BamHI\\n\
-		leemorlab -max 2 -min 1</pre>";
-printTextField('Enzymes', 'enzymes',$formParams, null, $helpText);
-$fcounter = printCrossCombobxs($id, $types, 0, $formParams);
-printReferenceLink('Freezer', 'Freezer locations', $id, 'vial', $formParams);
-print "</div></div>\n";
 printSubmitButton($formParams,$button);
 printSequenceField("Sequence", 'DNA', 'sequence', $formParams, true, true);
 $sites = getRestrictionSites($fields['enzymes'], $fields['sequence'], $userid);
@@ -93,7 +129,7 @@ if($mode == "modify"){
 }
 ?>
 
-<script src="js/raphael_2.1.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/raphael_4.29.6.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="lib/sms/sms_common.js" type="text/javascript"></script>
 <script src="lib/sms/sms_genetic_codes.js" type="text/javascript"></script>
 <script src="lib/sms/orf_find.js" type="text/javascript"></script>
@@ -114,11 +150,11 @@ window.addEvent('domready', function() {
 	vm = new VectorMap({}, $("map"));		
 	vm.updateFragments($('xcmbxFrags'));
 	vm.sites = <?php print $sites; ?>;
-	vm.drawVector();
-	$('gene').addEvent('click', addcmbx);
-	$('backbone').addEvent('click', addcmbx);
-	$('PCR').addEvent('click', addcmbx);
-	$('enzymes').addEvent('change', formatEnzymes)
+	vm.drawVector(); 
+<?php foreach($types as $name=>$table){
+	print "\$('$name').addEvent('click', addcmbx);";
+	}
+?>
 	sequence = "";
 	
 	var slideEl = $('orfSizeSlider');

@@ -19,11 +19,9 @@ if (isset($_GET['form'])){
 }
 #if ($mode == 'display') saveURI($_SERVER['REQUEST_URI']);
 if ($mode == "display"){
-    print "<div style=\"margin-bottom: 2em;\" class=\"formRow\"><div class=\"formLabel\">";
-    if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1){
-	    print "	<a href=\"editEntry.php?id=$id&mode=modify\">
-		    <span class=\"button\">Edit record<span></a>";
-    }
+    print "<div style=\"margin-bottom: 2em;\" class=\"formRow\"><div class=\"\">";
+	print "	<a href=\"editEntry.php?id=$id&mode=modify\">
+		<span class=\"button\">Edit record<span></a>";
     print "</div>";
 }
 include("footer.php");

@@ -21,11 +21,12 @@ $columns = array('fragments.name', 'fragments.description', 'fragments.proteinSe
 $join = "";
 #array of fields that is going to be searched for the term entered in the search... box
 $searchfields = $columns;
-$defaultOrder ="fragments.name";
+$defaultOrder ="fragments.id DESC";
 #End SQL parameters
 
 #array of query field => table heading
 $fields = array('trackID' => 'ID',
+		'hexID' => 'Building Block',
 		'name' => 'Name',
 		'description' => 'Description',
 		'1' => 'DNA Sequence',
@@ -34,6 +35,7 @@ $fields = array('trackID' => 'ID',
 
 if($category == 'backbone'){
 	$fields = array('trackID' => 'ID',
+		'hexID' => 'Building Block',
 			'name' => 'Name',
 			'description' => 'Description',
 			'resistance' => 'Resistance Marker',
@@ -44,6 +46,7 @@ if($category == 'backbone'){
 
 if($category == 'PCR'){
 	$fields = array('trackID' => 'ID',
+		'hexID' => 'Building Block',
 			'name' => 'Name',
 			'PCRoligo1' => 'Oligo 1',
 			'PCRoligo2' => 'Oligo 2',
@@ -58,12 +61,19 @@ if($category == 'PCR'){
 }
 
 #toggle Project combobox on and off
-$noProjectFilter = False;
+$noProjectFilter = True;
 #toggle user/group filters on and off
-$noUserFilter = False;
+$noUserFilter = True;
 
 #deal with different types of fragments
-$categories = array('gene'=>'Genes', 'PCR' => 'PCR Products', 'backbone' => 'Plasmid Backbones');
+$categories = array('gene'=>'Genes/Proteins', 'PCR' => 'PCR Products', 'backbone' => 'Plasmid Backbones');
+#Set Menu items
+?>
+<script type="text/javascript" >
+    var menu_items = ["new","edit", "fasta", "delete"];
+</script>
+
+<?php
 
 include("listhead.php");
 #
@@ -75,7 +85,7 @@ if($category == 'PCR'){
 	$olis = getRecords('oligos',$userid, $ocols);
 	if($olis){
 		foreach ($olis as $o) {
-			$tm = $o['tm'] ? $o['tm'] : Tm($o['targetmatch'],'bre',$o['Saltconc']*1E-3, $o['PCRconc']*1E-9);
+			$tm = $o['tm'] ? $o['tm']."(User)" : Tm($o['targetmatch'],'bre',$o['Saltconc']*1E-3, $o['PCRconc']*1E-9);
 			$oligos[$o['trackID']] = array('name' => $o['name'], 
 				'tm' => $tm);
 		}
@@ -93,11 +103,14 @@ if($category == 'PCR'){
 
 foreach ($rows as $row) {
 	$id = $row['trackID'];
+	$bbid = $row['hexID'];
 	$type = $row['type'];
 	$edit = 0;
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
-	echo listActions($id, array("new", "edit", "fasta", "delete") );
-	print "<td class=\"lists\" width=\"1%\" align=\"RIGHT\">$id</td>";
+	echo "<tr class=\"lists data-row\" data-record_id=\"$id\">";
+	echo listActions($id, $bbid);
+	print "<td class=\"lists dbid\" width=\"1%\" align=\"RIGHT\">$id</td>";
+	print "<td class=\"lists\" width=\"1%\" >$bbid</td>";
 	echo "<td class=\"lists\" width=\"10%\"><a href=\"editEntry.php?id=$id&amp;type=$type&amp;mode=display\">${row['name']}</a></td>";
 if($category == 'backbone' or $category == 'gene'){
 	echo "<td class=\"lists\" width=\"30%\">${row['description']}</td>";
@@ -112,7 +125,7 @@ if($category == 'PCR'){
 		$o = $row["PCRoligo$i"];
 		#$oligo = $oligos[$o];
 		$oligo = getRecord($o, $userid, $groups);
-		printf("<td class=\"lists\" style=\"text-align:center;\" width=\"5%%\"><a href=\"editEntry.php?id=%d&amp;mode=display\">%s (%d)</a></td>", $o, $oligo['name'], $o);
+		printf("<td class=\"lists\" style=\"text-align:center;\" width=\"5%%\"><a href=\"editEntry.php?id=%d&amp;mode=display\">%s (%d/%s)</a></td>", $o, $oligo['name'], $oligo['trackID'], $oligo['hexID']);
 	}
 	print "<td class=\"lists\" width=\"10%\">";
 	for ($i=1;$i<=2;$i++){
@@ -125,13 +138,14 @@ if($category == 'PCR'){
 	print "<td class=\"lists seq\" width=\"10%\"><a href=\"editEntry.php?id=${row['PCRtemplate']}&amp;mode=display\">".$template['name']." (".$row['PCRtemplate'].")</a></td>";
 }
 
-	echo "<td class=\"lists seq\" width=\"10%\"><a href=\"sequence.php?field=DNASequence&amp;id=$id\">".CountATCG($row['DNASequence'])." bp</a></td>";
+	echo "<td class=\"lists seq\" width=\"10%\"><a href=\"sequence.php?field=DNASequence&amp;id=$id\">".seqlen($row['DNASequence'])." bp</a></td>";
 $proteinSequence = remove_non_coding_prot($row['proteinSequence']);
 	if($category == 'gene'){
 		echo "<td class=\"lists seq\" width=\"5%\"><a href=\"protein_properties.php?id=$id\">"
 			.round(protein_molecular_weight($proteinSequence))." Da</a></td>";
 	}
 	echo "</tr>";
+	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
 	$i++;
 }
 listProcessor(array(1,2,3,7));

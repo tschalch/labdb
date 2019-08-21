@@ -84,6 +84,9 @@ if ($_POST['newid']=='' or $_POST['newname']==''
              'Please fill them in and try again.');
    }
 
+$newpass = substr(md5(time()),0,6);
+$newid = 'username';
+
 // Check for existing user with the new id
 $sql = "SELECT COUNT(*) FROM user WHERE userid = '$_POST[newid]'";
 $result = pdo_query($sql);
@@ -92,12 +95,12 @@ error('A database error occurred in processing your '.
      'submission.\\nIf this error persists, please '.
      'contact $adminEmail.');
 }
+
 if ($result[0]['COUNT(*)']) {
 error('A user already exists with your chosen userid.\\n'.
      'Please try another.');
 }
 
-$newpass = substr(md5(time()),0,6);
 
 $sql = "INSERT INTO user SET
      userid = '$_POST[newid]',
@@ -106,13 +109,15 @@ $sql = "INSERT INTO user SET
      email = '$_POST[newemail]',
      notes = '$_POST[newnotes]',
      groupType = 0";
+
 $newid = pdo_query($sql);
+
 if (!$newid)
 	error('1A database error occurred in processing your '.
 	     'submission.\\nIf this error persists, please '.
 	     "contact $adminEmail.");
     // Email the new password to the person.
-    
+//
 # setup groups
 $sql = "INSERT INTO groups SET
      userid = '$newid',
@@ -158,18 +163,26 @@ If you have any problems, feel free to contact me at
 Thomas
 ";
 
+$sendmailparams = "-r $adminEmail";
+
+$headers = array(
+    'From' => "From: $adminEmail",
+    'Reply-To' => "Reply-To: $adminEmail",
+    'X-Mailer' => 'X-Mail: PHP/' . phpversion()
+);
+
 mail($_POST['newemail'],"Your Password for labdb",
-	$message, "From:Thomas Schalch <$adminEmail>");
+	$message, implode("\n", $headers), $sendmailparams);
 
 mail("$adminEmail","New labdb user created",
-	"user $_POST[newid] has signed up to labdb.",
-        "From:Thomas Schalch <$adminEmail>");
+	"user $_POST[newid] has signed up to labdb.", 
+	implode("\n", $headers), $sendmailparams);
 
-
+#print implode("\n", $headers);
 ?>
    <p><strong>User registration successful!</strong></p>
    <p>Your userid and password have been emailed to
-      <strong><?=$_POST[newemail]?></strong>, the email address
+      <strong><?=$_POST['newemail']?></strong>, the email address
       you just provided in your registration form. To log in,
       click <a href="index.php">here</a> to return to the login
       page, and enter your new personal userid and password.</p>

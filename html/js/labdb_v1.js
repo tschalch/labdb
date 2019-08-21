@@ -1,3 +1,32 @@
+function showMenuInTableHead(){
+    var id = this.get('data-record_id');
+    var items = new Object();
+    items["new"] = new Element('span', {'class':'menu-item', html: "<img width=\"24px\" title=\"New Entry\" title=\"new\"src=\"img/add-item.png\" /><a class=\"menu-link\" style=\"\" href=\"newEntry.php?id="+id+"&amp;mode=modify\">  New Entry </a>"});
+    items["edit"] = new Element('span', {'class':'menu-item', html:"<img width=\"24px\" title=\"Edit record\" title=\"edit\"src=\"img/edit.png\" /><a class=\"menu-link\" style=\"\" href=\"editEntry.php?id="+id+"&amp;mode=modify\">  Edit </a>"});
+    items["fasta"] = new Element('span', {'class':'menu-item', html:"<img width=\"24px\" title=\"Get fasta file\" title=\"edit\"src=\"img/download.png\" /><a class=\"menu-link\" style=\"\" href=\"fasta.php?id="+id+"\">  Fasta file </a>"});
+    items["delete"] = new Element('span', {'class':'menu-item', html:"<img width=\"24px\" src=\"img/delete-item.png\" /><a class=\"menu-link\" style=\"cursor:pointer;\" onclick=\"deleteRecord(this, "+id+");\">  Delete </a>"});
+    items["vial"] = new Element('span', {'class':'menu-item', html:"<img width=\"24px\" style=\"\" title=\"New vial based on this record.\"src=\"img/lab.png\" /><a class=\"menu-link\" href=\"newEntry.php?form=frmVial&amp;mode=modify&amp;template="+id+"\">  New Vial </a>"});
+
+    $$('.lists tr').each(function(i){
+	i.setStyle('background-color', '');
+	var color =  i.get('data-color');
+    if (typeof i.get('data-color') !== 'undefined') i.setStyle('background-color', i.get('data-color'));
+    });
+    $$('.menu').set('html','');
+    var row =  this.closest('tr');
+    row.setStyle('background-color','LightGray');
+    var menu = $$("#menu_"+id);
+    menu.set('html','');
+    var menu_cell = new Element('td', {'colspan':'100'});
+    for (var i = 0; i < menu_items.length; i++){
+        var item = items[menu_items[i]]
+            if (item){
+                item.inject(menu_cell);
+            }
+    }
+    menu_cell.inject(menu[0]);
+}
+ 
 function AddFragmentField(type, removeOthers){
 	//alert("type: "+type);
 	trs=document.getElementsByTagName("div");
@@ -81,10 +110,12 @@ var addcmbx = function (event, recid){
 	//make the ajax call, replace text
 	var el = new Element('div');
 	var type = $(event.target).get('id');
+	var table = $(event.target).get('data-table');
 	addXcmbx(el, table, type, recid, '','');
 }
 
 function addXcmbx(el, table, type, recid, start, end, dir) {  
+	var tbl = table;
 	dir = (dir=='reverse') ? 0 : 1;
 	var req = new Request.HTML({  
 		method: 'get',  
@@ -96,7 +127,7 @@ function addXcmbx(el, table, type, recid, start, end, dir) {
 		    new Autocompleter.labdb(el.getFirst('div').getFirst('div').getFirst('input'),'autocomplete.php',{
 			'postData': {
 			'field': 'name', // send additional POST data, check the PHP code
-			'table': table,
+			'table': tbl,
 			'extended': '1',
 			}
 		    });
@@ -349,6 +380,7 @@ function checkDate(field){
 		ok = false;
 	}
 	newdate = year + "-" + month + "-" + day;
+	if (newdate == "--") { newdate = '0-0-0' };
 	if (ok) document.getElementById(field).value = newdate;
 	return ok;
 }

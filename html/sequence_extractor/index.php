@@ -30,7 +30,7 @@ include("../config.php");
 <td class="description">Sequence Extractor generates a clickable restriction map and PCR primer map of a DNA sequence. Protein translations and intron/exon boundaries are also shown. Use Sequence Extractor to build DNA constructs <i>in silico</i>. Please read the list of <a href="features.html">program features</a> to learn more.
 <br />
 <br />
-<form method="post" action="<?php print "$labdbUrl/cgi-bin/seq_ext/se.pl" ?>">
+<form method="post" action="<?php print "https://www.bioinformatics.org/paul/cgi-bin/se.pl" ?>">
 Paste a sequence into the text area below. Accepted formats are: <a href="raw_sample.html">raw</a>, <a href="genbank_sample.html">GenBank</a>, <a href="embl_sample.html">EMBL</a>, and <a href="fasta_sample.html">FASTA</a>.
 <br /><textarea name="sequenceRecord" rows="6" cols="81">
 <?php

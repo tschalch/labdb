@@ -25,13 +25,13 @@ include_once("title_bar.php");
  <p>You must log in to access this area of the site. If you are
     not a registered user, <a href="signup.php">click here</a>
     to sign up for instant access!</p>
- <p><form method="post" action="
+ <form method="post" action="
  	<?php print "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}";
  	?>">
-   <div class="formRow"><div class="formLabel" style="text-align: right;">User ID:</div><div class="formField"><input style="width: 20em;" type="text" name="uid"/></div></div>
-   <div class="formRow"><div class="formLabel" style="text-align: right;">Password:</div><div class="formField"><input style="width: 20em;" type="password" name="pwd"/></div></div>
-   <div class="formRow"><div class="formLabel"></div><div class="formField"><input type="submit" value="Log in" /></div></div>
- </form></p>
+   <div class="login">User ID: <input style="width: 20em;" type="text" name="uid"/></div>
+   <div class="login">Password:<input style="width: 20em;" type="password" name="pwd"/></div>
+   <div class="login"><input type="submit" value="Log in" /></div>
+ </form>
  <?php
  include("footer.php");
  exit;

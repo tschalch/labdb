@@ -13,11 +13,12 @@ $columns = array('plasmids.name', 'plasmids.description', 'plasmids.generation',
 $join = "";
 #array of fields that is going to be searched for the term entered in the search... box
 $searchfields = $columns;
-$defaultOrder ="plasmids.name";
+$defaultOrder ="plasmids.id DESC";
 #End SQL parameters
 
 #array of query field => table heading
 $fields = array('trackID' => 'ID',
+		'hexID' => 'Plasmid',
 		'Name' => 'Name',
 		'Description' => 'Description',
 		'1' => 'Backbone',
@@ -25,10 +26,16 @@ $fields = array('trackID' => 'ID',
 		'sequence' => 'DNA Sequence',);
 
 #toggle Project combobox on and off
-$noProjectFilter = False;
+$noProjectFilter = True;
 #toggle user/group filters on and off
-$noUserFilter = False;
+$noUserFilter = True;
+#Set Menu items
+?>
+<script type="text/javascript" >
+    var menu_items = ["new","edit", "fasta", "vial", "delete"];
+</script>
 
+<?php
 include("listhead.php");
 $fragments = array();
 $fcols = array('fragments.name','fragments.type','tracker.trackID');
@@ -42,13 +49,16 @@ if($frags){
 foreach ($rows as $row) {
 	#print "row: ";print_r($row); print "<br/>";
 	$id = $row['trackID'];
+	$pid = $row['hexID'];
 	$conxs = getConnections($id);
 	$edit = 0;
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1){
 		$edit = 1;
 	}
-	echo listActions($id,  array("new","edit", "fasta", "vial", "delete") );
-	print "<td class=\"lists\" width=\"1%\" align=\"RIGHT\">$id</td>";
+	echo "<tr class=\"lists data-row\" data-record_id=\"$id\">";
+	echo listActions($id, $pid);
+	print "<td class=\"lists dbid\" width=\"1%\" align=\"RIGHT\">$id</td>";
+	print "<td class=\"lists\" width=\"1%\" >$pid</td>";
 	echo "<td class=\"lists\" width=\"10%\">
 		<a href=\"editEntry.php?id=$id&mode=display\">${row['name']}</a></td>";
 	echo "<td class=\"lists\" width=\"30%\">${row['description']}</td>";
@@ -58,8 +68,9 @@ foreach ($rows as $row) {
 	echo "<td class=\"lists\" width=\"20%\">";
 		printFragments('gene',$conxs);
 	echo "</td>";
-	echo "<td class=\"lists seq\" width=\"10%\"><a href=\"sequence.php?table=plasmids&field=sequence&id=$id\">".CountATCG($row['sequence'])." bp</a></td>";
+	echo "<td class=\"lists seq\" width=\"10%\"><a href=\"sequence.php?table=plasmids&field=sequence&id=$id\">".seqlen($row['sequence'])." bp</a></td>";
 	echo "</tr>";
+	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
 }
 
 function printFragments($typ, $conxs){

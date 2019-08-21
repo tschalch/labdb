@@ -5,7 +5,7 @@ if(array_key_exists('id', $_GET)){
     header('Content-type: text/fasta');
     $data = getRecord($id, $userid, $groups);
     header("Content-Disposition: attachment; filename=\"${id}_${data['name']}.fasta\"");
-    print ">${id}, ${data['name']}\n";
+    print ">${id} ${data['name']}\n";
     ($data['DNASequence'])? $seq = $data['DNASequence'] : $seq = $data['sequence'];
     $sequence = fastaseq($seq, "\n");
     print $sequence;
