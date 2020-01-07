@@ -17,7 +17,7 @@ include("navigation.php");
 			<h2>Quick Search:</h2>
 	   </div>
 	   <div class="frontPageRow">
-		<input id="searchField" type="text" value="<?php if ( isset ($_GET['serachTerm'])) print $_GET['serachTerm']; ?>" name="serachTerm"/>
+		<input id="searchField" type="text" value="<?php if ( isset ($_GET['searchTerm'])) print $_GET['searchTerm']; ?>" name="serachTerm"/>
 	   </div>
             <div class="frontPageRow">
 		<input type="submit" value="search" />
@@ -25,8 +25,8 @@ include("navigation.php");
         </form></p>
          
 <?php
-	if ( isset($_GET['serachTerm']) and $_GET['serachTerm'] != ""){
-	    $searchwords = explode (" ", $_GET['serachTerm']);
+	if ( isset($_GET['searchTerm']) and $_GET['searchTerm'] != ""){
+	    $searchwords = explode (" ", $_GET['searchTerm']);
             $searchString = implode("+",$searchwords);
             $sql = "SELECT `st_name`, sampletypes.plural, `table`,`list` FROM sampletypes";
             $tables = pdo_query($sql);
