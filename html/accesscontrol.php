@@ -18,20 +18,30 @@ if (isset($_POST['uid']) & isset($_POST['pwd'])){
 if(!isset($uid)) {
 unset($_SESSION['currUser']);
 include_once("header.php");
+print "<link href=\"css/signin.css\" rel=\"stylesheet\">";
 print "</head><body>";
 include_once("title_bar.php");
  ?>
- <h1> Login</h1>
+<div class="container text-center">
+ <form method="post" class="form-signin" action="
+        <?php print "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}";
+        ?>">
+ <h1 class="h3 mb-3 font-weight-normal"> Login</h1>
  <p>You must log in to access this area of the site. If you are
     not a registered user, <a href="signup.php">click here</a>
     to sign up for instant access!</p>
- <form method="post" action="
- 	<?php print "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}";
- 	?>">
-   <div class="login">User ID: <input style="width: 20em;" type="text" name="uid"/></div>
-   <div class="login">Password:<input style="width: 20em;" type="password" name="pwd"/></div>
-   <div class="login"><input type="submit" value="Log in" /></div>
+   <div class="form-group">
+    <label class="sr-only" for="userid">User ID</label>
+    <input placeholder="Username" class="form-control" id="userid" type="text" name="uid" required autofocus/>
+   </div>
+   <div class="form-group">
+    <label for="userid">Password</label>
+    <input type="password" id="inputPassword" name="pwd" class="form-control" placeholder="Password" required>
+   </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
  </form>
+</div>
+
  <?php
  include("footer.php");
  exit;

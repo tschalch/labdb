@@ -210,24 +210,24 @@ window.addEvent('domready', function(){
 }
 
 function printUploadField($label, $field, $formParams){
-	$table = $formParams['table'];
-	$fields = $formParams['fields'];
+  $table = $formParams['table'];
+  $fields = $formParams['fields'];
 
 
-	print "\n<div class=\"formRow\"><div class=\"formLabel\">$label:";
-	print "</div>\n";
-	if (isset($fields['trackID'])){
-	    $trackID = ($fields['trackID'])? $fields['trackID']:"";
+  print "\n<div class=\"formRow\"><div class=\"formLabel\">$label:";
+  print "</div>\n";
+  if (isset($fields['trackID'])){
+    $trackID = ($fields['trackID'])? $fields['trackID']:"";
   }
 
-	$mode = $formParams['mode'];
+  $mode = $formParams['mode'];
   $html = '<div class="formField"><div id="filestore"></div>';
-	if($mode == "modify"){
-  $html = '<div id="filestore-row" class="formField"><div id="filestore"></div>';
-  $html .= ' <span></span><input type="file" name="file" id="file" />
-    <span>Description: </span><input id="file_description" type="text" name="filedesc" />
-        <button type="button" id="btn">Upload</button>
-        </div>';
+  if($mode == "modify"){
+    $html = '<div id="filestore-row" class="formField"><div id="filestore"></div>';
+    $html .= ' <span></span><input type="file" name="file" id="file" />
+      <span>Description: </span><input id="file_description" type="text" name="filedesc" />
+      <button type="button" id="btn">Upload</button>
+      </div>';
   }
   $value = (key_exists($field, $fields) && $fields[$field] != "")?$fields[$field]:"{}";
   $html .= "<input id=\"files_field\" type=\"hidden\" name=\"${table}_0_$field\" value=\"$value\" />";
@@ -1454,10 +1454,11 @@ function escape_quotes($receive) {
         return $thearray;
 }
 
-function getRestrictionSites($enzymes, $dnaSequence){
+function getRestrictionSites($digString, $dnaSequence){
 	include('config.php');
   include('lib/restriction_digest.php');
   $digestion = digestDNA( array("sequence" => $dnaSequence) );
+  $enzymes_array=get_array_of_Type_II_endonucleases();
 	$output = array();
 	$sites = array();
 	global $userid;
@@ -1465,8 +1466,10 @@ function getRestrictionSites($enzymes, $dnaSequence){
 	$sitelen = 4;
 	//print $enzymes;
 	$lab_key = "lab"; //keyword used to specify all enzymes available in Lab Enzymes box.
-  $enzymes = explode(" ", $enzymes);
-	if(strpos($enzymes[0], $lab_key) === 0){
+  $digParams = explode(" ", $digString);
+  $enzymes = explode(",", $digParams[0]);
+  $enzymeList = [];
+	if(in_array($lab_key, $enzymes)){
 		$noUserFilter = True;
 		$enzys = getRecords('vials', $userid, array('vials.name'), " trackboxes.name='Lab Enzymes' ", '', 0, " LEFT JOIN trackboxes ON vials.boxID=trackboxes.tID ");
 		$noUserFilter = False;
@@ -1479,35 +1482,51 @@ function getRestrictionSites($enzymes, $dnaSequence){
 			}
 			#print_r($enzymeList);
 		}
-  } else {
-    $enzymeList = explode(",", $enzymes[0]);
+  } 
+
+  foreach($enzymes as $e){
+    if (in_array($e, $enzymeList)) continue;
+    $enzymeList[] = $e;
   }
 	// $enzymes;
 	$limit ='';
-	if (substr($enzymes, 0, 3) != 'all') $limit = "-limit Y"; 
+  if (in_array('all', $enzymes)) {
+    $all = True; 
+    $enzymeList = array('all');
+  }
 	if ( $digestion == Null || $digestion == '' ){
 	    print "<script type='text/javascript'>alert('Problem with restriction sites! No restriction sites are displayed.');</script>";
 	}
 	//print "Tmp: $tmp<br/>Pos: $pos<br/>";
-  if ($maxPos = array_search('-max', $enzymes)){
-    $maxCuts = $enzymes[ $maxPos + 1]; 
+  if ($maxPos = array_search('-max', $digParams)){
+    $maxCuts = $digParams[ $maxPos + 1]; 
   } else {
     $maxCuts = 100;
   }
+  #print "Maxcuts: $maxCuts";
   $sites = "new Array(";
-  foreach($digestion[0] as $enzyme => $cuts ){
-    //print $enzyme;
-    if (in_array($enzyme, $enzymeList) && sizeof($cuts['cuts']) <= $maxCuts ) {
-      foreach($cuts['cuts'] as $site => $dunno){
-        $sites .= "['$enzyme', '$site', {'background-color': \"white\",
-          fill: \"black\", \"font-size\": '8', \"font-family\": \"Verdana\",
-          cursor:\"pointer\", 'text-anchor' : \"middle\"}],";
-        //print "<pre>$sites</pre>";
+  //print_r($digestion[0]);
+  $digsts = [];
+  foreach($enzymeList as $testEnz){
+    foreach($digestion[0] as $enzyme => $cuts ){
+      if (in_array($testEnz, explode(",", $enzymes_array[$enzyme][0])) &&  sizeof($cuts['cuts']) <= $maxCuts ) {
+        $digsts[$testEnz] = $cuts;
       }
     }
   }
+  foreach($digsts as $enzyme_name => $cuts){
+    foreach($cuts['cuts'] as $s => $xy){
+      $site = "['$enzyme_name', '$s', {'background-color': \"white\",
+        fill: \"black\", \"font-size\": '8', \"font-family\": \"Verdana\",
+        cursor:\"pointer\", 'text-anchor' : \"middle\"}],";
+      print "<pre>$site</pre>";
+      $sites .= $site;
+    }
+  }
+
+      #print_r($enzymes_array[$enzyme][0]); print "<br/>";
 	$sites .= ")";
-	print "<pre>"; $sites;
+	print "<pre>". $sites . "</pre>";
 	return $sites;
 }
 

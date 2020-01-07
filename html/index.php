@@ -8,7 +8,7 @@ include_once("header.php");
 include("title_bar.php");
 include("navigation.php");
 ?>
-<div id="content">
+<div id="content" class="container">
 <p>	This site stores information about chemicals, clones and so on.</p>
          <p><form method="get" action="
  	<?php print "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}";

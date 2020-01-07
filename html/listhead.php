@@ -8,7 +8,7 @@ include_once("functions.php");
 <body>
 
 <?php 
-include("title_bar.php");
+#include("title_bar.php");
 include("navigation.php");
 ?>
 <script type="text/javascript" >
@@ -16,7 +16,7 @@ include("navigation.php");
 	$$('.data-row').addEvent('click',showMenuInTableHead);
      });
 </script>
-<div id="content">
+<main><div class="container">
 <script type="text/javascript" language="javascript">
     <!--
     // js form validation stuff

@@ -1,5 +1,16 @@
+.navbar-custom{
+  background-color: #4682B4 !important;
+}
 body { 	font-family: arial, verdana, sans-serif;
-	font-size : 0.8em }
+	font-size : 0.8em; 
+  padding-top: 70px;
+}
+
+div.container a { text-decoration: none; color: #2E8B57 !important}
+
+.dropdown-menu, .nav-link {
+  font-size: 1rem;
+}
 
 .sequence {	font-size : 125%;
                 position: relative;
@@ -11,11 +22,6 @@ body { 	font-family: arial, verdana, sans-serif;
                 }
 div.login {padding: 0.5em;}
 
-.search{
-	font-size : 50%;
-	text-align: left;
-  margin-top: 2em;
-}
 .project{
 	text-align: left;
         float: right;
@@ -34,7 +40,6 @@ div.project span.projectCombo{
 	padding: 2px;
 }
 
-a{text-decoration: none; color: #2E8B57}
 
 img {border:0}
 
@@ -69,11 +74,6 @@ textarea.form {
 
 textarea.list {width: 100%}
 
-body {
-	margin: 0;
-	padding: 1%;
-	max-width: 1200px;
-}
 
 div.PCR{
   overflow:auto;

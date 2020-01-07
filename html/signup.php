@@ -6,73 +6,28 @@ include('config.php');
 if (!isset($_POST['submitok'])):
    // Display the user signup form 
    ?>
+<link href="css/signin.css" rel="stylesheet">
+<head><body>
+<div class="container text-center">
+ <h1 class="h3 mb-3 font-weight-normal">New User Registration Form</h1>
+        <form method="post" class="form-signin" action="<?php print $_SERVER['PHP_SELF']?>">
 
-	<h3>New User Registration Form</h3>
-	<p><font color="orangered" size="+1"><tt><b>*</b></tt></font>
-	  indicates a required field</p>
-	<form method="post" action="<?php print $_SERVER['PHP_SELF']?>">
-	<table border="0" cellpadding="0" cellspacing="5">
-	   <tr>
-	       <td align="right">
-	           <p>User ID</p>
-	       </td>
-	       <td>
-	           <input name="newid" type="text" maxlength="100" size="25" />
-	           <font color="orangered" size="+1"><tt><b>*</b></tt></font>
-	       </td>
-	   </tr>
-	   <tr>
-	       <td align="right">
-	           <p>Full Name</p>
-	       </td>
-	       <td>
-	           <input name="newname" type="text" maxlength="100" size="25" />
-	           <font color="orangered" size="+1"><tt><b>*</b></tt></font>
-	       </td>
-	   </tr>
-	   <tr>
-	       <td align="right">
-	           <p>E-Mail Address</p>
-	       </td>
-	       <td>
-	           <input name="newemail" type="text" maxlength="100" size="25" />
-	           <font color="orangered" size="+1"><tt><b>*</b></tt></font>
-	       </td>
-	   </tr>
-	   <tr>
-	       <td align="right">
-	           <p>Group</p>
-	       </td>
-	       <td>
-	           <select name="group"/>
-		   <option value ="0">please choose:</option>
-		   <?php
-		      $gq = "SELECT id, fullname FROM user WHERE groupType='1'";
-		      $groups = pdo_query($gq);
-		      foreach($groups as $g){
-	           	print "<option value =\"${g['id']}\">${g['fullname']}</option>";
-		      }
-	           ?>
-	           </select>
-	           <font color="orangered" size="+1"><tt><b>*</b></tt></font>
-	       </td>
-	   </tr>
-	   <tr valign="top">
-	       <td align="right">
-	           <p>Other Notes</p>
-	       </td>
-	       <td>
-	           <textarea wrap="soft" name="newnotes" rows="5" cols="30"></textarea>
-	       </td>
-	   </tr>
-	   <tr>
-	       <td align="right" colspan="2">
-	           <hr noshade="noshade" />
-	           <input type="reset" value="Reset Form" />
-	           <input type="submit" name="submitok" value="   OK   " />
-	       </td>
-	   </tr>
-	</table>
+   <div class="form-group">
+    <label class="sr-only" for="userid">User ID</label>
+    <input placeholder="Username" class="form-control" id="userid" type="text" name="newid" required autofocus/>
+   </div>
+   <div class="form-group">
+    <label class="sr-only" for="fullname">User ID</label>
+    <input placeholder="Full Name" class="form-control" id="fullname" type="text" name="newname" required autofocus/>
+   </div>
+   <div class="form-group">
+    <label class="sr-only" for="email">User ID</label>
+    <input placeholder="E-mail Address" class="form-control" id="email" type="text" name="newemail" required autofocus/>
+   </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+    <button class="btn btn-lg btn-primary btn-block" type="reset">Reset</button>
+        </form>
+
 	</form> 
 <?php 
 else:

@@ -65,7 +65,7 @@ var VectorMap = new Class({
 
   getBoundaries : function(fragment){
     var bndrs = fragment.slice(0,2);
-    bndrs = (fragment[3]) ? [bndrs[0], bndrs[1] + this.vL] : [bndrs[1], bndrs[0] + this.vL];
+    bndrs = (fragment[3]) ? [bndrs[0], bndrs[1].toInt() + this.vL.toInt()] : [bndrs[1], bndrs[0].toInt() + this.vL.toInt()];
     bndrs = (bndrs[1] - bndrs[0] > this.vL) ? [bndrs[0], bndrs[1] % this.vL] : bndrs;
     return bndrs;
   },
@@ -474,9 +474,9 @@ var VectorMap = new Class({
         frags[i+1] = group[i].attr.position;
         frags[i] = frags[i] - group[i].attr.position
       }
-      frags[0] += frags.pop();
+      frags[0] = parseInt(frags[0]) + parseInt(frags.pop());
       if (vm.selText) vm.selText.remove();
-      vm.selText = vm.vm.text(vm.cx, vm.options.height * 0.99, label.attr.text + ": " + frags.toString());
+      vm.selText = vm.vm.text(vm.cx, vm.options.height * 0.99, label.attr.text + ": " + frags.reverse().join(", "));
     }
     if (!label.attr.isFragment) svg[0].onmouseout = function (event){
       var label = this.label
@@ -524,13 +524,13 @@ var VectorMap = new Class({
       var y = event.pageY - $('map').offsetTop;
       this.bp = vm.getBp(x,y,vm.R);
     } else {
-      this.bp = label.attr.position;
+      this.bp = label.attr.position.toInt();
     }
     if (event.shiftKey){
-      selEnd = this.bp;
-      selEnd = selEnd < selStart ? selEnd + vm.vL : selEnd;
+      selEnd = this.bp.toInt();
+      selEnd = selEnd < selStart ? selEnd + vm.vL.toInt() : selEnd;
     } else {
-      selStart = this.bp;
+      selStart = this.bp.toInt();
       selEnd = null;
     }
     if (selStart && selEnd){
@@ -546,8 +546,8 @@ var VectorMap = new Class({
   drawScale : function (interval) {
     orbitNo = this.minOrb - 1;
     var r = (1 + orbitNo * this.options.orbitSpacing) * this.R;
-    var r1 = r - 0.01 * this.R;
-    var r2 = r + 0.01 * this.R;
+    var r1 = r - 0.01 * this.R.toInt();
+    var r2 = r + 0.01 * this.R.toInt();
 
     var cw = this.width/2;
     var circle = new Label("circle");

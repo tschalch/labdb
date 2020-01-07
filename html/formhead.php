@@ -41,7 +41,6 @@ include("header.php");
 <script src="js/Autocompleter.Request.js" type="text/javascript"></script>
 <script src="js/Autocompleter.labdb.js" type="text/javascript"></script>
 <script src="js/Observer.js" type="text/javascript"></script>
-
 </head>
 <body>
 
@@ -49,7 +48,7 @@ include("header.php");
 include("title_bar.php");
 include("navigation.php");
 ?>
-<div id="content">
+<div class="container">
 <?php
 if (!isset($noUserFilter)) $noUserFilter = Null;
 if (!isset($noProjectFilter)) $noProjectFilter = Null;
