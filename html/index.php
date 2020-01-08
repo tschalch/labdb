@@ -13,14 +13,14 @@ include("navigation.php");
          <p><form method="get" action="
  	<?php print "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}";
         ?>">
-           <div class="frontPageRow">
+           <div class="">
 			<h2>Quick Search:</h2>
 	   </div>
-	   <div class="frontPageRow">
-		<input id="searchField" type="text" value="<?php if ( isset ($_GET['searchTerm'])) print $_GET['searchTerm']; ?>" name="serachTerm"/>
+	   <div class="form-group">
+		<input id="searchField" class="form-control " type="text" value="<?php if ( isset ($_GET['searchTerm'])) print $_GET['searchTerm']; ?>" name="searchTerm"/>
 	   </div>
-            <div class="frontPageRow">
-		<input type="submit" value="search" />
+            <div class="form-group">
+		<input class="btn btn-secondary mr-sm-2" type="submit" value="search" />
 	    </div>
         </form></p>
          
