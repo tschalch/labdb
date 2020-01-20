@@ -44,7 +44,7 @@ jQuery( document ).ready(function( $ ) {
     ev = { 
       start: info.start.toISOString(),
       end: info.end.toISOString(),
-      title: <?php print "'$username'"; ?>,
+      title: <?php print "'$userfullname'"; ?>,
       description: '',
       color: <?php print "'$usercolor'"; ?>,
       user: <?php print "'$userid'"; ?>,
