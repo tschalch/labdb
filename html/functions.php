@@ -486,7 +486,7 @@ function printTextArea($label, $field, $formParams){
 	$table = $formParams['table'];
 	$fields = $formParams['fields'];
 	$mode = $formParams['mode'];
-	if (!key_exists($field, $fields)) $fields[$field] = '';
+	if (!isset($fields[$field])) $fields[$field] = '';
 	print "<div class=\"formRow\"><div class=\"formLabel\">$label:</div>\n";
 	if($mode == "modify"){
 		print "<div class=\"formField\"><textarea name=\"${table}_0_$field\" class=\"form\">$fields[$field]</textarea></div>\n";

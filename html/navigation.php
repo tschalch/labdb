@@ -1,9 +1,12 @@
+<?php 
+include_once("functions.php");
+?>
 <script>
-window.addEvent('domready',function() {
-    Element.prototype.hide = function() {
+//window.addEvent('domready',function() {
+    //Element.prototype.hide = function() {
         // Do nothing
-    };
-});
+    //};
+//});
 </script>
 <nav class="navbar navbar-custom navbar-expand-md navbar-dark fixed-top">
     <button class="navbar-toggler" type="button" data-toggle="collapse" 
@@ -16,7 +19,7 @@ window.addEvent('domready',function() {
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Inventory</a>
+        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Inventory</a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
           <a class="dropdown-item" href="list.php?list=listItems">All Items</a>
           <a class="dropdown-item" href="list.php?list=listItems&amp;status=1">Items to/on order</a>
@@ -67,6 +70,20 @@ window.addEvent('domready',function() {
           <a class="dropdown-item" href="sequence_extractor/index.php">Sequence Extractor</a>
           <a class="dropdown-item" href="/sms2/index.html">Sequence Maniuplation Suite</a>
           <a class="dropdown-item" href="http://www.bioinformatics.nl/cgi-bin/primer3plus/primer3plus.cgi/">Primer3Plus</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Booking</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown05">
+<?php
+$sql="SELECT resourceID, resource_name FROM resources WHERE active='1';";
+$resources = pdo_query($sql);
+if(isset($resources) && is_array($resources)){
+  foreach ($resources as $r) {
+  print "<a class=\"dropdown-item\" href=\"fullcalendar.php?resource=${r['resourceID']}\">${r['resource_name']}</a>";
+}
+}
+?>
         </div>
       </li>
       <li class="nav-item dropdown">

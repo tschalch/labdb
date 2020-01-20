@@ -24,9 +24,6 @@ echo "<!DOCTYPE html>";
 	<!--[if lt IE 6]>     <link rel="stylesheet" type="text/css" href="js/myiehacks-5.5.css" />   <![endif]--> 
 
 	<link rel="shortcut icon" href="favicon.ico" />
-<!--<script src="js/mootools-1.2.5-core.js" type="text/javascript"></script>-->
-<script src="js/MooTools-More-1.6.0-compat-compressed.js" type="text/javascript"></script>
-<!--<script src="js/mootools-1.2.5.1-more.js" type="text/javascript"></script>-->
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">

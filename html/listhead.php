@@ -4,6 +4,7 @@ include_once("accesscontrol.php");
 include("header.php");
 include_once("functions.php");
 ?>
+<script src="js/MooTools-More-1.6.0-compat-compressed.js" type="text/javascript"></script>
 </head>
 <body>
 
