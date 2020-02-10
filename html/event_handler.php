@@ -23,8 +23,8 @@ if (isset($_POST['delete']) && isset($_POST['id'])){
     print($sql);
     die ('SQL execution error');
   }
-  $user = $query->fetch();
-  if ($userid === $user['user']){
+  $event = $query->fetch();
+  if ($userid === $event['user']){
     $sql = "DELETE FROM events WHERE id = $id";
   }
 

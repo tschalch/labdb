@@ -2,11 +2,11 @@
 include_once("functions.php");
 ?>
 <script>
-//window.addEvent('domready',function() {
-    //Element.prototype.hide = function() {
+window.addEvent('domready',function() {
+    Element.prototype.hide = function() {
         // Do nothing
-    //};
-//});
+    };
+});
 </script>
 <nav class="navbar navbar-custom navbar-expand-md navbar-dark fixed-top">
     <button class="navbar-toggler" type="button" data-toggle="collapse" 

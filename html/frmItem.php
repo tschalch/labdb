@@ -7,6 +7,7 @@ $submitFunction = "validate_form()";
 $noUserFilter = true;
 
 include("formhead.php");
+
 ?>
 <script type="text/javascript">
 window.addEvent('domready', function() {

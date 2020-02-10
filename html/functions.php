@@ -526,7 +526,7 @@ function printSequenceField($label, $type, $field, $formParams, $area, $seqEdito
 	}
 	$label = "$label:";
 
-	print "<div class=\"formRow\" style=\"clear:both;width:100%;\"><div class=\"formLabel\">$label";
+	print "<div class=\"row\"><label>$label";
 	if (sizeof ($seq)){
 		if ($type == 'oligo'){
 			printOligoData($formParams, $field);
@@ -548,7 +548,7 @@ function printSequenceField($label, $type, $field, $formParams, $area, $seqEdito
 			Mw = $mw Da<br/> Length = $len<br/> Abs = %4.2f /(mg/ml)<br/></a></div>", $a);
 		}
 	}
-	print "</div>\n";
+	print "</label>\n";
 	
 	if($mode == "modify"){
 		if ($area){
@@ -1519,14 +1519,14 @@ function getRestrictionSites($digString, $dnaSequence){
       $site = "['$enzyme_name', '$s', {'background-color': \"white\",
         fill: \"black\", \"font-size\": '8', \"font-family\": \"Verdana\",
         cursor:\"pointer\", 'text-anchor' : \"middle\"}],";
-      print "<pre>$site</pre>";
+      #print "<pre>$site</pre>";
       $sites .= $site;
     }
   }
 
       #print_r($enzymes_array[$enzyme][0]); print "<br/>";
 	$sites .= ")";
-	print "<pre>". $sites . "</pre>";
+	#print "<pre>". $sites . "</pre>";
 	return $sites;
 }
 

@@ -24,7 +24,7 @@ if (!isset($_POST['submitok'])):
     <label class="sr-only" for="email">User ID</label>
     <input placeholder="E-mail Address" class="form-control" id="email" type="text" name="newemail" required autofocus/>
    </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+    <button class="btn btn-lg btn-primary btn-block" name="submitok" type="submit">Sign up</button>
     <button class="btn btn-lg btn-primary btn-block" type="reset">Reset</button>
         </form>
 
@@ -62,7 +62,6 @@ $sql = "INSERT INTO user SET
      password = MD5('$newpass'),
      fullname = '$_POST[newname]',
      email = '$_POST[newemail]',
-     notes = '$_POST[newnotes]',
      groupType = 0";
 
 $newid = pdo_query($sql);
@@ -135,12 +134,17 @@ mail("$adminEmail","New labdb user created",
 
 #print implode("\n", $headers);
 ?>
-   <p><strong>User registration successful!</strong></p>
+<link href="css/signin.css" rel="stylesheet">
+<head><body>
+<div class="container text-center">
+ <h1 class="h3 mb-3 font-weight-normal">User registration successful!</h1>
+   <p><strong></strong></p>
    <p>Your userid and password have been emailed to
       <strong><?=$_POST['newemail']?></strong>, the email address
       you just provided in your registration form. To log in,
       click <a href="index.php">here</a> to return to the login
       page, and enter your new personal userid and password.</p>
+</div>
 <?php
 endif;
 

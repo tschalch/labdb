@@ -30,6 +30,8 @@ if(array_key_exists('selection', $_POST)){
 			echo "You have successfully written data to <a href=\"$file\">$file</a>.<br/>";   
 			fclose($file_handle);  
 		}
+    $redirect = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}";
+    header("Location:$redirect");
 		break;
 	# change permissions
 	case 2:
@@ -46,6 +48,8 @@ if(array_key_exists('selection', $_POST)){
 			deleteRecord($id, $userid, $groups);
 		}
 		echo "Records deleted<br/><br/>";
+    $redirect = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}";
+    header("Location:$redirect");
 		break;
 	# set order placed
 	case 4:
@@ -63,6 +67,8 @@ if(array_key_exists('selection', $_POST)){
         }
         #print $q;
 		echo "Status changed to 'order placed'<br/><br/>";
+    $redirect = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}";
+    header("Location:$redirect");
 		break;
 	# set order received
 	case 5:
@@ -75,6 +81,8 @@ if(array_key_exists('selection', $_POST)){
 		}
 		#print $q;
 		echo "Status changed to 'received'<br/><br/>";
+    $redirect = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}";
+    header("Location:$redirect");
 		break;
 	case 6:
 		foreach($selection as $id){
@@ -85,6 +93,8 @@ if(array_key_exists('selection', $_POST)){
 		}
 		#print $q;
 		echo "Status changed to 'finished'<br/><br/>";
+    $redirect = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}";
+    header("Location:$redirect");
 		break;
 	case 7:
 	    $selString = join(",", $selection);

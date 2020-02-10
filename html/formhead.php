@@ -42,7 +42,6 @@ include("header.php");
 <script src="js/Autocompleter.Request.js" type="text/javascript"></script>
 <script src="js/Autocompleter.labdb.js" type="text/javascript"></script>
 <script src="js/Observer.js" type="text/javascript"></script>
-<script src="js/MooTools-More-1.6.0-compat-compressed.js" type="text/javascript"></script>
 </head>
 <body>
 
