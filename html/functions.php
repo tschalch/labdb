@@ -1457,8 +1457,8 @@ function escape_quotes($receive) {
 function getRestrictionSites($digString, $dnaSequence){
 	include('config.php');
   include('lib/restriction_digest.php');
-  $digestion = digestDNA( array("sequence" => $dnaSequence) );
-  $enzymes_array=get_array_of_Type_II_endonucleases();
+  $digestion = digestDNA( array("sequence" => $dnaSequence, 'IIs' => 0, 'IIb' => 0) );
+
 	$output = array();
 	$sites = array();
 	global $userid;
@@ -1507,10 +1507,14 @@ function getRestrictionSites($digString, $dnaSequence){
   $sites = "new Array(";
   //print_r($digestion[0]);
   $digsts = [];
-  foreach($enzymeList as $testEnz){
-    foreach($digestion[0] as $enzyme => $cuts ){
-      if (in_array($testEnz, explode(",", $enzymes_array[$enzyme][0])) &&  sizeof($cuts['cuts']) <= $maxCuts ) {
-        $digsts[$testEnz] = $cuts;
+  $enzymes_array[] = get_array_of_Type_II_endonucleases();
+  $enzymes_array[] = get_array_of_Type_IIs_endonucleases();
+  foreach($enzymes_array as $enz_arr){
+    foreach($enzymeList as $testEnz){
+      foreach($digestion[0] as $enzyme => $cuts ){
+        if (in_array($testEnz, explode(",", $enz_arr[$enzyme][0])) &&  sizeof($cuts['cuts']) <= $maxCuts ) {
+          $digsts[$testEnz] = $cuts;
+        }
       }
     }
   }

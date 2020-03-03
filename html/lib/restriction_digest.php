@@ -248,6 +248,7 @@ function restriction_digest($enzymes_array,$sequence){
                         $digestion[$enzyme2]["cuts"][$cleavageposition]="";
                                 // As overlapping may occur for many endonucleases,
                                 //   a subsequence starting in position 2 of fragment is calculate
+                                // print "<pre>".print_r($fragments)."</pre>";
                                 $subsequence=substr($fragments[$i-1],1).$fragments[$i].substr($fragments[$i+1],0,40);
                                 $subsequence=substr($subsequence,0,2*$enzymes_array[$enzyme][3]-2);
                                 //Previous process is repeated
@@ -383,6 +384,8 @@ $enzymes_array = Array(
 "BptI" => array("BptI","CC'W_GG","(CCAGG|CCTGG)",5,2,1,5),
 "Bpu10I" => array("Bpu10I","CC'TNA_GC","(CCT.AGC|GCT.AGG)",7,2,3,6),
 "BpvUI" => array("BpvUI,MvrI,PvuI,Ple19I","CG_AT'CG","(CGATCG)",6,4,-2,6),
+"BsaI" => array("BsaI,Bso31I,BspTNI,Eco31I","GGTCTCN'NNNN_","(GGTCTC.....)",11,7,4,6),
+   "BsaI@" => array("","","(.....GAGACC)",11,0,4,6),
 "BsaAI" => array("BsaAI,BstBAI,Ppu21I","YAC'GTR","(CACGTA|CACGTG|TACGTA|TACGTG)",6,3,0,6),
 "BsaBI" => array("BsaBI,Bse8I,BseJI,MamI","GATNN'NNATC","(GAT....ATC)",10,5,0,6),
 "BsaJI" => array("BsaJI,BseDI,BssECI","C'CNNG_G","(CC..GG)",6,1,4,4),
