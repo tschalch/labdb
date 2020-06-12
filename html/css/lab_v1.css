@@ -275,6 +275,7 @@ input.datefield{
 #footer
 {
 clear: both;
+padding: 2em;
 }
 
 div.autocomplete {
@@ -347,11 +348,15 @@ cursor:pointer;
 	background: url(../img/spinner.gif) no-repeat left;
 }
 
+div.seqtext > textarea {
+  font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+
 /* Sequence editor definitions */
 #seqEditor {
 	clear: both;
 	position: relative;
-	font-family: Courier New, Courier, monospace;
+	font-family: Courier, Courier New, monospace;
 	margin-right: 10px;
 	padding-left: 80px;
 	padding-top: 2em;

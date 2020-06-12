@@ -526,7 +526,7 @@ function printSequenceField($label, $type, $field, $formParams, $area, $seqEdito
 	}
 	$label = "$label:";
 
-	print "<div class=\"row\"><label>$label";
+	print "<div class=\"formRow\"><div class=\"formLabel\">$label";
 	if (sizeof ($seq)){
 		if ($type == 'oligo'){
 			printOligoData($formParams, $field);
@@ -548,7 +548,7 @@ function printSequenceField($label, $type, $field, $formParams, $area, $seqEdito
 			Mw = $mw Da<br/> Length = $len<br/> Abs = %4.2f /(mg/ml)<br/></a></div>", $a);
 		}
 	}
-	print "</label>\n";
+	print "</div>\n";
 	
 	if($mode == "modify"){
 		if ($area){
@@ -560,7 +560,7 @@ function printSequenceField($label, $type, $field, $formParams, $area, $seqEdito
 				$displayEditor = 'none';
 				$displayField = 'block';
 			}
-			print "<div id=\"SeqField\" style=\"display: $displayField\">";
+			print "<div id=\"SeqField\" class=\"seqtext\"  style=\"display: $displayField\">";
 			print "<textarea id=\"$field\" class=\"form\" 
 					name=\"${table}_0_$field\" 
 					rows=\"10\">$seq</textarea>";
