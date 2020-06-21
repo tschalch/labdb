@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="579pt"
+   height="579pt"
+   viewBox="0 0 579 579"
+   id="svg8"
+   sodipodi:docname="GHS-pictogram-nonhazardous.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata14">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs12" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     id="namedview10"
+     showgrid="false"
+     inkscape:zoom="0.30569948"
+     inkscape:cx="386"
+     inkscape:cy="358.19492"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg8" />
+  <path
+     d="M 25.301165,289.67172 289.32987,553.70044 553.40261,289.6277 C 465.35022,201.6757 377.47182,113.54942 289.3739,25.643024 L 25.301165,289.67172 z"
+     style="fill:#ffffff;stroke:none"
+     id="path2" />
+  <path
+     d="M 147.65941,148.01233 6,289.67173 147.66886,431.34059 289.32827,573 431.01602,431.31224 572.70378,289.62449 431.06327,147.98398 C 353.16571,70.086424 289.40386,6.34347 289.37551,6.34347 c -0.0284,0 -63.79965,63.752403 -141.7161,141.66886 z M 408.62189,170.42535 527.82103,289.62449 408.5652,408.88032 289.31882,528.1267 170.12913,408.87087 50.939444,289.61504 170.13858,170.41591 C 235.69574,104.85874 289.34716,51.22622 289.37551,51.22622 c 0.0283,0 53.68922,53.64197 119.24638,119.19913 z"
+     style="fill:#868686;stroke:none"
+     id="path4" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:55.4915657px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.6011672"
+     x="289.20288"
+     y="274.83694"
+     id="text823"><tspan
+       sodipodi:role="line"
+       id="tspan821"
+       x="289.20288"
+       y="274.83694"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:'Arial Bold';stroke-width:2.6011672">NO GHS</tspan><tspan
+       sodipodi:role="line"
+       x="289.20288"
+       y="344.20142"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:'Arial Bold';stroke-width:2.6011672"
+       id="tspan825">SYMBOL</tspan></text>
+</svg>
