@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.60, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.62, for Linux (x86_64)
 --
 -- Host: localhost    Database: lab_labdb
 -- ------------------------------------------------------
--- Server version	5.5.60
+-- Server version	5.5.62
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -29,7 +29,7 @@ CREATE TABLE `boxes` (
   `location` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,7 +48,7 @@ CREATE TABLE `connections` (
   `end` int(11) NOT NULL COMMENT 'end position on plasimd in bp',
   `direction` int(11) NOT NULL COMMENT 'direction on plasmid. fw is 1, rev is 0',
   PRIMARY KEY (`connID`)
-) ENGINE=InnoDB AUTO_INCREMENT=1876 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1933 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -80,6 +80,29 @@ CREATE TABLE `crystalsdev` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `events`
+--
+
+DROP TABLE IF EXISTS `events`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `events` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `color` varchar(7) DEFAULT NULL,
+  `start` datetime NOT NULL,
+  `end` datetime DEFAULT NULL,
+  `resource` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_resource` (`resource`),
+  KEY `FK_user` (`user`),
+  CONSTRAINT `FK_user` FOREIGN KEY (`user`) REFERENCES `user` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `fragments`
 --
 
@@ -104,7 +127,7 @@ CREATE TABLE `fragments` (
   `origin` text NOT NULL,
   `attachment` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3169 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3245 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,7 +158,7 @@ CREATE TABLE `groups` (
   `belongsToGroup` int(11) NOT NULL,
   `defaultPermissions` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,7 +191,7 @@ CREATE TABLE `inventory` (
   `billed` date DEFAULT '0000-00-00',
   `poNumber` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3000 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3091 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -197,7 +220,7 @@ CREATE TABLE `locations` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,7 +286,7 @@ CREATE TABLE `oligos` (
   `concentration` text NOT NULL,
   `orderDate` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2084 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2137 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -280,7 +303,7 @@ CREATE TABLE `permissions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
   UNIQUE KEY `tracknUser` (`trackID`,`userid`)
-) ENGINE=MyISAM AUTO_INCREMENT=40460 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41477 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -299,7 +322,7 @@ CREATE TABLE `plasmids` (
   `sequence` mediumtext NOT NULL,
   `enzymes` text NOT NULL COMMENT 'comma separated list of restriction enzyme names (emboss restrict syntax)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1640 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1680 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -335,6 +358,23 @@ CREATE TABLE `proteins` (
   `amount` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `resources`
+--
+
+DROP TABLE IF EXISTS `resources`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `resources` (
+  `resourceID` int(11) NOT NULL AUTO_INCREMENT,
+  `resource_name` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `resource_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `resource_location` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`resourceID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -417,7 +457,7 @@ CREATE TABLE `strains` (
   `strain` varchar(255) NOT NULL,
   `description` mediumtext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=836 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=847 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -511,7 +551,7 @@ CREATE TABLE `tracker` (
   `permOthers` smallint(6) NOT NULL,
   PRIMARY KEY (`trackID`),
   UNIQUE KEY `sampleType` (`sampleType`,`sampleID`)
-) ENGINE=InnoDB AUTO_INCREMENT=12534 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12873 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -559,14 +599,14 @@ CREATE TABLE `user` (
   `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `notes` text COLLATE utf8_unicode_ci,
   `groupType` tinyint(4) NOT NULL COMMENT '0 is user, 1 is labgroup, 2 is projectgroup, 3 for administrator groups',
+  `color` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `userid` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 INSERT INTO `user` VALUES(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '', 'default user with administrator privileges', 0);
 INSERT INTO `user` VALUES(2, 'defaultGroup', '', 'Default Group', '', NULL, 1)
-
 --
 -- Table structure for table `vials`
 --
@@ -587,7 +627,7 @@ CREATE TABLE `vials` (
   `exists` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `date` (`date`)
-) ENGINE=InnoDB AUTO_INCREMENT=3089 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3155 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -656,4 +696,4 @@ CREATE TABLE `vials` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-21  1:22:26
+-- Dump completed on 2020-06-15 19:28:16
