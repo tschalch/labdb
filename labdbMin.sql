@@ -208,6 +208,16 @@ CREATE TABLE `itemstatus` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+ --
+ -- Dumping data for table `itemstatus`
+ --
+
+LOCK TABLES `itemstatus` WRITE;
+/*!40000 ALTER TABLE `itemstatus` DISABLE KEYS */;
+INSERT INTO `itemstatus` VALUES (0,'under consideration'),(1,'to be ordered'),(2,'order placed'),(3,'in stock'),(4,'finished');
+/*!40000 ALTER TABLE `itemstatus` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `locations`
 --
@@ -397,6 +407,21 @@ CREATE TABLE `sampletypes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sampletypes`
+--
+
+LOCK TABLES `sampletypes` WRITE;
+/*!40000 ALTER TABLE `sampletypes` DISABLE KEYS */;
+INSERT INTO `sampletypes` VALUES (1,'P','Plasmid','Plasmids','frmPlasmids','plasmids','listPlasmids',1,0),(2,'O','Oligo','Oligos','frm
+  Oligo','oligos','listOligo',1,0),(3,'B','Protein','Proteins','frmProteins','proteins','',1,0),(4,'S','Strain','Strains','frmStrain','s
+  trains','listStrains',1,0),(6,NULL,'Vial','Vials','frmVial','vials','listVials',0,0),(7,'B','Fragment','Fragments','frmGene','fragment
+  s','listGene',1,0),(8,NULL,'Box','Boxes','frmBoxes','boxes','listBoxes',0,0),(9,NULL,'Project','Projects','frmProject','projects','lis
+  tProjects',0,0),(10,'TSL','item','Items','frmItem','inventory','listItems',0,2),(11,NULL,'location','locations','frmLocations','locati
+  ons','listLocations',0,2),(12,NULL,'logbook entry','logbook entries','frmLog','logbook','listLogbook',0,2);
+/*!40000 ALTER TABLE `sampletypes` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `sequencing`
@@ -605,8 +630,8 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-INSERT INTO `user` VALUES(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '', 'default user with administrator privileges', 0);
-INSERT INTO `user` VALUES(2, 'defaultGroup', '', 'Default Group', '', NULL, 1)
+INSERT INTO `user` VALUES(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '', 'default user with administrator privileges', 0, 'red');
+INSERT INTO `user` VALUES(2, 'defaultGroup', '', 'Default Group', '', NULL, 1);
 --
 -- Table structure for table `vials`
 --

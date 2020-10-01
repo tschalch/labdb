@@ -46,9 +46,9 @@ include("navigation.php");
                        foreach ($searchwords as $searchword){
                                $j=0;
                                $jnum = count($searchfields);
-							   $where .= " $hexIDSQL LIKE '%$searchword%' OR ";
+							   $where .= " $hexIDSQL LIKE :searchword OR ";
                                foreach ($searchfields as $sfield){
-                                       $where .= " $sfield LIKE '%$searchword%'";
+                                       $where .= " $sfield LIKE :searchword";
                                        $j++;
                                        if ($j < $jnum) $where .= " OR";
                                }
@@ -62,7 +62,7 @@ include("navigation.php");
                }
                //print "where: $where";
                $noUserFilter = True;
-               $results = getRecords($t, $userid, $columns, $where);
+               $results = getRecords($t, $userid, array(':searchword'=>"%$searchword%"), $columns, $where);
                 if (sizeof($results)){
                    $found[$t] = $results;
                    print "<a href=\"list.php?list=${table['list']}&searchword=$searchString\"><h2 class=\"qs\">${table["plural"]}</h2></a>";

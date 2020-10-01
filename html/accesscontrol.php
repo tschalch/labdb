@@ -47,9 +47,9 @@ include_once("title_bar.php");
  exit;
 }
 
-$sql = "SELECT * FROM user WHERE userid = '$uid' AND password = MD5('$pwd')";
+$sql = "SELECT * FROM user WHERE userid = :uid AND password = MD5(:pwd)";
 #print $sql;
-$accresult = pdo_query($sql);
+$accresult = pdo_query($sql, array(':uid'=>$uid, ':pwd'=>$pwd));
 if (!$accresult) {
  unset($_SESSION['uid']);
  unset($_SESSION['pwd']);

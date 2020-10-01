@@ -42,7 +42,7 @@ include("listhead.php");
 
 $plasmids = array();
 $pcols = array('plasmids.name', 'tracker.trackID');
-$plds = getRecords("plasmids", $userid, $pcols);
+$plds = getRecords("plasmids", $userid, array(), $pcols);
 if($plds){
 	foreach($plds as $plasmid){
 		$plasmids[$plasmid['trackID']] = $plasmid['name'];

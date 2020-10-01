@@ -39,7 +39,7 @@ $noUserFilter = True;
 include("listhead.php");
 $fragments = array();
 $fcols = array('fragments.name','fragments.type','tracker.trackID');
-$frags = getRecords("fragments", $userid, $fcols);
+$frags = getRecords("fragments", $userid, array(), $fcols);
 if($frags){
 	foreach($frags as $frag){
 		$fragments[$frag['trackID']] = array('name' => $frag['name'],'type' => $frag['type']);
@@ -79,7 +79,7 @@ function printFragments($typ, $conxs){
 	$typeCons = array();
 	foreach ($conxs as $c){
 		 $trackID = $c['record'];
-		 if ($fragments[$trackID]['type'] == $typ) $typeCons[]=$c;
+		 if ($trackID && $fragments[$trackID]['type'] == $typ) $typeCons[]=$c;
 	}
 	$c = 0;
 	$out = "";

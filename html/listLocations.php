@@ -49,4 +49,4 @@ foreach ($rows as $row) {
 }
 listProcessor(array(2,3));
 print "</table>";
-php?>
+?>

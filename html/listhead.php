@@ -47,6 +47,7 @@ if (isset($category)){
 if (!isset($query)){
     if (!isset($where)) {
 	$where = '';
+  $vars = array();
     }
 #	$query="SELECT tracker.trackID,";
 #	if ($queryFields){
@@ -83,10 +84,11 @@ if (!isset($query)){
                         $j=0;
                         $jnum = count($searchfields);
 			$hexIDSQL = getHexIDSQL($table);
-			$where .= " $hexIDSQL LIKE '%$searchword%' OR ";
+			$where .= " $hexIDSQL LIKE :searchword$i OR ";
+      $vars[":searchword$i"] = "%$searchword%";
 			foreach ($searchfields as $sfield){
 				$s = explode(" ",  $sfield);
-				$where .= " ${s[0]} LIKE '%$searchword%'";
+				$where .= " ${s[0]} LIKE :searchword$i ";
 				$j++;
 				if ($j < $jnum) $where .= " OR";
 			}
@@ -103,7 +105,8 @@ if (!isset($query)){
 	
 	if (isset($projectSelect)){
 	    if (isset($where) and strlen($where)) $where .= " AND ";
-	    $where .= $projectSelect;
+	    $where .= $projectSelect['q'];
+      $vars = array_merge($vars, $projectSelect['vars']);
 	}
 	if (isset($userSelect)){
 	    if (isset($where) and strlen($where)) $where .= " AND ";
@@ -113,8 +116,9 @@ if (!isset($query)){
 		//if ($projectSelect or ($searchwords and $searchfields)) $query .= " AND";
 		if (isset($where) and strlen($where)) $where .= " AND ";
 		$where .= "(";
-		$where .= " type='$category'";
+		$where .= " type=:category";
 		$where .= ")";
+    $vars[':category'] = $category;
 	}
 #	// user control
 #	$query .= " AND (tracker.owner=$userid OR tracker.public=TRUE)";
@@ -128,10 +132,10 @@ if (!isset($query)){
 #print "where: $where <br/>";
 #$rows = pdo_query($query);
 if (!isset($join)) $join = '';
-$noRows = getRecords($table, $userid, array('trackID'), $where, "", 1, $join);
+$noRows = getRecords($table, $userid, $vars, array('trackID'), $where, "", 1, $join);
 include("pageNav.php");
 if (isset($limit)) $order .= "$limit";
-$rows = getRecords($table, $userid, $columns, $where, $order, 0, $join);
+$rows = getRecords($table, $userid, $vars , $columns, $where, $order, 0, $join);
 //print_r($columns);
 if (!isset($rows)) $rows = array();
 ?>

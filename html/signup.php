@@ -19,6 +19,7 @@ if (!isset($_POST['submitok'])):
    <div class="form-group">
     <label class="sr-only" for="fullname">User ID</label>
     <input placeholder="Full Name" class="form-control" id="fullname" type="text" name="newname" required autofocus/>
+    <input placeholder="Group" class="form-control" id="group" type="hidden" name="group" value="2"/>
    </div>
    <div class="form-group">
     <label class="sr-only" for="email">User ID</label>
@@ -33,8 +34,8 @@ if (!isset($_POST['submitok'])):
 else:
    // Process signup submission 
 
-if ($_POST['newid']=='' or $_POST['newname']==''
-     or $_POST['newemail']=='' or $_POST['group']==0) {
+if ($_POST['newid']=='' || $_POST['newname']=='' 
+     || $_POST['newemail']=='' || $_POST['group']==0) {
        error('One or more required fields were left blank.\\n'.
              'Please fill them in and try again.');
    }
@@ -43,8 +44,8 @@ $newpass = substr(md5(time()),0,6);
 $newid = 'username';
 
 // Check for existing user with the new id
-$sql = "SELECT COUNT(*) FROM user WHERE userid = '$_POST[newid]'";
-$result = pdo_query($sql);
+$sql = "SELECT COUNT(*) FROM user WHERE userid = :newid";
+$result = pdo_query($sql, array(':newid' => $_POST['newid']));
 if (!$result) {
 error('A database error occurred in processing your '.
      'submission.\\nIf this error persists, please '.
@@ -58,13 +59,15 @@ error('A user already exists with your chosen userid.\\n'.
 
 
 $sql = "INSERT INTO user SET
-     userid = '$_POST[newid]',
-     password = MD5('$newpass'),
-     fullname = '$_POST[newname]',
-     email = '$_POST[newemail]',
+     userid = :newid,
+     password = MD5(:newpass),
+     fullname = :newname,
+     email = :newemail,
      groupType = 0";
 
-$newid = pdo_query($sql);
+$vars = array(':newid' => $_POST['newid'], ':newpass' => $newpass, 
+  ':newname' => $_POST['newname'], ':newemail' => $_POST['newemail']);
+$newid = pdo_query($sql, $vars);
 
 if (!$newid)
 	error('1A database error occurred in processing your '.
@@ -74,20 +77,20 @@ if (!$newid)
 //
 # setup groups
 $sql = "INSERT INTO groups SET
-     userid = '$newid',
-     belongsToGroup = '$newid',
+     userid = :newid,
+     belongsToGroup = :newid,
      defaultPermissions = 2";
-if (!pdo_query($sql))
+if (!pdo_query($sql, array(':newid' => $_POST['newid'])))
 	error('2A database error occurred in processing your '.
 	     'submission.\\nIf this error persists, please '.
 	     "contact $adminEmail.");
 
 $sql = "INSERT INTO groups SET
-     userid = '$newid',
-     belongsToGroup = '$_POST[group]',
+     userid = :newid,
+     belongsToGroup = :group,
      defaultPermissions = 1;";
 
-if (!pdo_query($sql))
+if (!pdo_query($sql, array(':newid' => $_POST['newid'], ':group' => $_POST['group'])))
 	error('3A database error occurred in processing your '.
 	     'submission.\\nIf this error persists, please '.
 	     "contact $adminEmail.");

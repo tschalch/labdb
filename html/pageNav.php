@@ -7,8 +7,8 @@ if (array_key_exists('page',$_GET)){
 
 if ($pageNr != 'all'){
 	$rowsPerPage = 25;
-	if (isset($noRows[0][0])){
-	    $noRows = $noRows[0][0];
+	if (isset($noRows[0]['COUNT(*)'])){
+	    $noRows = $noRows[0]['COUNT(*)'];
 	} else {
 	    $noRows = 0;
 	}

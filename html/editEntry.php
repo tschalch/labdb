@@ -18,7 +18,7 @@ if (isset($_GET['form'])){
     }
 }
 #if ($mode == 'display') saveURI($_SERVER['REQUEST_URI']);
-if ($mode == "display"){
+if (isset($mode) && $mode == "display"){
     print "<div style=\"margin-bottom: 2em;\" class=\"formRow\"><div class=\"\">";
 	print "	<a href=\"editEntry.php?id=$id&mode=modify\">
 		<span class=\"button\">Edit record<span></a>";

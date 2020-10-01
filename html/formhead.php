@@ -89,7 +89,7 @@ window.addEvent('domready', function() {
     if (loc == location){
       history.go(0);
   } else {
-    location.replace(loc);
+    //location.replace(loc);
   }
   }
   goBack = false;

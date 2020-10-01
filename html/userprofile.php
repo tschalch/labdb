@@ -15,23 +15,29 @@ if (isset($_POST['submitok'])):
       'Please fill them in and try again.');
   }
 if ($_POST['name']!=$userfullname or $_POST['email']!=$useremail or $_POST['color']!=$usercolor or $_POST['notes']!=$usernotes) {
-  $q ="UPDATE user SET fullname = '${_POST['name']}', email = '${_POST['email']}',
-     color = '${_POST['color']}', notes = '${_POST['notes']}' WHERE userid = '$uid'";
-  $r = pdo_query($q);
+  $q ="UPDATE user SET fullname = :name, email = :email, 
+     color = :color, notes = :notes WHERE userid = :uid;";
+  $vars = array(':name' => $_POST['name'], ':email' => $_POST['email'], ':uid' => $uid,
+    ':color' => $_POST['color'], ':notes' => $_POST['notes']);
+  $r = pdo_query($q, $vars);
   print $q;
   print "<strong>Profile change successful!</strong><br/>";
   include("accesscontrol.php");
 }
 
 #update password   
-if ($_POST['newpwdconf']!=$_POST['newpwd'] or ($_POST['oldpwd']!='' and $_POST['oldpwd']!=$pwd)){
-  error('Passwords don\'t match.\nPlease try again.');
-}elseif ($_POST['newpwd']!=''and $_POST['newpwdconf']==$_POST['newpwd'] and $_POST['oldpwd']==$pwd){
-  $pwd = $_POST['newpwd'];
-  $q ="UPDATE user SET password = MD5('$pwd') WHERE userid = '$uid'";
-  $r = pdo_query($q);
-  $_SESSION['pwd'] = $pwd;
-  print "<strong>Password change successful!</strong>";
+if (array_key_exists('newpwd', $_POST) && array_key_exists('oldpwd', $_POST) &&
+  array_key_exists('newpwdconf', $_POST)){
+  if ($_POST['newpwdconf']!=$_POST['newpwd'] or ($_POST['oldpwd']!='' and $_POST['oldpwd']!=$pwd)){
+    error('Passwords don\'t match.\nPlease try again.');
+  }elseif ($_POST['newpwd']!=''and $_POST['newpwdconf']==$_POST['newpwd'] and $_POST['oldpwd']==$pwd){
+    $pwd = $_POST['newpwd'];
+    $q ="UPDATE user SET password = MD5(:pwd) WHERE userid = :uid;";
+    $vars = array(':pwd' => $pwd, ':uid' => $uid);
+    $r = pdo_query($q, $vars);
+    $_SESSION['pwd'] = $pwd;
+    print "<strong>Password change successful!</strong>";
+  }
 }
 header('Location: '.$_SERVER['HTTP_REFERER']);
 endif
@@ -73,27 +79,25 @@ endif
   <div class="form-group">
   <label for="oldpw" class="col-sm-2 control-label">Old Password</label>
     <div class="col-sm-4">
-      <input type="password" name="oldpw" class="form-control" id="oldpw" placeholder="Old Password">
+      <input type="password" name="oldpwd" class="form-control" id="oldpw" placeholder="Old Password">
     </div>
   </div>
   <div class="form-group">
   <label for="newpw" class="col-sm-2 control-label">New Password</label>
     <div class="col-sm-4">
-      <input type="text" name="newpw" class="form-control" id="newpw" placeholder="New Password">
+      <input type="password" name="newpwd" class="form-control" id="newpw" placeholder="New Password">
     </div>
   </div>
   <div class="form-group">
   <label for="newpwconf" class="col-sm-2 control-label">Confirmation</label>
     <div class="col-sm-4">
-      <input type="text" name="newpwconf" class="form-control" id="newpw" placeholder="Confirmation">
+      <input type="password" name="newpwdconf" class="form-control" id="newpw" placeholder="Confirmation">
     </div>
   </div>
   <div class="form-group">
   <label for="notes" class="col-sm-2 control-label">Notes</label>
     <div class="col-sm-4">
-      <textarea rows="5" name="notes" class="form-control" id="notes" placeholder="">
-        <?php print $usernotes;?>
-      </textarea>
+      <textarea rows="5" name="notes" class="form-control" id="notes" placeholder=""><?php print $usernotes;?></textarea>
     </div>
   </div>
   <div class="form-group">

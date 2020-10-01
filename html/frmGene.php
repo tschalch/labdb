@@ -95,7 +95,7 @@ function printPCRFields($formParams){
 	# get choices for the comboboxes
 	foreach ($tables as $t){
 		$tcols = array('tracker.trackID',"$t.name");
-		$rows = getRecords($t, $userid, $tcols);
+		$rows = getRecords($t, $userid, array(), $tcols);
 		if (!$rows) continue;
 		foreach ($rows as $row) {
 			$choices[$t][$row['trackID']] = $row['name'];

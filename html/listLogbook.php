@@ -46,7 +46,7 @@ include("listhead.php");
 
 # get instrument names
 $fcols = array('inventory.name','tracker.trackID');
-$instrs = getRecords("inventory", $userid, $fcols, ' inventory.type!=0 ');
+$instrs = getRecords("inventory", $userid, array(), $fcols, ' inventory.type!=0 ');
 $instruments = Array();
 if($instrs){
 	foreach($instrs as $instrument){

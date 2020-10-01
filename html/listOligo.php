@@ -58,8 +58,8 @@ foreach ($rows as $row) {
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
 	echo "<tr class=\"lists data-row\" data-record_id=\"$id\">";
 	echo listActions($id, $oligoid);
-	print "<td class=\"lists dbid\" width=\"1%\" align=\"RIGHT\">$id</td>";
-	print "<td class=\"lists\" width=\"1%\" >$oligoid</td>";
+	print "<td class=\"lists dbid\" align=\"RIGHT\">$id</td>";
+	print "<td class=\"lists\" >$oligoid</td>";
 	$name = $row['name'];
 	$nameTitle = $name;
 	if (strlen($name) > 20){
@@ -69,7 +69,7 @@ foreach ($rows as $row) {
 	$seqlen = strlen($seq);
 	$dispseq = $seq;
 	if ($seqlen > 35) $dispseq = "see details";
-	echo "<td class=\"lists\" width=\"15%\">
+	echo "<td class=\"lists\" >
 	      <a title=\"$nameTitle\" href=\"editEntry.php?id=$id&amp;mode=display\">$name</a>
 	      <input type=\"hidden\" name=\"name_$id\" value=\"${row['name']}\"/></td>\n";
 	$desc = $row['description'];
@@ -77,29 +77,29 @@ foreach ($rows as $row) {
 	if (strlen($desc) > 25){
 		$desc = substr($desc,0,25)."...";
 	}
-	echo "<td class=\"lists\" width=\"15%\"><span title=\"$descTitle\">$desc<span></td>\n";
-	echo "<td class=\"lists\" width=\"15%\">
+	echo "<td class=\"lists\" ><span title=\"$descTitle\">$desc<span></td>\n";
+	echo "<td class=\"lists\" >
 		<input type=\"hidden\" name=\"sequence_$id\" value=\"$seq\"/>\n
 		<input type=\"hidden\" name=\"targetmatch_$id\" value=\"${row['targetmatch']}\"/>\n
 		$dispseq</td>\n";
-	echo "<td class=\"lists\" width=\"5%\" align=\"center\">$seqlen</td>\n";
-	echo "<td class=\"lists\" width=\"10%\" align=\"center\">${row['supplier']}</td>\n";
-	echo "<td class=\"lists\" width=\"5%\" align=\"center\">${row['scale']}</td>\n";
-	echo "<td class=\"lists\" width=\"10%\" align=\"center\" >${row['modifications']}</td>\n";
-	echo "<td class=\"lists\" width=\"5%\" align=\"center\">${row['purity']}</td>\n";
+	echo "<td class=\"lists\" align=\"center\">$seqlen</td>\n";
+	echo "<td class=\"lists\" align=\"center\">${row['supplier']}</td>\n";
+	echo "<td class=\"lists\" align=\"center\">${row['scale']}</td>\n";
+	echo "<td class=\"lists\" align=\"center\" >${row['modifications']}</td>\n";
+	echo "<td class=\"lists\" align=\"center\">${row['purity']}</td>\n";
 	$cost = strlen($row['sequence']) * $row['bpPrice'];
 	$totalCost += $cost;
-	echo "<td class=\"lists\" width=\"5%\" align=\"center\">$cost</td>\n";
+	echo "<td class=\"lists\" align=\"center\">$cost</td>\n";
 	$tmUser = $row['tm'] ? $row['tm']."(user)/":""; 
 	$tm= Tm($row['targetmatch'],'bre',$row['Saltconc']*1E-3, $row['PCRconc']*1E-9);
 	if (is_numeric($tm)){
 	    $tm = sprintf("%6.1f", $tm);
 	}
-	print "<td class=\"lists\" width=\"5%%\" align=\"center\">$tmUser$tm</td>\n";
+	print "<td class=\"lists\" align=\"center\">$tmUser$tm</td>\n";
 	$orderDate = $row['orderDate'];
 	if (strlen($orderDate) > 8) $orderDate = substr($orderDate,0,8)."...";
 	print "<input type=\"hidden\" name=\"orderDate_$id\" value=\"${row['orderDate']}\"/>";
-	echo "<td class=\"lists\" width=\"5%\" align=\"center\">$orderDate";
+	echo "<td class=\"lists\" align=\"center\">$orderDate";
 	print "<input type=\"hidden\" name=\"scale_$id\" value=\"${row['scale']}\"/>";
 	print "<input type=\"hidden\" name=\"purity_$id\" value=\"${row['purity']}\"/></td>\n";
 	print "<input type=\"hidden\" name=\"mods_$id\" value=\"${row['modifications']}\"/></td>\n";
@@ -128,7 +128,7 @@ Select ouput format: <select name="output">
 Select template for Sequence Extractor: 
 <?php
 	$cols = array('tracker.trackID',"plasmids.name");
-	$choices = getRecords("plasmids", $userid, $cols);
+	$choices = getRecords("plasmids", $userid, array(), $cols);
 	//print_r($choices);print "<br/>";
 	$current = isset($_SESSION['template'])?$_SESSION['template']:null;
 	print "<select name=\"template\">";

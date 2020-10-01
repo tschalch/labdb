@@ -9,6 +9,8 @@ $id = $_POST['id'];
 //print_r($data);
 //print_r($FILES);
 
+if (!isset($permissions)) $permissions = '';
+
 foreach ($data as $table => $datasets){
     if ($table == 'none') continue;
     if ($table == 'connections'){

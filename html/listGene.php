@@ -82,7 +82,7 @@ if($category == 'PCR'){
 	$oligos = array();
 	$ocols = array('tracker.trackID','oligos.name','oligos.targetmatch',
 		       'oligos.Saltconc','oligos.PCRconc', 'oligos.tm');
-	$olis = getRecords('oligos',$userid, $ocols);
+	$olis = getRecords('oligos',$userid, array(), $ocols);
 	if($olis){
 		foreach ($olis as $o) {
 			$tm = $o['tm'] ? $o['tm']."(User)" : Tm($o['targetmatch'],'bre',$o['Saltconc']*1E-3, $o['PCRconc']*1E-9);
@@ -93,7 +93,7 @@ if($category == 'PCR'){
 	// get plasmids into array
 	$plasmids = array();
 	$pcols = array('tracker.trackID','plasmids.name');
-	$plasms = getRecords('plasmids',$userid, $pcols);
+	$plasms = getRecords('plasmids',$userid, array(), $pcols);
 	if ($plasms){
 		foreach ($plasms as $p) {
 			$plasmids[$p['trackID']] = $p['name'];
@@ -124,7 +124,7 @@ if($category == 'PCR'){
 	for ($i=1;$i<=2;$i++){
 		$o = $row["PCRoligo$i"];
 		#$oligo = $oligos[$o];
-		$oligo = getRecord($o, $userid, $groups);
+		$oligo = getRecord($o, $userid);
 		printf("<td class=\"lists\" style=\"text-align:center;\" width=\"5%%\"><a href=\"editEntry.php?id=%d&amp;mode=display\">%s (%d/%s)</a></td>", $o, $oligo['name'], $oligo['trackID'], $oligo['hexID']);
 	}
 	print "<td class=\"lists\" width=\"10%\">";
@@ -134,7 +134,7 @@ if($category == 'PCR'){
 		if ($i < 2) print " / ";
 	}
 	print "</td>";
-	$template = getRecord($row["PCRtemplate"],$userid, $groups);
+	$template = getRecord($row["PCRtemplate"],$userid);
 	print "<td class=\"lists seq\" width=\"10%\"><a href=\"editEntry.php?id=${row['PCRtemplate']}&amp;mode=display\">".$template['name']." (".$row['PCRtemplate'].")</a></td>";
 }
 

@@ -45,7 +45,7 @@ printHazards('Hazard signals', 'hazards', $formParams);
 printUploadField('Files (COSSH, MSDS, Quotes)', 'files', $formParams);
 printLinkField('Link','www', $formParams);
 $lcol = array('tracker.trackID','locations.name');
-$locations = getRecords('locations', $userid, $lcol, '', "name");
+$locations = getRecords('locations', $userid, array(), $lcol, '', "name");
 printComboBox("Location",'location', $formParams, $locations, (isset($fields['location']) ? $fields['location']: null));
 printTextField('Manufacturer', 'manufacturer', $formParams);
 printTextField('Supplier', 'supplier', $formParams);
