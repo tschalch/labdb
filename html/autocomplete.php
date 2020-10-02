@@ -10,12 +10,12 @@ $extended = false;
 $hexIDSQL = getHexIDSQL($table);
 
 #$r = getRecords($table, $userid, array("$field"), " $field LIKE '%$cue%' OR tracker.trackID='$cue' OR $hexIDSQL='$cue' ", "$table.$field");
-$r = getRecords($table, $userid, array(':field'=>$field, ':cue'=>"%$cue%"), array("$field"), " :field LIKE :cue ", "$table.$field", 0, '', 1);
+$r = getRecords($table, $userid, array(':cue'=>"%$cue%"), array("$field"), " `$field` LIKE :cue ", "$table.$field", 0, '', 1);
 
 if (isset($_POST['extended']) && $_POST['extended'])
 {
     $extended = true;
-    $r = getRecords($table, $userid, array(':field'=>$field, ':cue'=>"%$cue%", ':hexIDSQL'=>$hexIDSQL), array('tracker.trackID', ":field"), " :field LIKE :cue OR tracker.trackID=:cue OR :hexIDSQL=:cue ", "$table.$field", 0, '');
+    $r = getRecords($table, $userid, array(':cue'=>"%$cue%", ':hexIDSQL'=>$hexIDSQL), array('tracker.trackID', "$field"), " $field LIKE :cue OR tracker.trackID=:cue OR :hexIDSQL=:cue ", "$table.$field", 0, '');
 } 
 
 #print_r($r);
@@ -24,7 +24,7 @@ foreach ($r as $row)
 	$entry = $row[$field];
 	if ($extended) {
 		//$results = print_r($r, true);
-		echo "<li title=\"$results\"><span>$entry</span><span style=\"display:none\">${row['trackID']}</span></li>";
+		echo "<li title=\"$entry\"><span>$entry</span><span style=\"display:none\">${row['trackID']}</span></li>";
 	}
 	else {
 	    print "<li>$entry</li>\n";

@@ -1256,13 +1256,13 @@ function newRecord($table, $ds, $userid){
 	$st = $str[0]['id'];
 	# insert query for data record
 	#print_r($ds);
-  $vars = array(':table'=>$table);
-	$iq = "INSERT INTO `:table` (";
+  $vars = array();
+	$iq = "INSERT INTO `$table` (";
 	$cnt = 0;
 	$end = sizeof($ds);
 	foreach ($ds as $field => $dat){
-		$iq .= ":field$cnt";
-    $vars[":field$cnt"] = $field;
+		$iq .= "`$field`";
+    #$vars[":field$cnt"] = $field;
 		$cnt += 1;
 		if($cnt <> $end) $iq .= ", ";
 	}
@@ -1271,7 +1271,7 @@ function newRecord($table, $ds, $userid){
 	foreach ($ds as $field => $dat){
 		#$dat = escape_quotes($dat);
 		if ($dat == 'mainID') $dat = $id;
-		$iq .= "':dat$cnt'";
+		$iq .= ":dat$cnt";
     $vars[":dat$cnt"] = "$dat";
 		$cnt += 1;
 		if($cnt <> $end) $iq .= ", ";
@@ -1283,7 +1283,7 @@ function newRecord($table, $ds, $userid){
 	$iq = "INSERT INTO tracker (sampleID, sampleType, project, created, owner, permOwner, deleted, permGroup, permOthers)";
 	$iq .= " VALUES (:sampleID, :st, :project, NOW(), :userid, 2, '0-0-0', 2, 0)";
 	//print "$iq<br/>;
-  $vars = array(':st'=>$st, ':project'=>$project, ':userid'=>$userid);
+  $vars = array(':sampleID' => $sampleID,':st'=>$st, ':project'=>$project, ':userid'=>$userid);
 	$newTrackID = pdo_query($iq, $vars);
 	# setup permissions
 	$gq = "SELECT * FROM groups JOIN user ON belongsToGroup=user.id WHERE groups.userid=:userid AND user.groupType!=3;";

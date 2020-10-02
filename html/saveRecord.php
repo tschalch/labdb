@@ -35,8 +35,8 @@ foreach ($data as $table => $datasets){
             }
         }
         foreach($cnxs as $con){
-            $qd = "DELETE FROM `connections` WHERE connID=${con['connID']}";
-            pdo_query($qd);
+            $qd = "DELETE FROM `connections` WHERE `connID`=:connid";
+            pdo_query($qd, array(':connid'=>$con['connID']));
         }
         continue;
     }
