@@ -6,4 +6,6 @@ $host="localhost";
 $labdbUrl="http://localhost/labdb";
 $adminEmail="admin@example.com";
 $currency="GBP";
+$log_filename = "/local/logs/labdb.log";
+$DEBUG = 0;
 ?>
