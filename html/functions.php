@@ -5,12 +5,10 @@ include('protein.inc.php');
 date_default_timezone_set('Europe/Berlin');
 
 function write_log($log_msg){
-  $log_filename = "/local/logs";
-  $log_file_data = $log_filename.'/debug.log';
-  file_put_contents($log_file_data, $log_msg . "\n", FILE_APPEND);
+  global $log_filename;
+  file_put_contents($log_filename, $log_msg . "\n", FILE_APPEND);
 }
 
-$DEBUG = 1;
 function console_log( $data ){
   global $DEBUG;
   #echo '<script>';
