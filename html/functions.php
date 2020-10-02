@@ -1511,7 +1511,7 @@ function getRestrictionSites($digString, $dnaSequence){
   $enzymeList = [];
 	if(in_array($lab_key, $enzymes)){
 		$noUserFilter = True;
-		$enzys = getRecords('vials', $userid, array(), array('vials.name'), " trackboxes.name='Lab Enzymes' ", 0, " LEFT JOIN trackboxes ON vials.boxID=trackboxes.tID ");
+		$enzys = getRecords('vials', $userid, array(), array('vials.name'), " boxes.name='Lab Enzymes' ", "", 0, " LEFT JOIN boxes ON vials.boxID=boxes.id ");
     #print "enzymes: "; print_r($enzys);
 		$noUserFilter = False;
 		if (sizeof($enzys) > 0){
