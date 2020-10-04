@@ -480,12 +480,12 @@ DROP TABLE IF EXISTS `resources`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `resources` (
-  `resourceID` int(11) NOT NULL AUTO_INCREMENT,
-  `resource_name` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `resource_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `resource_location` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `location` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `active` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`resourceID`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -525,7 +525,19 @@ CREATE TABLE `sampletypes` (
 
 LOCK TABLES `sampletypes` WRITE;
 /*!40000 ALTER TABLE `sampletypes` DISABLE KEYS */;
-INSERT INTO `sampletypes` VALUES (1,'P','Plasmid','Plasmids','frmPlasmids','plasmids','listPlasmids',1,0),(2,'O','Oligo','Oligos','frmOligo','oligos','listOligo',1,0),(3,'B','Protein','Proteins','frmProteins','proteins','',1,0),(4,'S','Strain','Strains','frmStrain','strains','listStrains',1,0),(6,NULL,'Vial','Vials','frmVial','vials','listVials',0,0),(7,'B','Fragment','Fragments','frmGene','fragments','listGene',1,0),(8,NULL,'Box','Boxes','frmBoxes','boxes','listBoxes',0,0),(9,NULL,'Project','Projects','frmProject','projects','listProjects',0,0),(10,'TSL','item','Items','frmItem','inventory','listItems',0,2),(11,NULL,'location','locations','frmLocations','locations','listLocations',0,2),(12,NULL,'logbook entry','logbook entries','frmLog','logbook','listLogbook',0,2), (13, NULL, 'Resource', 'Resources', 'frmResource', 'resources', 'listResources', '0', '2');
+INSERT INTO `sampletypes` VALUES 
+  (1,'P','Plasmid','Plasmids','frmPlasmids','plasmids','listPlasmids',1,0),
+  (2,'O','Oligo','Oligos','frmOligo','oligos','listOligo',1,0),
+  (3,'B','Protein','Proteins','frmProteins','proteins','',1,0),
+  (4,'S','Strain','Strains','frmStrain','strains','listStrains',1,0),
+  (6,NULL,'Vial','Vials','frmVial','vials','listVials',0,0),
+  (7,'B','Fragment','Fragments','frmGene','fragments','listGene',1,0),
+  (8,NULL,'Box','Boxes','frmBoxes','boxes','listBoxes',0,0),
+  (9,NULL,'Project','Projects','frmProject','projects','listProjects',0,0),
+  (10,'TSL','item','Items','frmItem','inventory','listItems',0,2),
+  (11,NULL,'location','locations','frmLocations','locations','listLocations',0,2),
+  (12,NULL,'logbook entry','logbook entries','frmLog','logbook','listLogbook',0,2), 
+  (13,NULL, 'Resource', 'Resources', 'frmResource', 'resources', 'listResources', '0', '2');
 /*!40000 ALTER TABLE `sampletypes` ENABLE KEYS */;
 UNLOCK TABLES;
 
