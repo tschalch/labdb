@@ -661,7 +661,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','21232f297a57a5a743894a0e4a801fc3','','','default user with administrator privileges',3,'red'),(2,'default_group','l1232f297a57a5a743894a0e4a801fc3','','','default group',2,'');
+INSERT INTO `user` VALUES (1,'admin','21232f297a57a5a743894a0e4a801fc3','','','default user with administrator privileges',3,'red'),(2,'default_group','l1232f297a57a5a743894a0e4a801fc3','','','default group',1,'');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
