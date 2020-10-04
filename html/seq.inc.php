@@ -1,4 +1,5 @@
 <?php
+include_once('functions.php');
 /**
  * Functions useful for nucleotide sequence analysis
  *
@@ -412,6 +413,7 @@ function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
         //printf("Initial dH: %4.2f, dS0:%4.2f<br/>", $dH, $dS0);
         // loop through sequence and add up based on the table above
         $strand = $DNA['fw'];
+        console_log("strand: ".$strand.$seqlen.print_r($nn, true));
         for ($i=0;$i<$seqlen-1;$i++) {
             $dH+=$nn[$strand{$i}][$strand{$i+1}]['H'];
             $dS0+=$nn[$strand{$i}][$strand{$i+1}]['S'];

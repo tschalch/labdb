@@ -75,5 +75,5 @@ $userid = $accresult[0]['ID'];
 $useremail = $accresult[0]['email'];
 $usercolor = $accresult[0]['color'];
 $usernotes = $accresult[0]['notes'];
-if (!$_SESSION['currUser']) $_SESSION['currUser'] = -1;
+if (!isset($_SESSION['currUser'])) $_SESSION['currUser'] = -1;
 ?>

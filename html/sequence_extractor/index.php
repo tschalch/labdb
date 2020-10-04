@@ -1,5 +1,4 @@
 <?php 
-session_start();
 include("../functions.php");
 include("../accesscontrol.php");
 include("../config.php");
@@ -34,7 +33,7 @@ include("../config.php");
 Paste a sequence into the text area below. Accepted formats are: <a href="raw_sample.html">raw</a>, <a href="genbank_sample.html">GenBank</a>, <a href="embl_sample.html">EMBL</a>, and <a href="fasta_sample.html">FASTA</a>.
 <br /><textarea name="sequenceRecord" rows="6" cols="81">
 <?php
-$plasmid = getRecord($_SESSION['template'], $userid, $groups);
+$plasmid = getRecord($_SESSION['template'], $userid);
 if ($plasmid) print $plasmid['sequence'];
 ?>
 </textarea><br /><br />

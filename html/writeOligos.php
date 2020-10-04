@@ -4,9 +4,9 @@ include_once("accesscontrol.php");
 include_once("functions.php");
 #include("header.php");
 
-$output = $_POST['output'];
-$selection = $_POST['selection'];
-$template =  $_POST['template'];
+if(isset($_POST['output'])) $output = $_POST['output'];
+if(isset($_POST['selection'])) $selection = $_POST['selection'];
+if(isset($_POST['template'])) $template =  $_POST['template'];
 
 # code for ajax requests
 if ($_GET["output"]){
@@ -32,9 +32,10 @@ if ($output == 'vectornti'){
 } elseif ($output == 'extractor'){
     include("config.php");
 	if ($selection){
+    $primers = "";
 		foreach($selection as $id){
 			if ($id!='NA'){
-				$oligo = getRecord($id, $userid, $groups);
+				$oligo = getRecord($id, $userid);
 				$primers .= "${oligo['sequence']} ${oligo['name']},\n";
 			}
 		}

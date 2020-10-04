@@ -5,6 +5,7 @@ $formParams = array('table'=>'fragments', 'mode'=>$mode);
 $noUserFilter = False;
 $submitFunction = "validate_form()";
 #determine type of building block and set title
+$titleName = "Building Block";
 include("formhead.php");
 
 ?>

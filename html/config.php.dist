@@ -1,6 +1,6 @@
 <?php
-$username="dev_labdb";
-$password="";
+$dbuser="dev_labdb";
+$dbpass="";
 $database="root";
 $host="localhost";
 $labdbUrl="http://localhost/labdb";

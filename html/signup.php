@@ -14,7 +14,7 @@ if (!isset($_POST['submitok'])):
 
    <div class="form-group">
     <label class="sr-only" for="userid">User ID</label>
-    <input placeholder="Username" class="form-control" id="userid" type="text" name="newid" required autofocus/>
+    <input placeholder="Username" class="form-control" id="userid" type="text" name="newuser" required autofocus/>
    </div>
    <div class="form-group">
     <label class="sr-only" for="fullname">User ID</label>
@@ -34,18 +34,18 @@ if (!isset($_POST['submitok'])):
 else:
    // Process signup submission 
 
-if ($_POST['newid']=='' || $_POST['newname']=='' 
+if ($_POST['newuser']=='' || $_POST['newname']=='' 
      || $_POST['newemail']=='' || $_POST['group']==0) {
        error('One or more required fields were left blank.\\n'.
              'Please fill them in and try again.');
    }
 
 $newpass = substr(md5(time()),0,6);
-$newid = 'username';
+$newuser = 'username';
 
 // Check for existing user with the new id
-$sql = "SELECT COUNT(*) FROM user WHERE userid = :newid";
-$result = pdo_query($sql, array(':newid' => $_POST['newid']));
+$sql = "SELECT COUNT(*) FROM user WHERE userid = :newuser";
+$result = pdo_query($sql, array(':newuser' => $_POST['newuser']));
 if (!$result) {
 error('A database error occurred in processing your '.
      'submission.\\nIf this error persists, please '.
@@ -59,13 +59,13 @@ error('A user already exists with your chosen userid.\\n'.
 
 
 $sql = "INSERT INTO user SET
-     userid = :newid,
+     userid = :newuser,
      password = MD5(:newpass),
      fullname = :newname,
      email = :newemail,
      groupType = 0";
 
-$vars = array(':newid' => $_POST['newid'], ':newpass' => $newpass, 
+$vars = array(':newuser' => $_POST['newuser'], ':newpass' => $newpass, 
   ':newname' => $_POST['newname'], ':newemail' => $_POST['newemail']);
 $newid = pdo_query($sql, $vars);
 
@@ -80,7 +80,7 @@ $sql = "INSERT INTO groups SET
      userid = :newid,
      belongsToGroup = :newid,
      defaultPermissions = 2";
-if (!pdo_query($sql, array(':newid' => $_POST['newid'])))
+if (!pdo_query($sql, array(':newid' => $newid)))
 	error('2A database error occurred in processing your '.
 	     'submission.\\nIf this error persists, please '.
 	     "contact $adminEmail.");
@@ -90,7 +90,7 @@ $sql = "INSERT INTO groups SET
      belongsToGroup = :group,
      defaultPermissions = 1;";
 
-if (!pdo_query($sql, array(':newid' => $_POST['newid'], ':group' => $_POST['group'])))
+if (!pdo_query($sql, array(':newid' => $newid, ':group' => $_POST['group'])))
 	error('3A database error occurred in processing your '.
 	     'submission.\\nIf this error persists, please '.
 	     "contact $adminEmail.");
@@ -108,7 +108,7 @@ $labdbUrl
 Your personal login ID and password are as
 follows:
 
-userid: $_POST[newid]
+userid: $_POST[newuser]
 password: $newpass
 
 You aren't stuck with this password! Your can
@@ -132,7 +132,7 @@ mail($_POST['newemail'],"Your Password for labdb",
 	$message, implode("\n", $headers), $sendmailparams);
 
 mail("$adminEmail","New labdb user created",
-	"user $_POST[newid] has signed up to labdb.", 
+	"user $_POST[newuser] has signed up to labdb.", 
 	implode("\n", $headers), $sendmailparams);
 
 #print implode("\n", $headers);

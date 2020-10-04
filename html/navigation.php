@@ -75,12 +75,14 @@ window.addEvent('domready',function() {
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Booking</a>
         <div class="dropdown-menu" aria-labelledby="dropdown05">
+          <a class="dropdown-item" href="list.php?list=listResources">Resources</a>
+          <a class="dropdown-item" href="newEntry.php?form=frmResource&amp;mode=modify">.. Add Resource</a>
 <?php
-$sql="SELECT resourceID, resource_name FROM resources WHERE active='1';";
+$sql="SELECT id, name FROM resources WHERE active='1';";
 $resources = pdo_query($sql);
 if(isset($resources) && is_array($resources)){
   foreach ($resources as $r) {
-  print "<a class=\"dropdown-item\" href=\"fullcalendar.php?resource=${r['resourceID']}\">${r['resource_name']}</a>";
+  print "<a class=\"dropdown-item\" href=\"fullcalendar.php?resource=${r['id']}\">${r['name']}</a>";
 }
 }
 ?>

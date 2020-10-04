@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.62, for Linux (x86_64)
 --
--- Host: localhost    Database: lab_labdb
+-- Host: localhost    Database: dev_labdb
 -- ------------------------------------------------------
 -- Server version	5.5.62
 
@@ -29,8 +29,17 @@ CREATE TABLE `boxes` (
   `location` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `boxes`
+--
+
+LOCK TABLES `boxes` WRITE;
+/*!40000 ALTER TABLE `boxes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `boxes` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `connections`
@@ -48,8 +57,17 @@ CREATE TABLE `connections` (
   `end` int(11) NOT NULL COMMENT 'end position on plasimd in bp',
   `direction` int(11) NOT NULL COMMENT 'direction on plasmid. fw is 1, rev is 0',
   PRIMARY KEY (`connID`)
-) ENGINE=InnoDB AUTO_INCREMENT=1933 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `connections`
+--
+
+LOCK TABLES `connections` WRITE;
+/*!40000 ALTER TABLE `connections` DISABLE KEYS */;
+/*!40000 ALTER TABLE `connections` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `crystals`
@@ -66,6 +84,15 @@ CREATE TABLE `crystals` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `crystals`
+--
+
+LOCK TABLES `crystals` WRITE;
+/*!40000 ALTER TABLE `crystals` DISABLE KEYS */;
+/*!40000 ALTER TABLE `crystals` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `crystalsdev`
 --
 
@@ -78,6 +105,15 @@ CREATE TABLE `crystalsdev` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `crystalsdev`
+--
+
+LOCK TABLES `crystalsdev` WRITE;
+/*!40000 ALTER TABLE `crystalsdev` DISABLE KEYS */;
+/*!40000 ALTER TABLE `crystalsdev` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `events`
@@ -99,8 +135,17 @@ CREATE TABLE `events` (
   KEY `FK_resource` (`resource`),
   KEY `FK_user` (`user`),
   CONSTRAINT `FK_user` FOREIGN KEY (`user`) REFERENCES `user` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `events`
+--
+
+LOCK TABLES `events` WRITE;
+/*!40000 ALTER TABLE `events` DISABLE KEYS */;
+/*!40000 ALTER TABLE `events` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `fragments`
@@ -127,23 +172,17 @@ CREATE TABLE `fragments` (
   `origin` text NOT NULL,
   `attachment` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3245 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `fragmentsinplasmids`
+-- Dumping data for table `fragments`
 --
 
-DROP TABLE IF EXISTS `fragmentsinplasmids`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fragmentsinplasmids` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plasmidID` int(11) NOT NULL,
-  `fragmentID` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `fragments` WRITE;
+/*!40000 ALTER TABLE `fragments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fragments` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `groups`
@@ -158,8 +197,18 @@ CREATE TABLE `groups` (
   `belongsToGroup` int(11) NOT NULL,
   `defaultPermissions` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `groups`
+--
+
+LOCK TABLES `groups` WRITE;
+/*!40000 ALTER TABLE `groups` DISABLE KEYS */;
+INSERT INTO `groups` VALUES (1,1,1,2),(2,1,2,1);
+/*!40000 ALTER TABLE `groups` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `inventory`
@@ -191,8 +240,17 @@ CREATE TABLE `inventory` (
   `billed` date DEFAULT '0000-00-00',
   `poNumber` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3091 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inventory`
+--
+
+LOCK TABLES `inventory` WRITE;
+/*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
+/*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `itemstatus`
@@ -208,9 +266,9 @@ CREATE TABLE `itemstatus` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
- --
- -- Dumping data for table `itemstatus`
- --
+--
+-- Dumping data for table `itemstatus`
+--
 
 LOCK TABLES `itemstatus` WRITE;
 /*!40000 ALTER TABLE `itemstatus` DISABLE KEYS */;
@@ -230,8 +288,17 @@ CREATE TABLE `locations` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `locations`
+--
+
+LOCK TABLES `locations` WRITE;
+/*!40000 ALTER TABLE `locations` DISABLE KEYS */;
+/*!40000 ALTER TABLE `locations` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `logbook`
@@ -259,6 +326,15 @@ CREATE TABLE `logbook` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `logbook`
+--
+
+LOCK TABLES `logbook` WRITE;
+/*!40000 ALTER TABLE `logbook` DISABLE KEYS */;
+/*!40000 ALTER TABLE `logbook` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `newpermissions`
 --
 
@@ -271,6 +347,15 @@ CREATE TABLE `newpermissions` (
   `2` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `newpermissions`
+--
+
+LOCK TABLES `newpermissions` WRITE;
+/*!40000 ALTER TABLE `newpermissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `newpermissions` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `oligos`
@@ -296,8 +381,17 @@ CREATE TABLE `oligos` (
   `concentration` text NOT NULL,
   `orderDate` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2137 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `oligos`
+--
+
+LOCK TABLES `oligos` WRITE;
+/*!40000 ALTER TABLE `oligos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `oligos` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `permissions`
@@ -313,8 +407,17 @@ CREATE TABLE `permissions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
   UNIQUE KEY `tracknUser` (`trackID`,`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=41477 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `permissions`
+--
+
+LOCK TABLES `permissions` WRITE;
+/*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `plasmids`
@@ -332,8 +435,17 @@ CREATE TABLE `plasmids` (
   `sequence` mediumtext NOT NULL,
   `enzymes` text NOT NULL COMMENT 'comma separated list of restriction enzyme names (emboss restrict syntax)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1680 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `plasmids`
+--
+
+LOCK TABLES `plasmids` WRITE;
+/*!40000 ALTER TABLE `plasmids` DISABLE KEYS */;
+/*!40000 ALTER TABLE `plasmids` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `projects`
@@ -348,27 +460,17 @@ CREATE TABLE `projects` (
   `parent` int(11) NOT NULL,
   `description` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `proteins`
+-- Dumping data for table `projects`
 --
 
-DROP TABLE IF EXISTS `proteins`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `proteins` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` text NOT NULL,
-  `source` mediumtext NOT NULL,
-  `glycerolStockID` int(11) NOT NULL,
-  `purity` text NOT NULL,
-  `concentration` text NOT NULL,
-  `amount` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `projects` WRITE;
+/*!40000 ALTER TABLE `projects` DISABLE KEYS */;
+/*!40000 ALTER TABLE `projects` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `resources`
@@ -384,8 +486,17 @@ CREATE TABLE `resources` (
   `resource_location` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `active` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`resourceID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `resources`
+--
+
+LOCK TABLES `resources` WRITE;
+/*!40000 ALTER TABLE `resources` DISABLE KEYS */;
+/*!40000 ALTER TABLE `resources` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `sampletypes`
@@ -405,7 +516,7 @@ CREATE TABLE `sampletypes` (
   `isSample` tinyint(1) NOT NULL DEFAULT '1',
   `labPermission` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -414,59 +525,9 @@ CREATE TABLE `sampletypes` (
 
 LOCK TABLES `sampletypes` WRITE;
 /*!40000 ALTER TABLE `sampletypes` DISABLE KEYS */;
-INSERT INTO `sampletypes` VALUES (1,'P','Plasmid','Plasmids','frmPlasmids','plasmids','listPlasmids',1,0),(2,'O','Oligo','Oligos','frm
-  Oligo','oligos','listOligo',1,0),(3,'B','Protein','Proteins','frmProteins','proteins','',1,0),(4,'S','Strain','Strains','frmStrain','s
-  trains','listStrains',1,0),(6,NULL,'Vial','Vials','frmVial','vials','listVials',0,0),(7,'B','Fragment','Fragments','frmGene','fragment
-  s','listGene',1,0),(8,NULL,'Box','Boxes','frmBoxes','boxes','listBoxes',0,0),(9,NULL,'Project','Projects','frmProject','projects','lis
-  tProjects',0,0),(10,'TSL','item','Items','frmItem','inventory','listItems',0,2),(11,NULL,'location','locations','frmLocations','locati
-  ons','listLocations',0,2),(12,NULL,'logbook entry','logbook entries','frmLog','logbook','listLogbook',0,2);
+INSERT INTO `sampletypes` VALUES (1,'P','Plasmid','Plasmids','frmPlasmids','plasmids','listPlasmids',1,0),(2,'O','Oligo','Oligos','frmOligo','oligos','listOligo',1,0),(3,'B','Protein','Proteins','frmProteins','proteins','',1,0),(4,'S','Strain','Strains','frmStrain','strains','listStrains',1,0),(6,NULL,'Vial','Vials','frmVial','vials','listVials',0,0),(7,'B','Fragment','Fragments','frmGene','fragments','listGene',1,0),(8,NULL,'Box','Boxes','frmBoxes','boxes','listBoxes',0,0),(9,NULL,'Project','Projects','frmProject','projects','listProjects',0,0),(10,'TSL','item','Items','frmItem','inventory','listItems',0,2),(11,NULL,'location','locations','frmLocations','locations','listLocations',0,2),(12,NULL,'logbook entry','logbook entries','frmLog','logbook','listLogbook',0,2), (13, NULL, 'Resource', 'Resources', 'frmResource', 'resources', 'listResources', '0', '2');
 /*!40000 ALTER TABLE `sampletypes` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `sequencing`
---
-
-DROP TABLE IF EXISTS `sequencing`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sequencing` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `vialID` int(11) NOT NULL,
-  `analysis` mediumtext NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `sequencing-datafiles`
---
-
-DROP TABLE IF EXISTS `sequencing-datafiles`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sequencing-datafiles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sequenceID` int(11) NOT NULL,
-  `datafile` mediumtext NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `settings`
---
-
-DROP TABLE IF EXISTS `settings`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `settings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `variable` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
-  `value` text COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `strains`
@@ -482,58 +543,17 @@ CREATE TABLE `strains` (
   `strain` varchar(255) NOT NULL,
   `description` mediumtext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=847 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `tag`
+-- Dumping data for table `strains`
 --
 
-DROP TABLE IF EXISTS `tag`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tag` (
-  `tagID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `description` varchar(45) NOT NULL DEFAULT '',
-  PRIMARY KEY (`tagID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `tag_map`
---
-
-DROP TABLE IF EXISTS `tag_map`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tag_map` (
-  `trackID` int(11) NOT NULL DEFAULT '0',
-  `tagID` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`trackID`,`tagID`),
-  KEY `tag_fk` (`tagID`),
-  KEY `track_fk` (`trackID`),
-  CONSTRAINT `tag_fk` FOREIGN KEY (`tagID`) REFERENCES `tag` (`tagID`),
-  CONSTRAINT `track_fk` FOREIGN KEY (`trackID`) REFERENCES `tracker` (`trackID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Temporary table structure for view `trackBoxes`
---
-
-DROP TABLE IF EXISTS `trackBoxes`;
-/*!50001 DROP VIEW IF EXISTS `trackBoxes`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE TABLE `trackBoxes` (
-  `id` tinyint NOT NULL,
-  `name` tinyint NOT NULL,
-  `description` tinyint NOT NULL,
-  `location` tinyint NOT NULL,
-  `tID` tinyint NOT NULL,
-  `boxName` tinyint NOT NULL
-) ENGINE=MyISAM */;
-SET character_set_client = @saved_cs_client;
+LOCK TABLES `strains` WRITE;
+/*!40000 ALTER TABLE `strains` DISABLE KEYS */;
+/*!40000 ALTER TABLE `strains` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Temporary table structure for view `trackboxes`
@@ -567,8 +587,8 @@ CREATE TABLE `tracker` (
   `created` date NOT NULL,
   `changed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted` date NOT NULL,
-  `project` int(11) NOT NULL,
-  `subProject` int(11) NOT NULL,
+  `project` int(11),
+  `subProject` int(11),
   `owner` int(11) NOT NULL,
   `groupid` int(11) NOT NULL DEFAULT '0',
   `permOwner` smallint(6) NOT NULL,
@@ -576,8 +596,17 @@ CREATE TABLE `tracker` (
   `permOthers` smallint(6) NOT NULL,
   PRIMARY KEY (`trackID`),
   UNIQUE KEY `sampleType` (`sampleType`,`sampleID`)
-) ENGINE=InnoDB AUTO_INCREMENT=12873 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tracker`
+--
+
+LOCK TABLES `tracker` WRITE;
+/*!40000 ALTER TABLE `tracker` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tracker` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Temporary table structure for view `tracklocations`
@@ -592,22 +621,6 @@ SET character_set_client = utf8;
   `locationName` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
-
---
--- Table structure for table `uploads`
---
-
-DROP TABLE IF EXISTS `uploads`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `uploads` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `trackID` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `file_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `user`
@@ -627,11 +640,19 @@ CREATE TABLE `user` (
   `color` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `userid` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-INSERT INTO `user` VALUES(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '', 'default user with administrator privileges', 0, 'red');
-INSERT INTO `user` VALUES(2, 'defaultGroup', '', 'Default Group', '', NULL, 1);
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'admin','21232f297a57a5a743894a0e4a801fc3','','','default user with administrator privileges',3,'red'),(2,'default_group','l1232f297a57a5a743894a0e4a801fc3','','','default group',2,'');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `vials`
 --
@@ -652,27 +673,17 @@ CREATE TABLE `vials` (
   `exists` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `date` (`date`)
-) ENGINE=InnoDB AUTO_INCREMENT=3155 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Final view structure for view `trackBoxes`
+-- Dumping data for table `vials`
 --
 
-/*!50001 DROP TABLE IF EXISTS `trackBoxes`*/;
-/*!50001 DROP VIEW IF EXISTS `trackBoxes`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8mb4_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `trackBoxes` AS select 1 AS `id`,1 AS `name`,1 AS `description`,1 AS `location`,1 AS `tID`,1 AS `boxName` */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
+LOCK TABLES `vials` WRITE;
+/*!40000 ALTER TABLE `vials` DISABLE KEYS */;
+/*!40000 ALTER TABLE `vials` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Final view structure for view `trackboxes`
@@ -721,4 +732,4 @@ CREATE TABLE `vials` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-15 19:28:16
+-- Dump completed on 2020-10-02 13:22:23

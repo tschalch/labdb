@@ -2,6 +2,7 @@
 #database functions
 include('seq.inc.php');
 include('protein.inc.php');
+include('config.php');
 date_default_timezone_set('Europe/Berlin');
 
 function write_log($log_msg){
@@ -18,7 +19,7 @@ function console_log( $data ){
 }
 
 function pdo_query($q, $vars=array()){
-  include('config.php');
+  global $dbpass, $database, $host, $dbuser;
   $dsn = "mysql:host=$host;dbname=$database;charset=utf8mb4";
   $options = [
     PDO::ATTR_EMULATE_PREPARES   => false, // turn off emulation mode for "real" prepared statements
@@ -28,7 +29,7 @@ function pdo_query($q, $vars=array()){
     ];
   //print "\"$q\"";
   try {
-    $dbh = new PDO($dsn, $username, $password, $options);
+    $dbh = new PDO($dsn, $dbuser, $dbpass, $options);
   } catch (PDOException $e) {
     print "Database Error!: " . $e->getMessage() . "<br/>";
     die();
@@ -461,10 +462,14 @@ function printCheckbox($label, $field, $formParams){
 	$mode = $formParams['mode'];
 	print "<div class=\"formRow\"><div class=\"formLabel\">$label:</div>";
 	$value = 1;
-	if ($fields[$field]) $checked = "checked";
+	$checked = ($fields[$field]) ?"checked" : '';
 	if($mode == "modify"){
-		print "<div class=\"formField\"><input type=\"checkbox\" 
-			name=\"${table}_0_$field\" class=\"radiobox\" value=\"$value\" $checked/></div>";
+    print "<div class=\"formField\">
+      <input type=\"hidden\" name=\"${table}_0_$field\" 
+      class=\"\" value=\"0\"/>
+      <input type=\"checkbox\" name=\"${table}_0_$field\" 
+      class=\"radiobox\" value=\"1\" $checked/></div>
+        ";
 	}	
 	if($mode == "display"){
 		print "<div class=\"displayField\"><input type=\"checkbox\" 
@@ -1087,12 +1092,12 @@ function getSampleType($trackerID){
 function getRecord($trackerID, $userid, $mode='display'){
 	$table = getTable($trackerID);
 	if ($mode == 'modify'){
-		$accesscontrol = "AND ((owner = $userid AND permOwner > 1) OR
+		$accesscontrol = "AND ((owner = :userid AND permOwner > 1) OR
 				  (permissions.userid=groups.belongsToGroup AND
 				  permission > 1))";
 		
 	} else {
-		$accesscontrol = "AND ((owner = $userid) OR
+		$accesscontrol = "AND ((owner = :userid) OR
 				  (permissions.userid=groups.belongsToGroup AND
 				  permission > 0))";
 	}
@@ -1244,7 +1249,11 @@ function getRecords($table, $userid, $vars, $columns, $where='', $order='', $cou
 }
 
 function newRecord($table, $ds, $userid){
-	if (array_key_exists('project', $ds)) $project = ($ds['project'] == '' ? -1 : $ds['project']);
+  if (array_key_exists('project', $ds)){
+    $project = ($ds['project'] == '' ? -1 : $ds['project']);
+  } else {
+    $project = -1;
+  }
 	#$subProject = ($ds['subProject'] == '' ? -1 : $ds['subProject']);
 	unset($ds['project']);
 	#unset($ds['subProject']);
@@ -1297,16 +1306,16 @@ function newRecord($table, $ds, $userid){
 		}
 		if ($perm > 0){
 			$pq = "INSERT INTO permissions (trackID,userid,permission)
-			 VALUES ($newTrackID,${g['belongsToGroup']},:perm)";
+			 VALUES ($newTrackID, :belongsToGroup, :perm)";
 			 #print "$pq<br/>";
-			 pdo_query($pq, array(':perm'=>$perm));
+			 pdo_query($pq, array(':perm'=>$perm, ':belongsToGroup'=>$g['belongsToGroup']));
 		}
 	}
 	
 	#setup admin rights
 	#find group that has admin rights in the users labgroup
 	$aq = "SELECT DISTINCT user.ID FROM user JOIN groups ON belongsToGroup =
-			(SELECT user.ID FROM groups JOIN user ON belongsToGroup=user.id
+			(SELECT user.ID FROM groups JOIN user ON belongsToGroup=user.ID
 			WHERE groups.userid=:userid AND user.groupType=1)
 		WHERE user.groupType=3;";
 	$ags = pdo_query($aq, array(':userid'=>$userid));
@@ -1509,14 +1518,13 @@ function getRestrictionSites($digString, $dnaSequence){
   $enzymeList = [];
 	if(in_array($lab_key, $enzymes)){
 		$noUserFilter = True;
-		$enzys = getRecords('vials', $userid, array(), array('vials.name'), " boxes.name='Lab Enzymes' ", "", 0, " LEFT JOIN boxes ON vials.boxID=boxes.id ");
-    #print "enzymes: "; print_r($enzys);
+		$enzys = getRecords('vials', $userid, array(), array('vials.name'), " trackboxes.name='Lab Enzymes' ", "", 0, " LEFT JOIN trackboxes ON vials.boxID=trackboxes.tID ");
+    console_log("enzymes: ".print_r($enzys,true));
 		$noUserFilter = False;
 		if (sizeof($enzys) > 0){
 			$enzymeList = [];
 			foreach($enzys as $enzyme){
-				$arr = explode(' ',trim($enzyme[0]));
-				$enzyme = $arr[0];
+				$enzyme = $enzyme['name'];
 				$enzymeList[] = $enzyme;
 			}
 			#print_r($enzymeList);
