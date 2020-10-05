@@ -92,5 +92,10 @@ labdb ";
         }
     }
 }
-print "$id";
+$hexid = '';
+if(isset($id)){
+  $hq = "SELECT " . getHexIDSQL($table) . " as 'hexID' FROM $table JOIN sampletypes ON sampletypes.table='$table' WHERE $table.id=:id";
+  $hexid = pdo_query($hq, array(':id'=>$id))[0]['hexID'];
+}
+print "{\"id\":$id, \"hexid\":\"$hexid\"}";
 ?>

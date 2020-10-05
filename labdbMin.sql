@@ -221,9 +221,9 @@ CREATE TABLE `inventory` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci NOT NULL,
-  `www` text COLLATE utf8_unicode_ci,
+  `www` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `hazards` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `files` text COLLATE utf8_unicode_ci,
+  `files` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `location` int(11) NOT NULL,
   `orderNumber` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `quantity` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
@@ -429,11 +429,11 @@ DROP TABLE IF EXISTS `plasmids`;
 CREATE TABLE `plasmids` (
   `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'unique identifier',
   `name` varchar(50) NOT NULL COMMENT 'clone name',
-  `description` mediumtext NOT NULL,
+  `description` mediumtext  DEFAULT NULL,
   `resistance` varchar(64) DEFAULT NULL,
-  `generation` mediumtext NOT NULL,
-  `sequence` mediumtext NOT NULL,
-  `enzymes` text NOT NULL COMMENT 'comma separated list of restriction enzyme names (emboss restrict syntax)',
+  `generation` mediumtext DEFAULT NULL,
+  `sequence` mediumtext DEFAULT NULL,
+  `enzymes` text DEFAULT NULL COMMENT 'comma separated list of restriction enzyme names (emboss restrict syntax)',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -457,8 +457,8 @@ DROP TABLE IF EXISTS `projects`;
 CREATE TABLE `projects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-  `parent` int(11) NOT NULL,
-  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `parent` int(11) DEFAULT NULL,
+  `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -482,7 +482,7 @@ DROP TABLE IF EXISTS `resources`;
 CREATE TABLE `resources` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `location` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `active` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
@@ -551,9 +551,9 @@ DROP TABLE IF EXISTS `strains`;
 CREATE TABLE `strains` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` text NOT NULL,
-  `organism` varchar(255) NOT NULL,
-  `strain` varchar(255) NOT NULL,
-  `description` mediumtext NOT NULL,
+  `organism` varchar(255) DEFAULT NULL,
+  `strain` varchar(255) DEFAULT NULL,
+  `description` mediumtext DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -599,8 +599,8 @@ CREATE TABLE `tracker` (
   `created` date NOT NULL,
   `changed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted` date NOT NULL,
-  `project` int(11),
-  `subProject` int(11),
+  `project` int(11) DEFAULT NULL,
+  `subProject` int(11) DEFAULT NULL,
   `owner` int(11) NOT NULL,
   `groupid` int(11) NOT NULL DEFAULT '0',
   `permOwner` smallint(6) NOT NULL,

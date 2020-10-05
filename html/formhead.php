@@ -76,16 +76,18 @@ window.addEvent('domready', function() {
     //Set the options of the form's Request handler. 
     //("this" refers to the $('myForm') element).
     this.set('send', {onComplete: function(response) { 
+      response = JSON.parse(response);
       log.removeClass('ajax-loading');
-      $('id').set('html', response);
-      $('inp_id').set('value', response);
+      $('id').set('html', response['id']);
+      $('inp_id').set('value', response['id']);
+      $('hexID').set('html', response['hexid']);
       //$('title').set('html', "<h2>Edit "+$('name').get('value')+"<\/h2>");			    
       //return
       frm_submitted = true;
       if (goBack) {
         history.back();
   } else {
-    var loc = "editEntry.php?id=" + response + "&mode=modify";
+    var loc = "editEntry.php?id=" + response['id'] + "&mode=modify";
     if (loc == location){
       history.go(0);
   } else {

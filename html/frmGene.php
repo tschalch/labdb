@@ -28,7 +28,7 @@ window.addEvent('domready', function() {
 </script>
 <?php
 
-$fields['type']? $type=$fields['type']:$type = $_GET['type'];
+isset($fields['type'])? $type=$fields['type']:$type = $_GET['type'];
 switch ($type){
 	case 'gene':
 		$titleName = "Gene Fragment";
