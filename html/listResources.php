@@ -18,7 +18,9 @@ $defaultOrder ="resources.name";
 
 #array of query field => table heading
 $fields = array('Name' => 'Name',
-		'Description' => 'Description');
+'Location' => 'Location',
+'Description' => 'Description',
+'active' => 'active');
 
 #toggle Project combobox on and off
 $noProjectFilter = True;
@@ -39,14 +41,15 @@ foreach ($rows as $row) {
 	$edit = 0;
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
 	echo "<tr class=\"lists data-row\" data-record_id=\"$id\">";
-	echo listActions($id);
+	echo listActions($id, Null);
 	echo "<td class=\"lists\" >
 		<a href=\"editEntry.php?id=$id&mode=display\">${row['name']}</a></td>";
 	echo "<td class=\"lists\" >${row['location']}</td>";
 	echo "<td class=\"lists\" >${row['description']}</td>";
+  $checked = $row['active'] ? "checked" : "";
+	echo "<td class=\"lists\" ><input type=\"checkbox\" $checked disabled /></td>";
 	echo "</tr>";
 	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
-	$i++;
 }
 listProcessor(array(2,3));
 print "</table>";

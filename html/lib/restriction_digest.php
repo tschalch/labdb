@@ -22,10 +22,10 @@ function digestDNA($request){
         $sequence = extract_sequences($text);
 
         // Obtain the other parameters related to endonucleases
-        $minimun=$request["minimum"];
-        $retype=$request["retype"];
-        $defined_sq=$request["defined"];
-        $wre=$request["wre"];
+        $minimun= isset($request["minimum"]) ? $request["minimum"] : 0;
+        $retype= isset($request["retype"]) ? $request["retype"] : 0;
+        $defined_sq= isset($request["defined_sq"]) ? $request["defined_sq"] : 0;
+        $wre= isset($request["wre"]) ? $request["wre"] : 0;
 
         // We will get info for endonucleases. The info is included within 3 different functions in the bottom (for Type II, IIb and IIs enzymes)
         // Type II endonucleases are always used
@@ -235,6 +235,7 @@ function restriction_digest($enzymes_array,$sequence){
         // split sequence based on pattern from restriction enzyme
         $fragments = preg_split("/".$enzymes_array[$enzyme][2]."/", $sequence,-1,PREG_SPLIT_DELIM_CAPTURE);
         reset ($fragments);
+        console_log("fragments: ".print_r($fragments, true));
         $maxfragments=sizeof($fragments);
         // when sequence is cleaved ($maxfragments>1) start further calculations
         if ($maxfragments>1){
@@ -249,7 +250,7 @@ function restriction_digest($enzymes_array,$sequence){
                                 // As overlapping may occur for many endonucleases,
                                 //   a subsequence starting in position 2 of fragment is calculate
                                 // print "<pre>".print_r($fragments)."</pre>";
-                                $subsequence=substr($fragments[$i-1],1).$fragments[$i].substr($fragments[$i+1],0,40);
+                                if (isset($fragments[$i+1])) $subsequence=substr($fragments[$i-1],1).$fragments[$i].substr($fragments[$i+1],0,40);
                                 $subsequence=substr($subsequence,0,2*$enzymes_array[$enzyme][3]-2);
                                 //Previous process is repeated
                                 // split subsequence based on pattern from restriction enzyme

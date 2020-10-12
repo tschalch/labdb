@@ -44,11 +44,11 @@ if (isset($category)){
 	}
 	echo "</ul></div>";
 }
+if (!isset($vars)) $vars = array();
 if (!isset($query)){
-    if (!isset($where)) {
-	$where = '';
-  $vars = array();
-    }
+  if (!isset($where)) {
+    $where = '';
+  }
 #	$query="SELECT tracker.trackID,";
 #	if ($queryFields){
 #		foreach ($queryFields as $qf){

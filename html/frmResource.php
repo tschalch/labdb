@@ -29,6 +29,7 @@ printID($formParams);
 printTextField('Resource', 'name', $formParams);
 printTextField('Location', 'location', $formParams);
 printTextArea('Description', 'description', $formParams);
+if (!isset($id)) $formParams['fields']['active']['checked'] = 1;
 printCheckbox('Is active', 'active', $formParams);
 printSubmitButton($formParams, $button);
 ?>

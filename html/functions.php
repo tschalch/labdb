@@ -864,6 +864,7 @@ function getAutoselectField($table, $mode, $elementID, $post_name, $trackID, $cl
 }
 
 function printCrossCombobxs($id, $types, $fcounter, $formParams, $unlink=False){
+  console_log("crosscombo vars:".print_r($formParams, true));
 	$table = $formParams['table'];
 	$mode = $formParams['mode'];
 	global $userid;
@@ -1044,13 +1045,14 @@ function printProjectFields($formParams){
 	$columns = array('tracker.trackID','projects.name');
 	$projects = getRecords('projects', $userid, array(), $columns);
 	$row = $formParams['fields'];
-	printComboBox('Project', 'project', $formParams, $projects, $row['project']);
+  $project = isset($row['project'])? $row['project'] : Null;
+	printComboBox('Project', 'project', $formParams, $projects, $project);
 	#setupProjects();
 } 
 function listActions($id, $hexID){
    	$action = "<td class=\"lists\" width=\"1%\">";
 	$action .= "<input type=\"checkbox\" name=\"selection[]\" value=\"$id\"/>\n";
-	$action .= "<input type=\"hidden\" name=\"hexID_$id\" value=\"$hexID\"/>\n";
+	$action .= isset($hexID) ? "<input type=\"hidden\" name=\"hexID_$id\" value=\"$hexID\"/>\n" : "";
 	$actionID = "nav";
 	$action .= "</td>\n";
 	return $action;
@@ -1101,11 +1103,13 @@ function getRecord($trackerID, $userid, $mode='display'){
 				  (permissions.userid=groups.belongsToGroup AND
 				  permission > 0))";
 	}
-	if ($table){
+  if ($table){
+    $hexIDSQL = gethexIDSQL($table);
 		$q2 = "SELECT MAX(permission) AS maxpermission, tracker.*, $table.*, sampletypes.*,
 		       DATE_FORMAT(tracker.created,'%m/%d/%y') AS createDate,
 		       DATE_FORMAT(tracker.changed,'%m/%d/%y') AS changeDate, user.userid AS username,
-			   CONCAT(sampletypes.st_code, '.', LPAD(CONV($table.id, 10, 36), 3, '0')) as hexID,
+           sampletypes.st_code, $table.id,
+			     $hexIDSQL as hexID,
 		       user.fullname FROM permissions
 		       LEFT JOIN tracker ON tracker.trackID=permissions.trackID
 		       LEFT JOIN sampletypes ON sampletypes.id=tracker.sampleType 
@@ -1195,9 +1199,9 @@ function getRecords($table, $userid, $vars, $columns, $where='', $order='', $cou
 				   AND permissions.permission > 0)";
     $vars[':currUid'] = $currUid;
 	}
-	$q = '';
+	$ql = '';
 	if($count){
-		$q1 = "SELECT  COUNT(*) FROM ( SELECT DISTINCT tracker.* ";
+		$q1 = "SELECT COUNT(*) FROM ( SELECT DISTINCT tracker.* ";
 	} else {
 		$q1 = "SELECT DISTINCT ";
 		$n = sizeof($columns);
@@ -1208,7 +1212,8 @@ function getRecords($table, $userid, $vars, $columns, $where='', $order='', $cou
 			$i += 1;
 		}
 	}
-	$q1 .= ", $table.id FROM permissions
+  $q1 .= ", $table.id, sampletypes.st_code, ".getHexIDSQL($table)." as \"hexid\"";
+	$q1 .= " FROM permissions
   	        JOIN groups ON groups.userid = :userid
 		JOIN tracker ON permissions.trackID = tracker.trackID
 		JOIN user ON user.ID=tracker.owner

@@ -15,7 +15,7 @@ $r = getRecords($table, $userid, array(':cue'=>"%$cue%"), array("$field"), " `$f
 if (isset($_POST['extended']) && $_POST['extended'])
 {
     $extended = true;
-    $r = getRecords($table, $userid, array(':cue'=>"%$cue%", ':hexIDSQL'=>$hexIDSQL), array('tracker.trackID', "$field"), " $field LIKE :cue OR tracker.trackID=:cue OR :hexIDSQL=:cue ", "$table.$field", 0, '');
+    $r = getRecords($table, $userid, array(':cue'=>"%$cue%", ':cueexact'=>"$cue"), array('tracker.trackID', "$field"), " ( $field LIKE :cue OR tracker.trackID=:cueexact OR $hexIDSQL LIKE :cue) ", "$table.$field", 0, '');
 } 
 
 #print_r($r);
@@ -24,7 +24,8 @@ foreach ($r as $row)
 	$entry = $row[$field];
 	if ($extended) {
 		//$results = print_r($r, true);
-		echo "<li title=\"$entry\"><span>$entry</span><span style=\"display:none\">${row['trackID']}</span></li>";
+    $hexid = $row['hexid'];
+		echo "<li title=\"$hexid $entry\" value=\"${row['trackID']}\"><span>$hexid $entry</span><span style=\"display:none\">${row['trackID']}</span></li>";
 	}
 	else {
 	    print "<li>$entry</li>\n";

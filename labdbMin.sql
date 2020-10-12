@@ -309,6 +309,8 @@ DROP TABLE IF EXISTS `logbook`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `logbook` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
   `instrumentID` int(11) NOT NULL,
   `columnID` int(11) NOT NULL,
   `sample` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -516,7 +518,7 @@ CREATE TABLE `sampletypes` (
   `isSample` tinyint(1) NOT NULL DEFAULT '1',
   `labPermission` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -528,16 +530,15 @@ LOCK TABLES `sampletypes` WRITE;
 INSERT INTO `sampletypes` VALUES 
   (1,'P','Plasmid','Plasmids','frmPlasmids','plasmids','listPlasmids',1,0),
   (2,'O','Oligo','Oligos','frmOligo','oligos','listOligo',1,0),
-  (3,'B','Protein','Proteins','frmProteins','proteins','',1,0),
-  (4,'S','Strain','Strains','frmStrain','strains','listStrains',1,0),
-  (6,NULL,'Vial','Vials','frmVial','vials','listVials',0,0),
-  (7,'B','Fragment','Fragments','frmGene','fragments','listGene',1,0),
-  (8,NULL,'Box','Boxes','frmBoxes','boxes','listBoxes',0,0),
-  (9,NULL,'Project','Projects','frmProject','projects','listProjects',0,0),
-  (10,'TSL','item','Items','frmItem','inventory','listItems',0,2),
-  (11,NULL,'location','locations','frmLocations','locations','listLocations',0,2),
-  (12,NULL,'logbook entry','logbook entries','frmLog','logbook','listLogbook',0,2), 
-  (13,NULL, 'Resource', 'Resources', 'frmResource', 'resources', 'listResources', '0', '2');
+  (3,'S','Strain','Strains','frmStrain','strains','listStrains',1,0),
+  (4,NULL,'Vial','Vials','frmVial','vials','listVials',0,0),
+  (5,'B','Fragment','Fragments','frmGene','fragments','listGene',1,0),
+  (6,NULL,'Box','Boxes','frmBoxes','boxes','listBoxes',0,0),
+  (7,NULL,'Project','Projects','frmProject','projects','listProjects',0,0),
+  (8,'TSL','item','Items','frmItem','inventory','listItems',0,2),
+  (9,NULL,'location','locations','frmLocations','locations','listLocations',0,2),
+  (10,NULL,'logbook entry','logbook entries','frmLog','logbook','listLogbook',0,2), 
+  (11,NULL, 'Resource', 'Resources', 'frmResource', 'resources', 'listResources', '0', '2');
 /*!40000 ALTER TABLE `sampletypes` ENABLE KEYS */;
 UNLOCK TABLES;
 

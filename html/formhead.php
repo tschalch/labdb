@@ -1,6 +1,7 @@
 <?php
 include_once("accesscontrol.php");
 #$noUserFilter = True;
+$fields = array();
 if ((isset($edit) and $edit) or (isset($duplicate) and $duplicate)){
   if(isset($form)){
     $query="SELECT `$table`.*, tracker.*, sampletypes.`table`, sampletypes.`form`, sampletypes.st_name AS stName FROM `$table` LEFT JOIN tracker ON $table.id=tracker.sampleID LEFT JOIN sampletypes ON sampletypes.`table`='$table' WHERE $table.id='$id' AND tracker.sampleType=sampletypes.id AND tracker.owner=$userid ";
@@ -80,7 +81,7 @@ window.addEvent('domready', function() {
       log.removeClass('ajax-loading');
       $('id').set('html', response['id']);
       $('inp_id').set('value', response['id']);
-      $('hexID').set('html', response['hexid']);
+      if ($('hexID')) $('hexID').set('html', response['hexid']);
       //$('title').set('html', "<h2>Edit "+$('name').get('value')+"<\/h2>");			    
       //return
       frm_submitted = true;
@@ -91,7 +92,7 @@ window.addEvent('domready', function() {
     if (loc == location){
       history.go(0);
   } else {
-    //location.replace(loc);
+    location.replace(loc);
   }
   }
   goBack = false;
