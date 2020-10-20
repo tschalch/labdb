@@ -67,7 +67,7 @@ foreach ($rows as $row) {
 	} else {
 		print "<tr class=\"lists data-row\" data-record_id=\"$id\">";
 	}
-	echo listActions($id);
+	echo listActions($id, null);
 	echo "<td class=\"lists\" width=\5%\"><a href=\"editEntry.php?id=$id&mode=display\">${row['date']}</a></td>";
 	$instrument = $instruments[$row['instrumentID']]['name'];
 	echo "<td class=\"lists\" width=\"15%\">${instrument}</td>";

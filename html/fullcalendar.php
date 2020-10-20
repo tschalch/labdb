@@ -1,20 +1,14 @@
 <?php
 require_once('accesscontrol.php');
-require_once('bdd.php');
+require_once('functions.php');
 require_once("header.php");
 
 $resource = isset($_GET['resource']) ? $_GET['resource']: NULL;
-$sql = "SELECT id, title, description, start, end, color FROM events WHERE resource='$resource';";
+$sql = "SELECT id, title, description, start, end, color FROM events WHERE resource=:resource;";
+$events = pdo_query($sql, array(':resource'=>$resource));
 
-$req = $bdd->prepare($sql);
-$req->execute();
-
-$events = $req->fetchAll();
-
-$sql = "SELECT * FROM resources WHERE resourceID='$resource';";
-$req = $bdd->prepare($sql);
-$req->execute();
-$resource = $req->fetch();
+$sql = "SELECT * FROM resources WHERE id=:resource;";
+$resource = pdo_query($sql, array(':resource'=>$resource))[0];
 
 ?>
 <link href='fc4/packages/core/main.css' rel='stylesheet' />
@@ -48,7 +42,7 @@ jQuery( document ).ready(function( $ ) {
       description: '',
       color: <?php print "'$usercolor'"; ?>,
       user: <?php print "'$userid'"; ?>,
-      resource: <?php print "'${resource['resourceID']}'"; ?>
+      resource: <?php print "'${resource['id']}'"; ?>
     }
     var str_json = JSON.stringify(ev)
     request= new XMLHttpRequest()
@@ -121,7 +115,7 @@ jQuery( document ).ready(function( $ ) {
     defaultView: 'timeGridWeek',
     eventSources: [
       {
-        url: 'events.php?resource=<?php print $resource['resourceID'] ?>',
+        url: 'events.php?resource=<?php print $resource['id'] ?>',
         color: 'yellow',   // an option!
         textColor: 'black' // an option!
       }
@@ -320,7 +314,7 @@ font-weight: bold;
 <?php 
 require_once("navigation.php");
 print "<div class=\"container\">";
-print "<div id=\"title\"><h2 >Reservations for ${resource['resource_name']}</h2></div>";
+print "<div id=\"title\"><h2 >Reservations for ${resource['name']}</h2></div>";
 
 ?>
 <div id='calendar'></div>

@@ -14,8 +14,8 @@ if (isset($_GET['template'])){
   $fields['project'] = $template['project'];
   $fields['sID'] = $template['trackID'];
 }
-
 include("formhead.php");
+console_log("frmVial template: ".print_r($fields, true));
 ?>
 <script type="text/javascript">
 window.addEvent('domready', function() {

@@ -1,7 +1,7 @@
 <?php
 
 require_once('accesscontrol.php');
-require_once('bdd.php');
+require_once('functions.php');
 
 $str_json = file_get_contents('php://input');
 $event = json_decode( $str_json, true );
@@ -9,65 +9,44 @@ $event = json_decode( $str_json, true );
 if (isset($_POST['delete']) && isset($_POST['id'])){
 
   $id = $_POST['id'];
+  $vars = array(':id' => $id);
 
-  $sql = "SELECT user FROM events WHERE id = $id";
+  $sql = "SELECT user FROM events WHERE id=:id";
+  $event = pdo_query($sql, array(':id'=>$id))[0];
 
-  $query = $bdd->prepare( $sql );
-  if ($query == false) {
-    print_r($bdd->errorInfo());
-    die ('SQL preparation error');
-  }
-  $res = $query->execute();
-  if ($res == false) {
-    print_r($query->errorInfo());
-    print($sql);
-    die ('SQL execution error');
-  }
-  $event = $query->fetch();
-  if ($userid === $event['user']){
-    $sql = "DELETE FROM events WHERE id = $id";
+  if (isset($event['user']) && $userid === $event['user']){
+    $sql = "DELETE FROM events WHERE id=:id";
   }
 
 } elseif (isset($event['id']) || isset($_POST['id'])) {
 
 
-$fields = array("id","start","end","color","title","description");
+  $fields = array("id","start","end","color","title","description");
 
-foreach($fields as $field){
-  if(isset($_POST[$field])){
-    $value  = $_POST[$field];
-    $event[$field] = $value;
+  $id = $event['id'];
+  $vars = array(':id' => $id);
+  foreach($fields as $field){
+    if(isset($_POST[$field])){
+      $value_fields[$field] = $_POST[$field];
+    }
   }
-}
 
-$numItems = count($event);
-$i = 0;
-foreach($event as $f => $value){
-  $sqlupdate .= "$f='$value'";
-  if(++$i < $numItems) {
-    $sqlupdate .= ", ";
+  $numItems = count($value_fields);
+  $i = 0;
+  foreach($value_fields as $f => $value){
+    $sqlupdate .= "$f=:$f ";
+    $vars[":$f"] = $value;
+    if(++$i < $numItems) {
+      $sqlupdate .= ", ";
+    }
   }
-}
 
-print_r($event);
-print $sqlupdate;
-$id = $event['id'];
 
-$sql = "UPDATE events SET $sqlupdate WHERE id='$id'";
+  $sql = "UPDATE events SET $sqlupdate WHERE id=:id";
 
 }
 
-$query = $bdd->prepare( $sql );
-if ($query == false) {
-  print_r($bdd->errorInfo());
-  die ('SQL preparation error');
-}
-$res = $query->execute();
-if ($res == false) {
-  print_r($query->errorInfo());
-  print($sql);
-  die ('SQL execution error');
-}
+pdo_query($sql, $vars);
 
 header('Location: '.$_SERVER['HTTP_REFERER']);
 

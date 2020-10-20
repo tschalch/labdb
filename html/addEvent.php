@@ -1,17 +1,14 @@
 <?php
 
 require_once('accesscontrol.php');
-require_once('bdd.php');
+require_once('functions.php');
 
 $str_json = file_get_contents('php://input');
 $event = json_decode( $str_json, true );
 #print_r($event);
 
-$sql = "INSERT INTO events (title,color,start,end,user,resource) VALUES ('${event['title']}', '${event['color']}', '${event['start']}', '${event['end']}', '${event['user']}', '${event['resource']}')";
-#print $sql;
+$sql = "INSERT INTO events (title,color,start,end,user,resource) VALUES (:title, :color, :start, :end, :user, :resource)";
+$vars = array(':title' => $event['title'], ':color' => $event['color'], ':start' => $event['start'], ':end' => $event['end'], ':user'=>$event['user'], ':resource'=>$event['resource']);
 
-$req = $bdd->prepare($sql);
-$req->execute();
-
-print $bdd->lastInsertId();
+print pdo_query($sql, $vars);
 ?>

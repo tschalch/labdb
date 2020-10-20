@@ -39,7 +39,7 @@ foreach ($rows as $row) {
 	$edit = 0;
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
 	echo "<tr class=\"lists data-row\" data-record_id=\"$id\">";
-	echo listActions($id);
+	echo listActions($id, null);
 	echo "<td class=\"lists\" width=\"20%\">
 		<a href=\"editEntry.php?id=$id&mode=display\">${row['name']}</a></td>";
 	echo "<td class=\"lists\" width=\"70%\">${row['description']}</td>";
