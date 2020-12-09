@@ -1083,11 +1083,12 @@ function getTable($trackerID){
 }
 
 function getSampleType($trackerID){
+  console_log("sampleType trackID: $trackerID");
 	if (!is_numeric($trackerID)) return;
 	$q1 = "SELECT sampletypes.* FROM tracker INNER JOIN sampletypes ON sampletypes.id=tracker.sampleType WHERE trackID=:trackerID";
 	#print "$q1";
 	$r1 = pdo_query($q1, array(':trackerID' => $trackerID));
-	//print_r($r1);
+	console_log("sampletype query: $q1 ".print_r($r1,true));
 	if($r1) return $r1[0];
 }
 
@@ -1120,7 +1121,7 @@ function getRecord($trackerID, $userid, $mode='display'){
 		       GROUP BY user.id";
 		//print "<br/>$q2<br/>";
 		$r2 = pdo_query($q2, array(':userid' => $userid, ':trackerID' => $trackerID));
-		//print_r($r2);
+		console_log(print_r($r2, true));
 		if ($r2) return $r2[0];
 	}
 }

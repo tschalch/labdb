@@ -87,6 +87,8 @@ printTextField('Created by', 'creator', $formParams);
 # Sample comboboxes
 $q = "SELECT *, id AS trackID, `st_name` AS `name` FROM sampletypes WHERE isSample=TRUE";
 $sampleTypes = pdo_query($q);
+console_log("sampleTypes from $q: ".print_r($sampleTypes, true));
+
 #$choices = array('plasmids'=>'Plasmid','glycerolstocks'=>'Glycerol Stock','oligos' => 'Oligo','proteins' => 'Protein');
 $script = "<script type=\"text/javascript\" charset=\"utf-8\">\n";
 $script .= "<!--\n";
@@ -101,13 +103,13 @@ $script .= "</script>\n";
 print $script;
 if (key_exists('sID', $fields)){
   $r1 = getSampleType($fields['sID']);
-  $st = $r1[0];
-  //print "stID".$st['id'];
+  console_log("rl: ".print_r($r1, true));
+  $st = $r1['id'];
 } else {
   $st = '';
 }
 print "<div id =\"typeChoice\" class=\"formRow\"><div class=\"formLabel\">Select Type:</div>";
-print getComboBox('', '', $mode, $sampleTypes, $st, '', False);
+print getComboBox('Type', 'none', $mode, $sampleTypes, $st, '', False);
 print "</div></div>\n";
 #	if ($id){
 #		//get sample table

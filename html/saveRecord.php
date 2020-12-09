@@ -95,11 +95,12 @@ labdb ";
 
 if(isset($id)){
   $r = getRecord($id, $userid);
+  console_log("id, userid for getRecord: $id, $userid: ". print_r($r, true));
   if ($r['hexID'] != ""){
     $hexid = $r['hexID'];
     print "{\"id\":$id, \"hexid\":\"$hexid\"}";
   } else {
-    print "$id"; 
+    print "{\"id\":\"$id\"}"; 
   }
 }
 ?>
