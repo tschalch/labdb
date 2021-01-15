@@ -26,7 +26,7 @@ jQuery( document ).ready(function( $ ) {
     ev = { 
       id: info.event.id.toString(),
       start: info.event.start.toISOString(),
-      end: info.event.end.toISOString() 
+      end: info.event.end.toISOString()
     }
     var str_json = JSON.stringify(ev)
     request= new XMLHttpRequest()
@@ -36,8 +36,8 @@ jQuery( document ).ready(function( $ ) {
   }
   function addEvent(calendar, info, callback){
     ev = { 
-      start: info.start.toISOString(),
-      end: info.end.toISOString(),
+      start: info.start.toISOString().slice(0, 19).replace('T', ' '),
+      end: info.end.toISOString().slice(0, 19).replace('T', ' '),
       title: <?php print "'$userfullname'"; ?>,
       description: '',
       color: <?php print "'$usercolor'"; ?>,
