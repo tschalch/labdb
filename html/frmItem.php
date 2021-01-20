@@ -32,9 +32,9 @@ window.addEvent('domready', function() {
 
 if(isset($duplicate) and $duplicate){
         $fields['status'] = 1;
-	$formParams['fields']['orderDate'] = '0000-00-00';
-	$formParams['fields']['received'] = '0000-00-00';
-	$formParams['fields']['billed'] = '0000-00-00';
+	$formParams['fields']['orderDate'] = 'NULL';
+	$formParams['fields']['received'] = 'NULL';
+	$formParams['fields']['billed'] = 'NULL';
 	$formParams['fields']['funding'] = '';
 }
 printID($formParams);

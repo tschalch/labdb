@@ -660,7 +660,7 @@ function getComboBox($field, $table, $mode, $choices, $match, $action=null, $lin
 		if ($action) $cmbBox .= $action;
 		$cmbBox .= ">\n";
 		//$cmbBox .= "<option value=\"NA\"/>\n";
-		$cmbBox .= "<option value=\"\">***none***</option>\n";
+		$cmbBox .= "<option value=\"0\">***none***</option>\n";
 		#print_r($choices);
 		if ($choices){
 			foreach ($choices as $choice){
