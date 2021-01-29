@@ -9,33 +9,39 @@ $noUserFilter = true;
 include("formhead.php");
 
 ?>
+
 <script type="text/javascript">
 window.addEvent('domready', function() {
-    window.fields = [
-	<?php
-	$fieldname = "document.mainform.${table}_0_";
-	print "${fieldname}price, ${fieldname}name, ${fieldname}quantity,
-	    ${fieldname}unitMeas, ${fieldname}status, ${fieldname}orderNumber,
-	    ${fieldname}supplier";
-    ?>];
-    window.NoFields = [
-	<?php
-	print "${fieldname}price, ${fieldname}status";
-	?>];
-    window.DateFields = [
-	<?php 
-	    print "\"${table}_0_orderDate\", \"${table}_0_received\", \"${table}_0_billed\"";
-	?>];
+  window.fields = [
+
+<?php
+
+$fieldname = "document.mainform.${table}_0_";
+print "${fieldname}price, ${fieldname}name, ${fieldname}quantity,
+  ${fieldname}unitMeas, ${fieldname}status, ${fieldname}orderNumber,
+  ${fieldname}supplier";
+?>
+];
+window.NoFields = [
+<?php
+print "${fieldname}price, ${fieldname}status";
+?>];
+window.DateFields = [
+<?php 
+print "\"${table}_0_orderDate\", \"${table}_0_received\", \"${table}_0_billed\"";
+?>];
 });
 </script>
+
 <?php
 
 if(isset($duplicate) and $duplicate){
-        $fields['status'] = 1;
-	$formParams['fields']['orderDate'] = 'NULL';
-	$formParams['fields']['received'] = 'NULL';
-	$formParams['fields']['billed'] = 'NULL';
-	$formParams['fields']['funding'] = '';
+  $fields['status'] = 1;
+  $formParams['fields']['orderDate'] = NULL ;
+  $formParams['fields']['received'] = NULL ;
+  $formParams['fields']['billed'] = NULL ;
+  $formParams['fields']['funding'] = '';
+  $formParams['fields']['poNumber'] = '';
 }
 printID($formParams);
 printTypeID($formParams, "Item ID");
@@ -52,25 +58,25 @@ printTextField('Supplier', 'supplier', $formParams);
 if ($mode == 'modify'):
 ?>
 <script type="text/javascript">
-//<![CDATA[
-window.addEvent('domready', function() {
-     new Autocompleter.Request.HTML('manufacturer', 'autocomplete.php', {
-		'postData': {
-		    'field': 'manufacturer', // send additional POST data, check the PHP code
-		    'table': 'inventory',
-		}
+  //<![CDATA[
+  window.addEvent('domready', function() {
+    new Autocompleter.Request.HTML('manufacturer', 'autocomplete.php', {
+      'postData': {
+        'field': 'manufacturer', // send additional POST data, check the PHP code
+          'table': 'inventory',
+    }
     });
      new Autocompleter.Request.HTML('supplier', 'autocomplete.php', {
-		'postData': {
-		    'field': 'supplier', // send additional POST data, check the PHP code
-		    'table': 'inventory',
-		}
+       'postData': {
+         'field': 'supplier', // send additional POST data, check the PHP code
+           'table': 'inventory',
+    }
     });
      new Autocompleter.Request.HTML('funding', 'autocomplete.php', {
-		'postData': {
-		    'field': 'funding', // send additional POST data, check the PHP code
-		    'table': 'inventory',
-		}
+       'postData': {
+         'field': 'funding', // send additional POST data, check the PHP code
+           'table': 'inventory',
+    }
     });
 
 });
@@ -90,8 +96,8 @@ printDateField('Order date', 'orderDate', $formParams);
 printDateField('Date received', 'received', $formParams);
 $statusChoices = pdo_query("SELECT statusNr AS trackID, statusName AS name FROM itemstatus;");
 if (isset($fields['status']) and $fields['status'] > 2){
-    unset($statusChoices[0]);
-    unset($statusChoices[1]);
+  unset($statusChoices[0]);
+  unset($statusChoices[1]);
 }
 printComboBox("Status", 'status', $formParams, $statusChoices, (isset($fields['status']) ? $fields['status'] : null));
 printDateField("Billed on", 'billed', $formParams);

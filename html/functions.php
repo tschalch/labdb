@@ -1284,17 +1284,21 @@ function newRecord($table, $ds, $userid){
 	foreach ($ds as $field => $dat){
 		#$dat = escape_quotes($dat);
 		if ($dat == 'mainID') $dat = $id;
-		$iq .= ":dat$cnt";
-    $vars[":dat$cnt"] = "$dat";
-		$cnt += 1;
+    if ($dat == NULL) {
+      $iq .= 'NULL';
+    } else {
+      $iq .= ":dat$cnt";
+      $vars[":dat$cnt"] = "$dat";
+    }
+    $cnt += 1;
 		if($cnt <> $end) $iq .= ", ";
 	}
 	$iq .= ")";
 	//print "$iq<br/>";
 	$sampleID = pdo_query($iq, $vars);
 	# insert query for tracker
-	$iq = "INSERT INTO tracker (sampleID, sampleType, project, created, owner, permOwner, deleted, permGroup, permOthers)";
-	$iq .= " VALUES (:sampleID, :st, :project, NOW(), :userid, 2, '0-0-0', 2, 0)";
+	$iq = "INSERT INTO tracker (sampleID, sampleType, project, created, owner, permOwner, permGroup, permOthers)";
+	$iq .= " VALUES (:sampleID, :st, :project, NOW(), :userid, 2, 2, 0)";
 	//print "$iq<br/>;
   $vars = array(':sampleID' => $sampleID,':st'=>$st, ':project'=>$project, ':userid'=>$userid);
 	$newTrackID = pdo_query($iq, $vars);

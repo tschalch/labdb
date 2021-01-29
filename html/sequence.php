@@ -11,7 +11,7 @@ switch($process){
 	case 'ic':
 		$title = "Inverse complement of ".$title;
 		$revcomp = revcomp($sequence, 'DNA');
-		$sequence = fastaseq($revcomp, "\n");
+		$sequence = fastaseq($revcomp, "\n", 60);
 		break;
 }
 
