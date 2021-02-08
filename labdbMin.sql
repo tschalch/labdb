@@ -25,8 +25,8 @@ DROP TABLE IF EXISTS `boxes`;
 CREATE TABLE `boxes` (
   `id` int(6) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
-  `description` mediumtext NOT NULL,
-  `location` varchar(50) NOT NULL,
+  `description` mediumtext DEFAULT NULL,
+  `location` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -52,10 +52,10 @@ CREATE TABLE `connections` (
   `connID` int(11) NOT NULL AUTO_INCREMENT,
   `record` int(11) NOT NULL,
   `belongsTo` int(11) NOT NULL,
-  `fragName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `start` int(11) NOT NULL COMMENT 'start position on plasmid in bp',
-  `end` int(11) NOT NULL COMMENT 'end position on plasimd in bp',
-  `direction` int(11) NOT NULL COMMENT 'direction on plasmid. fw is 1, rev is 0',
+  `fragName` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `start` int(11) DEFAULT NULL COMMENT 'start position on plasmid in bp',
+  `end` int(11) DEFAULT NULL COMMENT 'end position on plasimd in bp',
+  `direction` int(11) DEFAULT NULL COMMENT 'direction on plasmid. fw is 1, rev is 0',
   PRIMARY KEY (`connID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -78,7 +78,7 @@ DROP TABLE IF EXISTS `crystals`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `crystals` (
   `id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `data` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `data` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -712,7 +712,7 @@ UNLOCK TABLES;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `trackboxes` AS select `boxes`.`id` AS `id`,`boxes`.`name` AS `name`,`boxes`.`description` AS `description`,`boxes`.`location` AS `location`,`tracker`.`trackID` AS `tID`,`boxes`.`name` AS `boxName` from (`boxes` join `tracker` on(((`boxes`.`id` = `tracker`.`sampleID`) and (`tracker`.`sampleType` = 8)))) */;
+/*!50001 VIEW `trackboxes` AS select `boxes`.`id` AS `id`,`boxes`.`name` AS `name`,`boxes`.`description` AS `description`,`boxes`.`location` AS `location`,`tracker`.`trackID` AS `tID`,`boxes`.`name` AS `boxName` from (`boxes` join `tracker` on(((`boxes`.`id` = `tracker`.`sampleID`) and (`tracker`.`sampleType` = 6)))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
