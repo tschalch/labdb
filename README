@@ -9,7 +9,8 @@
   written this software for use in my laboratory and it has been in use for
   many years. I am not a professional programmer, and the code is rather rough,
   but it works.  labdb has not been widely tested and will require some
-  knowledge of php and mysql from the administrator.
+  knowledge of php and mysql from the administrator. I strongly recommend to use
+  it behind a firewall.
 
   Features
   --------
