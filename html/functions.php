@@ -1274,13 +1274,18 @@ function newRecord($table, $ds, $userid){
 	$cnt = 0;
 	$end = sizeof($ds);
 	foreach ($ds as $field => $dat){
+		$cnt += 1;
+    if ($dat == ''){
+      unset($ds[$field]);
+    } else {
+		if($cnt < $end && $cnt > 1) $iq .= ", ";
 		$iq .= "`$field`";
     #$vars[":field$cnt"] = $field;
-		$cnt += 1;
-		if($cnt <> $end) $iq .= ", ";
+    }
 	}
 	$iq .= ") VALUES (";
 	$cnt = 0;
+	$end = sizeof($ds);
 	foreach ($ds as $field => $dat){
 		#$dat = escape_quotes($dat);
 		if ($dat == 'mainID') $dat = $id;
@@ -1345,10 +1350,14 @@ function updateRecord($trackerID, $ds, $userid, $groupids){
 	#print_r($ds);
   $n = 0;
 	foreach ($ds as $key => $field){
-		$uq .= " `$key`=:field$n";
-    #$vars[":key$n"] = $key;
-    $vars[":field$n"] = $field;
-    $n += 1;
+    if ($field == ''){
+      $uq .= " `$key`= NULL";
+    } else {
+      $uq .= " `$key`=:field$n";
+      #$vars[":key$n"] = $key;
+      $vars[":field$n"] = $field;
+      $n += 1;
+    }
 		if (next($ds)!==FALSE) $uq .= ',';
 	}
 	$uq .= ", tracker.changed=NOW() ";

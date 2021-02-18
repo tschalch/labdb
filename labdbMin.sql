@@ -101,7 +101,7 @@ DROP TABLE IF EXISTS `crystalsdev`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `crystalsdev` (
   `id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `data` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `data` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -125,12 +125,12 @@ DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
   `color` varchar(7) DEFAULT NULL,
-  `start` datetime NOT NULL,
+  `start` datetime DEFAULT NULL,
   `end` datetime DEFAULT NULL,
-  `resource` int(11) NOT NULL,
-  `user` int(11) NOT NULL,
+  `resource` int(11) DEFAULT NULL,
+  `user` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_resource` (`resource`),
   KEY `FK_user` (`user`),
@@ -156,21 +156,21 @@ DROP TABLE IF EXISTS `fragments`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fragments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `reaction` varchar(255) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `organism` text NOT NULL,
-  `description` mediumtext NOT NULL,
-  `DNASequence` mediumtext NOT NULL,
-  `proteinSequence` mediumtext NOT NULL,
-  `link` mediumtext NOT NULL,
-  `type` text NOT NULL,
-  `PCRoligo1` int(11) NOT NULL,
-  `PCRoligo2` int(11) NOT NULL,
-  `PCRtemplate` int(11) NOT NULL,
-  `PCRremarks` mediumtext NOT NULL,
-  `resistance` text NOT NULL,
-  `origin` text NOT NULL,
-  `attachment` text NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `description` mediumtext DEFAULT NULL,
+  `reaction` varchar(255) DEFAULT NULL,
+  `organism` text DEFAULT NULL,
+  `DNASequence` mediumtext DEFAULT NULL,
+  `proteinSequence` mediumtext DEFAULT NULL,
+  `link` mediumtext DEFAULT NULL,
+  `type` text DEFAULT NULL,
+  `PCRoligo1` int(11) DEFAULT NULL,
+  `PCRoligo2` int(11) DEFAULT NULL,
+  `PCRtemplate` int(11) DEFAULT NULL,
+  `PCRremarks` mediumtext DEFAULT NULL,
+  `resistance` text DEFAULT NULL,
+  `origin` text DEFAULT NULL,
+  `attachment` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -220,24 +220,24 @@ DROP TABLE IF EXISTS `inventory`;
 CREATE TABLE `inventory` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `www` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `hazards` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
   `files` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `location` int(11) NOT NULL,
-  `orderNumber` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `quantity` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
-  `unitMeas` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `price` float NOT NULL,
-  `orderDate` date NOT NULL,
-  `received` date NOT NULL,
-  `supplier` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `manufacturer` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `casNumber` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL,
-  `funding` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
-  `type` int(11) NOT NULL COMMENT 'used for log, 0=regular item, 1=instrument, 2=column',
-  `billed` date DEFAULT '0000-00-00',
+  `orderNumber` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `quantity` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `unitMeas` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `price` float DEFAULT NULL,
+  `orderDate` date DEFAULT NULL,
+  `received` date DEFAULT NULL,
+  `supplier` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `manufacturer` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `casNumber` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `funding` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type` int(11) DEFAULT NULL COMMENT 'used for log, 0=regular item, 1=instrument, 2=column',
+  `billed` date DEFAULT NULL,
   `poNumber` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -286,7 +286,7 @@ DROP TABLE IF EXISTS `locations`;
 CREATE TABLE `locations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -309,20 +309,20 @@ DROP TABLE IF EXISTS `logbook`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `logbook` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `description` text COLLATE utf8_unicode_ci NOT NULL,
-  `instrumentID` int(11) NOT NULL,
-  `columnID` int(11) NOT NULL,
-  `sample` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `buffer` text COLLATE utf8_unicode_ci NOT NULL,
-  `date` date NOT NULL,
-  `bypresbef` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `bypresaf` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `colpresbef` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `colpresaf` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `storage` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `remarks` text COLLATE utf8_unicode_ci NOT NULL,
-  `user` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `instrumentID` int(11) DEFAULT NULL,
+  `columnID` int(11) DEFAULT NULL,
+  `sample` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `buffer` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `bypresbef` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bypresaf` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `colpresbef` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `colpresaf` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `storage` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `remarks` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `user` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -368,20 +368,20 @@ DROP TABLE IF EXISTS `oligos`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `oligos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` text NOT NULL,
-  `description` mediumtext NOT NULL,
-  `sequence` mediumtext NOT NULL,
-  `targetmatch` text NOT NULL,
-  `tm` float NOT NULL,
-  `PCRconc` float NOT NULL,
-  `Saltconc` float NOT NULL,
-  `supplier` text NOT NULL,
-  `bpPrice` float NOT NULL,
-  `scale` text NOT NULL,
-  `modifications` mediumtext NOT NULL,
-  `purity` text NOT NULL,
-  `concentration` text NOT NULL,
-  `orderDate` text NOT NULL,
+  `name` text DEFAULT NULL,
+  `description` mediumtext DEFAULT NULL,
+  `sequence` mediumtext DEFAULT NULL,
+  `targetmatch` text DEFAULT NULL,
+  `tm` float DEFAULT NULL,
+  `PCRconc` float DEFAULT NULL,
+  `Saltconc` float DEFAULT NULL,
+  `supplier` text DEFAULT NULL,
+  `bpPrice` float DEFAULT NULL,
+  `scale` text DEFAULT NULL,
+  `modifications` mediumtext DEFAULT NULL,
+  `purity` text DEFAULT NULL,
+  `concentration` text DEFAULT NULL,
+  `orderDate` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -430,7 +430,7 @@ DROP TABLE IF EXISTS `plasmids`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `plasmids` (
   `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'unique identifier',
-  `name` varchar(50) NOT NULL COMMENT 'clone name',
+  `name` varchar(50) DEFAULT NULL COMMENT 'clone name',
   `description` mediumtext  DEFAULT NULL,
   `resistance` varchar(64) DEFAULT NULL,
   `generation` mediumtext DEFAULT NULL,
@@ -458,7 +458,7 @@ DROP TABLE IF EXISTS `projects`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `projects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `parent` int(11) DEFAULT NULL,
   `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -483,7 +483,7 @@ DROP TABLE IF EXISTS `resources`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `resources` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `location` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `active` int(11) NOT NULL DEFAULT '1',
@@ -510,13 +510,13 @@ DROP TABLE IF EXISTS `sampletypes`;
 CREATE TABLE `sampletypes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `st_code` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `st_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `plural` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `form` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `table` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `list` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
-  `isSample` tinyint(1) NOT NULL DEFAULT '1',
-  `labPermission` int(11) NOT NULL,
+  `st_name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `plural` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `form` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `table` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `list` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `isSample` tinyint(1) DEFAULT '1',
+  `labPermission` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -597,18 +597,19 @@ CREATE TABLE `tracker` (
   `trackID` int(11) NOT NULL AUTO_INCREMENT,
   `sampleType` int(11) NOT NULL,
   `sampleID` int(11) NOT NULL,
-  `created` date NOT NULL,
-  `changed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `deleted` date NOT NULL,
+  `created` date DEFAULT NULL,
+  `changed` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted` date DEFAULT NULL,
   `project` int(11) DEFAULT NULL,
   `subProject` int(11) DEFAULT NULL,
   `owner` int(11) NOT NULL,
   `groupid` int(11) NOT NULL DEFAULT '0',
-  `permOwner` smallint(6) NOT NULL,
-  `permGroup` smallint(6) NOT NULL,
-  `permOthers` smallint(6) NOT NULL,
+  `permOwner` smallint(6) DEFAULT NULL,
+  `permGroup` smallint(6) DEFAULT NULL,
+  `permOthers` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`trackID`),
   UNIQUE KEY `sampleType` (`sampleType`,`sampleID`)
+  ADD CONSTRAINT `FK_sampleType` FOREIGN KEY (`sampleType`) REFERENCES `sampletypes` (`id`);
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -646,11 +647,11 @@ CREATE TABLE `user` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `userid` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `password` char(32) COLLATE utf8_unicode_ci NOT NULL,
-  `fullname` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `notes` text COLLATE utf8_unicode_ci,
-  `groupType` tinyint(4) NOT NULL COMMENT '0 is user, 1 is labgroup, 2 is projectgroup, 3 for administrator groups',
-  `color` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `fullname` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `notes` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `groupType` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0 is user, 1 is labgroup, 2 is projectgroup, 3 for administrator groups',
+  `color` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `userid` (`userid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -675,15 +676,15 @@ DROP TABLE IF EXISTS `vials`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vials` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `date` date NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `concentration` varchar(25) NOT NULL,
-  `description` text NOT NULL,
-  `creator` varchar(255) NOT NULL,
-  `sID` int(11) NOT NULL COMMENT 'trackerID of vial content',
-  `boxID` int(11) NOT NULL,
-  `position` varchar(25) NOT NULL,
-  `exists` tinyint(1) NOT NULL,
+  `date` date DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `concentration` varchar(25) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `creator` varchar(255) DEFAULT NULL,
+  `sID` int(11) DEFAULT NULL COMMENT 'trackerID of vial content',
+  `boxID` int(11) DEFAULT NULL,
+  `position` varchar(25) DEFAULT NULL,
+  `exists` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `date` (`date`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
