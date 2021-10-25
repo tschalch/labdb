@@ -7,10 +7,7 @@ $submitFunction = "validate_form()";
 $noUserFilter = true;
 include("formhead.php");
 if($duplicate){
-  $fields['status'] = 0;
-  $formParams['fields']['orderDate'] = '0000-00-00';
-  $formParams['fields']['received'] = '0000-00-00';
-  $formParams['fields']['funding'] = '';
+  $formParams['fields']['date'] = '0000-00-00';
 }
 ?>
 <script type="text/javascript">
@@ -24,9 +21,8 @@ if($duplicate){
     var fields = [
 <?php
 $fieldname = "document.mainform.${table}_0_";
-print "${fieldname}sample, ${fieldname}buffer, ${fieldname}instrumentID, ${fieldname}columnID,
-  //${fieldname}bypresbef, ${fieldname}bypresaf, ${fieldname}colpresbef, ${fieldname}colpresaf, ${fieldname}storage, 
-  ${fieldname}user";
+print "${fieldname}sample, ${fieldname}buffer,
+  ${fieldname}user, ${fieldname}name, ${fieldname}date_m, ${fieldname}date_d, ${fieldname}date_y";
 ?>];
 for (var i=0; i<fields.length; i++){
   fields[i].style.border  = "";
@@ -54,6 +50,8 @@ return valid;
 </script>
 <?php
 printID($formParams);
+printTextField('Title', 'name', $formParams);
+printTextArea('Description', 'description', $formParams);
 printDateField('Date', 'date', $formParams, date('Y-m-d'));
 printTextField('Sample', 'sample', $formParams);
 printTextField('User', 'user', $formParams);

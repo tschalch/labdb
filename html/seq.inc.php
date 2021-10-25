@@ -3,7 +3,7 @@ include_once('functions.php');
 /**
  * Functions useful for nucleotide sequence analysis
  *
- * These functions are used in the class seq, but can also be used 
+ * These functions are used in the class seq, but can also be used
  * independently.
  *
  * Much code by Serge Gregorio, edited by Nico Stuurman
@@ -24,7 +24,7 @@ function CountCG($c){
         $cg=substr_count($c,"G")+substr_count($c,"C");
         return $cg;
         }
-        
+
 function CountATCG($c){
 	$c = strtoupper($c);
         $cg=substr_count($c,"A")+substr_count($c,"T")+substr_count($c,"G")+substr_count($c,"C");
@@ -87,7 +87,7 @@ function formseq($seq){
 	return $formseq;
 }
 
-function fastaseq($seq, $lb, $lineLength){
+function fastaseq($seq, $lb, $lineLength = 60){
 	$formseq = "";
 	$lineLength = (isset($lineLength) and $lineLength > 0) ? $lineLength: 60;
 	$seq = strtoupper ($seq);
@@ -97,7 +97,7 @@ function fastaseq($seq, $lb, $lineLength){
 		if($i>0) $formseq .= $lb;
 		$formseq .= substr($seq,$i, $lineLength);
 	}
-	return $formseq;       
+	return $formseq;
 }
 
 function remove_non_coding($seq) {
@@ -192,8 +192,8 @@ function expand_na($string)
  * Tm calculates the melting temperature of a given DNA duplex with its
  * complementary sequence
  *
- * Methods: 
- * basic (basic): 
+ * Methods:
+ * basic (basic):
  *     Tm=(Na + Nt) * 2 + (Ng + Nc) * 4
  *   For sequences longer than 14 nucleotides, use:
  *     Tm=64.9+41*(Ng + Nc -16.4)/(Na + Nt + Ng + Nc)
@@ -202,26 +202,26 @@ function expand_na($string)
  *     Tm=(Na+Nt)*2 + (Ng+Nc)*4-16.6log10 (0.05/[Na+])
  *   For sequences longer than 14 nucleotides, use:
  *      Tm=100.5 + 41*(Ng+Nc)/(Na+Nt+Ng+Nc)-820/(Na+Nt+Ng+Nc)+16.6*log10([Na+])
- *     
+ *
  * Nearest-Neighbor Thermodynamics (nnt):
  *    Tm = dH/(dS + R lnC) -273
  *    C = Ct /4
  *    dS = dS0 + 0.368(N-1)ln[Na+]
- * We try to implement the method by 
+ * We try to implement the method by
  * John SantaLucia, JR.(1998).Proc. Natl. Acad. Sci. USA 95 (4), 1460-1465
- * http://www.pubmedcentral.nih.gov/articlerender.fcgi?tool=pubmed&pubmedid=9465037 
+ * http://www.pubmedcentral.nih.gov/articlerender.fcgi?tool=pubmed&pubmedid=9465037
  *
  * All methods come from http://old.mclab.com/toolbox/tm.htm
- * Another great resource is the program 'melting', available 
+ * Another great resource is the program 'melting', available
  * http://www.ebi.ac.uk/~lenov/meltinghome.html
- * 
+ *
  *
  * $salt is monovalent cation concentration in M (default to 50mM)
  * $concentration is nucleotide concentration in M (default 250 pM)
  *
  * @author Nico Stuurman
  */
-function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12) 
+function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
 {
     // Sanity checks
     if (!$sequence) {
@@ -278,7 +278,7 @@ function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
                 case 'U':
                     $ATscore+=1;
                     break;
-           } 
+           }
         }
         if ($seqlength<15) {
             $tm=$ATscore*2 + $GCscore*4 - 16.6 * log10 (0.05/$salt);
@@ -291,7 +291,7 @@ function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
     	$DNA = array ('fw' => $sequence,
     	              'rev' => $revcomp);
         // first setup array with needed data (we somehow should load these things from a file
-        // deltaH (kcal/mol) and deltaS (cal/k.mol) 
+        // deltaH (kcal/mol) and deltaS (cal/k.mol)
         $nn['A']['A']['H']=-7.9;
         $nn['A']['A']['S']=-22.2;
         $nn['T']['T']['H']=-7.9;
@@ -362,9 +362,9 @@ function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
         // Assume we deal with a PCR and have an excess of one strand
         $C=$concentration/4;
 
-        $R=1.987; // Gas Constant in cal/K.mol 
+        $R=1.987; // Gas Constant in cal/K.mol
 
-        // enthalpy was in kilo calory per mol, correct here 
+        // enthalpy was in kilo calory per mol, correct here
         $tm=1000*$dH/($dS + ($R*log($C))) - 273.15;
 
         return $tm;
@@ -373,7 +373,7 @@ function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
     	$DNA = array ('fw' => $sequence,
     	              'rev' => $revcomp);
         // first setup array with needed data (we somehow should load these things from a file
-        // deltaH (kcal/mol) and deltaS (cal/k.mol) 
+        // deltaH (kcal/mol) and deltaS (cal/k.mol)
         $nn['A']['A']['H']=9.1;
         $nn['A']['A']['S']=24.0;
         $nn['T']['T']['H']=9.1;
@@ -429,9 +429,9 @@ function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
         // Assume we deal with a PCR and have an excess of one strand
         $K=1/$concentration;
 
-        $R=1.987; // Gas Constant in cal/K.mol 
+        $R=1.987; // Gas Constant in cal/K.mol
         //printf("dH: %6.1f, dS: %6.1f <br/>",$dH,$dS0);
-        // enthalpy was in kilo calory per mol, correct here 
+        // enthalpy was in kilo calory per mol, correct here
         $tm=1000*$dH/($dS0 + ($R*log($K))) - 273.15;
         // salt correction
         $tm=$tm + 7.21*log($salt);
@@ -439,8 +439,8 @@ function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
         return $tm;
    }
    // we could throw an exception if the method was not valid....
-   
+
    return false;
-} 
+}
 
 ?>

@@ -18,9 +18,9 @@ foreach ($data as $table => $datasets){
         foreach ($datasets as $dataset){
             //print_r($dataset);
             if($dataset['connID']>-1){
-                $uq = getUpdateQuery($dataset, 'connections', $dataset['connID']);
+                list($uq, $values) = getUpdateQuery($dataset, 'connections', $dataset['connID']);
                 //print "$uq\n";
-                pdo_query($uq);
+                pdo_query($uq, $values);
                 $newCnxs = array();
                 foreach($cnxs as $con){
                     if ($con['connID']!=$dataset['connID']) $newCnxs[] = ($con);
@@ -29,9 +29,9 @@ foreach ($data as $table => $datasets){
             } else {
                 unset($dataset['connID']);
                 $dataset['belongsTo'] = $id;
-                $query = getInsertQuery($dataset, 'connections', '');
+                list($query, $values) = getInsertQuery($dataset, 'connections', '');
                 //print "$query\n";
-                pdo_query($query);
+                pdo_query($query, $values);
             }
         }
         foreach($cnxs as $con){
@@ -65,8 +65,8 @@ labdb ";
                     'Reply-To' => "Reply-To: $adminEmail",
                     'X-Mailer' => 'X-Mail: PHP/' . phpversion()
                 );
-                mail("$adminEmail","Item on order has been changed",
-                    $message, implode("\n", $headers), $sendmailparams);
+                #mail("$adminEmail","Item on order has been changed",
+                #    $message, implode("\n", $headers), $sendmailparams);
             }
         } else {
             $id = newRecord($table, $dataset, $userid, $permissions);

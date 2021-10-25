@@ -99,19 +99,23 @@ function getInsertQuery($ds, $table, $id){
 	}
 	$iq .= ") VALUES (";
 	$count = 0;
+  $values = array();
 	foreach ($ds as $field => $dat){
 		if ($dat == 'mainID') $dat = $id;
-		$iq .= "'$dat'";
+    $dat = ($dat == '')? NULL : $dat;
+		$iq .= ":val".$count;
+    $values[':val'.$count] = $dat;
 		$count += 1;
 		if($count < $n) $iq .= ", ";
 	}
 
 	$iq .= ")";
-	return $iq;
+	return array($iq, $values);
 }
 
 function getUpdateQuery($ds, $table, $uid){
 	$i = 0;
+  $values = array();
 	if (array_key_exists('connID',$ds)){
 	    $uid=$ds['connID'];
 	}
@@ -119,12 +123,14 @@ function getUpdateQuery($ds, $table, $uid){
 	$uq = "UPDATE `$table` SET ";
 	foreach ($ds as $key => $field){
 	    $i++;
-	    $uq .= "`$key` = '".$field."' ";
-	    if ($i < $num) $uq .= ',';
+      $field = ($field == '')? NULL : $field;
+      $uq .= "`$key` = :val".$i;
+      $values[':val'.$i] = $field;
+	    if ($i < $num) $uq .= ', ';
 	}
-	$uq .= "WHERE connID='$uid';";
+	$uq .= " WHERE connID='$uid';";
 	//print $uq;
-	return $uq;
+	return array ($uq, $values);
 }
 
 #form functions
@@ -143,7 +149,7 @@ function printTextField($label, $field, $formParams, $default=null, $helpText=""
 					HelpSlide.toggle();
 				});
 			})
-			
+
 		</script>
 		<?php
 	}
@@ -162,7 +168,7 @@ function printTextField($label, $field, $formParams, $default=null, $helpText=""
 		if($helpText != ""){
 			print "<div id=\"${field}Help\"></div>";
 		}
-	}	
+	}
 	if($mode == "display"){
 		print "<div id=\"$field\" class=\"displayField\">$fields[$field]</div>";
 		if($helpText != ""){
@@ -178,10 +184,10 @@ function printHazards($label, $field, $formParams){
 	$fields = $formParams['fields'];
 	$mode = $formParams['mode'];
 
-?> 
-<style> 
-img.GHS-picto { max-height: 6em; opacity: 0.1; display: none; } 
-</style> 
+?>
+<style>
+img.GHS-picto { max-height: 6em; opacity: 0.1; display: none; }
+</style>
 <script>
 function showHazardSelector(el){
   var hsymbols = $$('img');
@@ -250,7 +256,7 @@ window.addEvent('domready', function(){
   print "<img id=\"GHS-corrosive\" data-hazard=\"corrosive\" onClick=$onclick title=\"Corrosive\" class=\"GHS-picto\" src=\"img/GHS-pictogram-acid.svg\"> \n";
   print "<img id=\"GHS-compressed-gas\" data-hazard=\"compressed-gas\" onClick=$onclick title=\"Compressed Gas\" class=\"GHS-picto\" src=\"img/GHS-pictogram-bottle.svg\"> \n";
   print "<img id=\"GHS-nohazard\" data-hazard=\"nohazard\" onClick=$onclick title=\"non-hazardous\" class=\"GHS-picto\" src=\"img/GHS-pictogram-nonhazardous.svg\"> \n";
-  
+
   $value = (is_array($fields) && key_exists($field, $fields) && $fields[$field] != "")?$fields[$field]:"{}";
   print "<input id=\"hazard_field\" type=\"hidden\" name=\"${table}_0_$field\" value=\"$value\" />";
 	print "</div>\n";
@@ -371,12 +377,12 @@ window.addEvent('domready', function(){
         $('file').setStyle('outline','none');
 			}
 		});
-		
+
 		upload.send();
 	});
 });
 </script>
-<?php       
+<?php
 }
 
 function printID($formParams){
@@ -446,7 +452,7 @@ function printDateField($label, $field, $formParams, $default=null){
 			<input type=\"text\" id=\"${table}_0_${field}_d\" class=\"datefield\" size=\"3\" value=\"${date['mday']}\"/>
 			<input type=\"text\" id=\"${table}_0_${field}_y\" class=\"datefield\" size=\"5\" value=\"${date['year']}\"/> (Month/Day/Year)
 			<input type=\"hidden\" id=\"${table}_0_$field\" name=\"${table}_0_$field\" value=\"${date['0']}\"/></div>";
-	}	
+	}
 	if($mode == "display"){
 		if (isset($fields[$field]) and $fields[$field] != '0000-00-00'){
 		    $date = date("m/d/Y",strtotime($fields[$field]));
@@ -465,14 +471,14 @@ function printCheckbox($label, $field, $formParams){
 	$checked = ($fields[$field]) ?"checked" : '';
 	if($mode == "modify"){
     print "<div class=\"formField\">
-      <input type=\"hidden\" name=\"${table}_0_$field\" 
+      <input type=\"hidden\" name=\"${table}_0_$field\"
       class=\"\" value=\"0\"/>
-      <input type=\"checkbox\" name=\"${table}_0_$field\" 
+      <input type=\"checkbox\" name=\"${table}_0_$field\"
       class=\"radiobox\" value=\"1\" $checked/></div>
         ";
-	}	
+	}
 	if($mode == "display"){
-		print "<div class=\"displayField\"><input type=\"checkbox\" 
+		print "<div class=\"displayField\"><input type=\"checkbox\"
 			disabled class=\"displayField\" value=\"$value\" $checked></input></div>";
 	}
 	print "</div>\n\n";
@@ -485,9 +491,9 @@ function printLinkField($label, $field, $formParams){
 	$mode = $formParams['mode'];
 	print "<div class=\"formRow\"><div class=\"formLabel\">$label:</div>";
 	if($mode == "modify"){
-		print "<div class=\"formField\"><input id=\"$field\" type=\"text\" 
+		print "<div class=\"formField\"><input id=\"$field\" type=\"text\"
 			name=\"${table}_0_$field\" class=\"textfield\" value=\"$fields[$field]\"/></div>";
-	}	
+	}
 	if($mode == "display"){
 		print "<div class=\"displayField\"><a href=\"$fields[$field]\">$fields[$field]</a></div>";
 	}
@@ -508,7 +514,7 @@ function printAttachmentField($label, $field, $formParams){
 		}
 		print "<input class=\"textfield\"  size=\"50\" type=\"file\" name=\"${table}_0_$field\"
 			onChange=\"deleteField('hiddenFile', 'fileUp');\"></input></div>";
-	}	
+	}
 	if($mode == "display"){
 		print "<div class=\"displayField\"><a href=\"attachments/$fields[$field]\">$fields[$field]</a></div>\n";
 	}
@@ -532,7 +538,7 @@ function printReferenceLink($label, $text, $id, $type, $formParams, $cat=Null){
 			\"list.php?list=$list$category&ref=$id\">
 			$text</a></div>";
 		print "</div>";
-	}	
+	}
 }
 
 function printTextArea($label, $field, $formParams){
@@ -543,7 +549,7 @@ function printTextArea($label, $field, $formParams){
 	print "<div class=\"formRow\"><div class=\"formLabel\">$label:</div>\n";
 	if($mode == "modify"){
 		print "<div class=\"formField\"><textarea name=\"${table}_0_$field\" class=\"form\">$fields[$field]</textarea></div>\n";
-	}	
+	}
 	if($mode == "display"){
 		print "<div class=\"displayField\">$fields[$field]</div>\n";
 	}
@@ -602,7 +608,7 @@ function printSequenceField($label, $type, $field, $formParams, $area, $seqEdito
 		}
 	}
 	print "</div>\n";
-	
+
 	if($mode == "modify"){
 		if ($area){
 			print "<div class=\"formField\">";
@@ -614,8 +620,8 @@ function printSequenceField($label, $type, $field, $formParams, $area, $seqEdito
 				$displayField = 'block';
 			}
 			print "<div id=\"SeqField\" class=\"seqtext\"  style=\"display: $displayField\">";
-			print "<textarea id=\"$field\" class=\"form\" 
-					name=\"${table}_0_$field\" 
+			print "<textarea id=\"$field\" class=\"form\"
+					name=\"${table}_0_$field\"
 					rows=\"10\">$seq</textarea>";
 			print "</div>\n";
 			if ($seq) $seq = fastaseq($seq, "\n", 0);
@@ -625,12 +631,12 @@ function printSequenceField($label, $type, $field, $formParams, $area, $seqEdito
 			printSeqEditor($seq);
 			print "</div>";
 		} else {
-			print "<div class=\"formField\"><input type=\"text\" id=\"$field\"  class=\"textfield\" 
+			print "<div class=\"formField\"><input type=\"text\" id=\"$field\"  class=\"textfield\"
 					onBlur=\"FilterSequence(this,'$type');\"
-					name=\"${table}_0_$field\" 
+					name=\"${table}_0_$field\"
 					rows=\"10\" value=\"$seq\"/></div>";
 		}
-	}	
+	}
 	if($mode == "display"){
 		print "<div class=\"displayField\">";
 		if ($seqEditor){
@@ -660,7 +666,7 @@ function getComboBox($field, $table, $mode, $choices, $match, $action=null, $lin
 		if ($action) $cmbBox .= $action;
 		$cmbBox .= ">\n";
 		//$cmbBox .= "<option value=\"NA\"/>\n";
-		$cmbBox .= "<option value=\"0\">***none***</option>\n";
+		$cmbBox .= "<option value=\"\">***none***</option>\n";
 		#print_r($choices);
 		if ($choices){
 			foreach ($choices as $choice){
@@ -685,7 +691,7 @@ function getComboBox($field, $table, $mode, $choices, $match, $action=null, $lin
 			 $cmbBox .= "${redchoices[$match]}";
 		}
 		//$cmbBox = "</div>";
-			
+
 	}
 	return $cmbBox;
 }
@@ -744,7 +750,7 @@ function getCrossCombobox($connection, $table, $type, $fcounter, $mode, $userid)
 		print " (${connection['start']}-${connection['end']})";
 	}
 	print "</span>\n";
-	
+
 	//form fields
 	print "<div style=\"$formDisplay\">";
 	print "<select $hidden style=\"width: 35%; float: left\" name=\"connections_${fcounter}_record\">\n";
@@ -797,7 +803,7 @@ function getCrossAutoselectField($connection, $table, $type, $fcounter, $mode, $
     } else {
 		$display = "display: none; ";
 		$formDisplay = '';
-		print "<span style=\"width:20%; clear: left; float:left; text-align:left; 
+		print "<span style=\"width:20%; clear: left; float:left; text-align:left;
 		    margin-right:10px;height:1.5em;\">$type:</span>\n";
     }
     print "<span style=\"$display \"><a title=\"$type\" style=\"float: left\" href=\"editEntry.php?id=$fid&amp;mode=display\"> ${fragment['name']}</a>";
@@ -805,7 +811,7 @@ function getCrossAutoselectField($connection, $table, $type, $fcounter, $mode, $
 	    print " (${connection['start']}-${connection['end']})";
     }
     print "</span>\n";
-	
+
     //form fields
     print "<div style=\"$formDisplay\">";
 
@@ -880,7 +886,7 @@ function printCrossCombobxs($id, $types, $fcounter, $formParams, $unlink=False){
 	}
 	print "<div style=\"padding: 0 0 0.5em 0;\"></div>\n";
 	print "</div>\n";
-	
+
 	#### gene fragments section
 	$frags = array();
 	$fcounter = 0;
@@ -950,7 +956,7 @@ function setupProjects($userid){
 		print "projects[${project['id']}] = project;\n";
 		print "project.push(new Option('*',0, true));\n";
 		foreach ($spr as $subProject){
-			print "var subProject = new Option('${subProject['name']}', 	
+			print "var subProject = new Option('${subProject['name']}',
 				'${subProject['id']}', false";
 			//if ($project['id'] == $_SESSION['project'] AND
 			//	$subProject['id'] == $_SESSION['subProject']){
@@ -980,7 +986,7 @@ function getProjectCmbxs($projectID, $curUser){
 	foreach ($choices as $choice){
 		print "<span class=\"projectCombo\">${choice[3]}</span>";
 		$cmbBox = "<span class=\"projectCombo\">";
-		$cmbBox .= "<select style=\"width: 200px;\" name=\"${choice[2]}\" 
+		$cmbBox .= "<select style=\"width: 200px;\" name=\"${choice[2]}\"
 				onchange=\"document.f1.submit();\">\n";
 		$cmbBox .= "<option value=\"-1\">*</option>\n";
 		foreach ($choice[1] as $item){
@@ -1024,7 +1030,7 @@ function printCloseAddFragmentButton($formParams, $id){
 		echo "<div class=\"formRow\">";
 		echo "<input name=\"closeAddFrag\" type=\"button\" onClick=\"CloseAddFragment();\" value=\"Close and add Fragment\"/></div>";
 	}
-	
+
 }
 
 
@@ -1048,7 +1054,7 @@ function printProjectFields($formParams){
   $project = isset($row['project'])? $row['project'] : Null;
 	printComboBox('Project', 'project', $formParams, $projects, $project);
 	#setupProjects();
-} 
+}
 function listActions($id, $hexID){
    	$action = "<td class=\"lists\" width=\"1%\">";
 	$action .= "<input type=\"checkbox\" name=\"selection[]\" value=\"$id\"/>\n";
@@ -1073,7 +1079,7 @@ function error($msg) {
    </body>
    </html>
    <?php
-   exit; 
+   exit;
 }
 
 function getTable($trackerID){
@@ -1098,7 +1104,7 @@ function getRecord($trackerID, $userid, $mode='display'){
 		$accesscontrol = "AND ((owner = :userid AND permOwner > 1) OR
 				  (permissions.userid=groups.belongsToGroup AND
 				  permission > 1))";
-		
+
 	} else {
 		$accesscontrol = "AND ((owner = :userid) OR
 				  (permissions.userid=groups.belongsToGroup AND
@@ -1113,7 +1119,7 @@ function getRecord($trackerID, $userid, $mode='display'){
 			     $hexIDSQL as hexID,
 		       user.fullname FROM permissions
 		       LEFT JOIN tracker ON tracker.trackID=permissions.trackID
-		       LEFT JOIN sampletypes ON sampletypes.id=tracker.sampleType 
+		       LEFT JOIN sampletypes ON sampletypes.id=tracker.sampleType
 		       LEFT JOIN user ON user.id =  tracker.owner
 		       LEFT JOIN $table ON tracker.sampleID=$table.id
 		       JOIN groups ON groups.userid=:userid
@@ -1139,7 +1145,7 @@ function changePermission($trackerID, $newuser, $permission, $userid){
 		$q = "SELECT MAX(permission) FROM permissions
 			WHERE trackID=:trackerID AND permissions.userid=:newuser";
 		$r = pdo_query($q, array(':trackerID'=>$trackerID, ':newuser'=>$newuser));
-		$existing = $r[0][0];			
+		$existing = $r[0][0];
 		if ($existing==NULL){
 			$pq = "INSERT INTO permissions (trackID,userid,permission)
 			 VALUES (:trackerID, :newuser, :permission)";
@@ -1278,7 +1284,7 @@ function newRecord($table, $ds, $userid){
     if ($dat == ''){
       unset($ds[$field]);
     } else {
-		if($cnt < $end && $cnt > 1) $iq .= ", ";
+		if($cnt <= $end && $cnt > 1) $iq .= ", ";
 		$iq .= "`$field`";
     #$vars[":field$cnt"] = $field;
     }
@@ -1296,7 +1302,7 @@ function newRecord($table, $ds, $userid){
       $vars[":dat$cnt"] = "$dat";
     }
     $cnt += 1;
-		if($cnt <> $end) $iq .= ", ";
+		if($cnt < $end) $iq .= ", ";
 	}
 	$iq .= ")";
 	//print "$iq<br/>";
@@ -1326,7 +1332,7 @@ function newRecord($table, $ds, $userid){
 			 pdo_query($pq, array(':perm'=>$perm, ':belongsToGroup'=>$g['belongsToGroup']));
 		}
 	}
-	
+
 	#setup admin rights
 	#find group that has admin rights in the users labgroup
 	$aq = "SELECT DISTINCT user.ID FROM user JOIN groups ON belongsToGroup =
@@ -1440,7 +1446,7 @@ function disableRow(rowID, disabled){
 	    }
 	}
     }
-    
+
 }
 
 // -->
@@ -1548,7 +1554,7 @@ function getRestrictionSites($digString, $dnaSequence){
 			}
 			#print_r($enzymeList);
 		}
-  } 
+  }
 
   foreach($enzymes as $e){
     if (in_array($e, $enzymeList)) continue;
@@ -1557,7 +1563,7 @@ function getRestrictionSites($digString, $dnaSequence){
 	// $enzymes;
 	$limit ='';
   if (in_array('all', $enzymes)) {
-    $all = True; 
+    $all = True;
     $enzymeList = array('all');
   }
 	if ( $digestion == Null || $digestion == '' ){
@@ -1565,7 +1571,7 @@ function getRestrictionSites($digString, $dnaSequence){
 	}
 	//print "Tmp: $tmp<br/>Pos: $pos<br/>";
   if ($maxPos = array_search('-max', $digParams)){
-    $maxCuts = $digParams[ $maxPos + 1]; 
+    $maxCuts = $digParams[ $maxPos + 1];
   } else {
     $maxCuts = 100;
   }

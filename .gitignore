@@ -3,3 +3,5 @@ config.php
 *.swp
 *~
 temp/
+vendor
+composer.lock
