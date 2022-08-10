@@ -26,6 +26,13 @@ $noProjectFilter = True;
 #toggle user/group filters on and off
 $noUserFilter = True;
 #Set Menu items
+
+if (!isset($where)) $where = "";
+if (array_key_exists('location', $_GET)) {
+	$location = $_GET['location'];
+	$where .= " `$table`.location=$location ";
+}
+
 ?>
 <script type="text/javascript" >
     var menu_items = ["new","edit","delete"];
@@ -39,13 +46,16 @@ foreach ($rows as $row) {
 	$id = $row['trackID'];
 	echo "<tr class=\"lists data-row\" data-record_id=\"$id\">";
 	echo listActions($id, null );
+	#echo "<td class=\"lists\" width=\"20%\">
+	#	<a href=\"list.php?list=listVials&box=$id\">${row['name']}</a></td>";
 	echo "<td class=\"lists\" width=\"20%\">
-		<a href=\"list.php?list=listVials&box=$id\">${row['name']}</a></td>";
-	echo "<td class=\"lists\" width=\"20%\">${row['location']}</td>";
+		<a href=\"editEntry.php?id=$id&amp;mode=display\">${row['name']}</a></td>";
+	$locID = $row['location'];
+	$location = getRecord($locID, $userid);
+	echo "<td class=\"lists\" width=\"20%\"><a href=\"editEntry.php?id=$locID&mode=display\">${location['name']}</a></td>";
 	echo "<td class=\"lists\" width=\"30%\">${row['description']}</td>";
 	echo "</tr>";
 	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
-	$i++;
 }
 listProcessor(array(1,2,3,7));
 print "</table>";

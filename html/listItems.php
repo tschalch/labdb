@@ -46,19 +46,24 @@ foreach ($rows as $row) {
 	$permissions = array(9,9,9);
 	$cost = $row['quantity'] * $row['price'];
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
+  $tr = "";
 	if($row['status']==4 and $status != 4){
-		print "<tr class=\"lists data-row\" data-record_id=\"$id\" data-color=\"#DCDCDC\">";
+		$tr = "<tr class=\"lists data-row\" data-record_id=\"$id\" data-color=\"#DCDCDC\">";
+	} elseif ($row['status']==1 && $row['funding']!="") {
+		$tr = "<tr class=\"lists data-row\" data-record_id=\"$id\" data-color=\"#e6ffcc\">";
 	} elseif ($row['status']==1) {
-		print "<tr class=\"lists data-row\" data-record_id=\"$id\" data-color=\"#F8D3FF\">";
+		$tr = "<tr class=\"lists data-row\" data-record_id=\"$id\" data-color=\"#F8D3FF\">";
 	} elseif ($row['billed']==0) {
 		if ($row['status']!=0){
 			$unpaidBills += $cost;
 		}
+
 		#print "<tr class=\"lists data-row\" data-record_id=\"$id\" data-color=\"#FFFAD2\">";
-		print "<tr class=\"lists data-row\" data-record_id=\"$id\">";
+		$tr = "<tr class=\"lists data-row\" data-record_id=\"$id\">";
 	} else {
-		print "<tr class=\"lists data-row\" data-record_id=\"$id\">";
+		$tr = "<tr class=\"lists data-row\" data-record_id=\"$id\">";
 	}
+  print $tr;
 	echo listActions($id, $itemid);
 	print "<td class=\"lists dbid\" width=\"1%\" align=\"RIGHT\">$id</td>";
 	print "<td class=\"lists\" width=\"1%\" >$itemid</td>";
@@ -86,8 +91,8 @@ foreach ($rows as $row) {
     echo "<tr><td colspan = \"100\">";
     $noItems = count($rows);
     echo "Number of Items: $noItems; ";
-    echo "Total Cost = \$ $totalCost; "; 
-    echo "Outstanding bills = \$ $unpaidBills"; 
+    echo "Total Cost = \$ $totalCost; ";
+    echo "Outstanding bills = \$ $unpaidBills";
     echo "</td></tr>";
 
 if (isset($status) and $status == 1){
@@ -98,5 +103,3 @@ if (isset($status) and $status == 1){
 ?>
 
 </table>
-
-

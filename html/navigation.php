@@ -1,4 +1,4 @@
-<?php 
+<?php
 include_once("functions.php");
 ?>
 <script>
@@ -9,8 +9,8 @@ window.addEvent('domready',function() {
 });
 </script>
 <nav class="navbar navbar-custom navbar-expand-md navbar-dark fixed-top">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" 
-      data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" 
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
       aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -25,8 +25,6 @@ window.addEvent('domready',function() {
           <a class="dropdown-item" href="list.php?list=listItems&amp;status=1">Items to/on order</a>
           <a class="dropdown-item" href="list.php?list=listItems&amp;status=4">Finished items</a>
           <a class="dropdown-item" href="newEntry.php?form=frmItem&amp;mode=modify">.. Add Item</a>
-          <a class="dropdown-item" href="list.php?list=listLocations">....Item Locations</a>
-          <a class="dropdown-item" href="newEntry.php?form=frmLocations&amp;mode=modify">...... Add Location</a>
           <a class="dropdown-item" href="list.php?list=listLogbook">Logbook</a>
           <a class="dropdown-item" href="newEntry.php?form=frmLog&amp;mode=modify">.. New Log Entry</a>
           <a class="dropdown-item" href="list.php?list=listItems&amp;column=1">.. Columns</a>
@@ -54,12 +52,14 @@ window.addEvent('domready',function() {
         </div>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Freezer</a>
+        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sample Storage</a>
         <div class="dropdown-menu" aria-labelledby="dropdown03">
+          <a class="dropdown-item" href="list.php?list=listLocations">Locations</a>
+          <a class="dropdown-item" href="newEntry.php?form=frmLocations&amp;mode=modify">.. Add Location</a>
           <a class="dropdown-item" href="list.php?list=listBoxes">Boxes</a>
+          <a class="dropdown-item" href="newEntry.php?form=frmBoxes&amp;mode=modify">.. Add Box</a>
           <a class="dropdown-item" href="list.php?list=listVials">Vials</a>
           <a class="dropdown-item" href="newEntry.php?form=frmVial&amp;mode=modify">.. Add Vial</a>
-          <a class="dropdown-item" href="newEntry.php?form=frmBoxes&amp;mode=modify">.. Add Box</a>
         </div>
       </li>
       <li class="nav-item dropdown">

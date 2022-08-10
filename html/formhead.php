@@ -21,9 +21,11 @@ if ((isset($edit) and $edit) or (isset($duplicate) and $duplicate)){
   }
   if(array_key_exists('trackID',$fields)) $id = $fields['trackID'];
   if ($mode == 'display'){
-    $title = "$titleName ${fields['name']}";
+    $title = "$titleName: ${fields['name']}";
+    $entrytitle = "<span style=\"color:gray\">$titleName:</span> ${fields['name']}";
   } else {
-    $title = "Edit $titleName ${fields['name']}";
+    $title = "Edit $titleName: ${fields['name']}";
+    $entrytitle = "<span style=\"color:gray\">Edit $titleName:</span> ${fields['name']}";
   }
 }
 if (isset($new) and $new){
@@ -46,7 +48,7 @@ include("header.php");
 </head>
 <body>
 
-<?php 
+<?php
 include("title_bar.php");
 include("navigation.php");
 ?>
@@ -58,7 +60,7 @@ initProjects($noUserFilter, $noProjectFilter);
 $formParams['fields'] = isset($fields) ?  $fields : Null;
 //print_r($fields);
 ?>
-<div id='title'><h2><?php echo "$title";?></h2></div>
+<div id='title'><h2><?php echo "$entrytitle";?></h2></div>
 <?php
 if (isset($submitFunction)){
   echo "<form id=\"mainform\" name=\"mainform\" action=\"saveRecord.php?\" method=\"post\">\n";
@@ -74,15 +76,15 @@ window.addEvent('domready', function() {
     //Empty the log and show the spinning indicator.
     if (!<?php print "$submitFunction" ?>) return;
     var log = $('log_res').empty().addClass('ajax-loading');
-    //Set the options of the form's Request handler. 
+    //Set the options of the form's Request handler.
     //("this" refers to the $('myForm') element).
-    this.set('send', {onComplete: function(response) { 
+    this.set('send', {onComplete: function(response) {
       response = JSON.parse(response);
       log.removeClass('ajax-loading');
       $('id').set('html', response['id']);
       $('inp_id').set('value', response['id']);
       if ($('hexID')) $('hexID').set('html', response['hexid']);
-      //$('title').set('html', "<h2>Edit "+$('name').get('value')+"<\/h2>");			    
+      //$('title').set('html', "<h2>Edit "+$('name').get('value')+"<\/h2>");
       //return
       frm_submitted = true;
       if (goBack) {
@@ -205,7 +207,7 @@ case "textarea":
     for (var i=0; i<MaxLenFields.length; i++){
       window.MaxLenFields[i]['name'].style.border  = "";
       if ((window.MaxLenFields[i]['name'].value.length > MaxLenFields[i]['maxLen']) | +
-        (window.MaxLenFields[i]['name'].value.length < MaxLenFields[i]['minLen']) ) 
+        (window.MaxLenFields[i]['name'].value.length < MaxLenFields[i]['minLen']) )
       {
         window.MaxLenFields[i]['name'].style.border  = "1px solid #FF6633";
         ( msg += "- " + MaxLenFields[i]['msg'] + "\n" );

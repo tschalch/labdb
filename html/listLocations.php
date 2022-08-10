@@ -20,6 +20,12 @@ $defaultOrder ="locations.name";
 $fields = array('Name' => 'Name',
 		'Description' => 'Description');
 
+if (!isset($where)) $where = "";
+if (array_key_exists('location', $_GET)) {
+	$location = $_GET['location'];
+	$where .= " `$table`.location=$location ";
+}
+
 #toggle Project combobox on and off
 $noProjectFilter = True;
 #toggle user/group filters on and off

@@ -1,5 +1,5 @@
 <?php
-$titleName = "Locations";
+$titleName = "Location";
 $submitFunction = "validate_form()";
 $mode = $_GET['mode'];
 $table = 'locations';
@@ -18,7 +18,7 @@ window.addEvent('domready', function() {
 	print "";
 	?>];
     window.DateFields = [
-	<?php 
+	<?php
 	    print "";
 	?>];
 });
@@ -26,7 +26,15 @@ window.addEvent('domready', function() {
 <?php
 
 printID($formParams);
-printTextField('Location', 'name', $formParams);
+printTextField('Location name', 'name', $formParams);
+$lcol = array('tracker.trackID','locations.name');
+$locations = getRecords('locations', $userid, array(), $lcol, '', "name");
+printComboBox("Contained in location",'location', $formParams, $locations, (isset($fields['location']) ? $fields['location']: null), null, true);
 printTextArea('Description', 'description', $formParams);
+echo "<div class=\"formRow\"><div class=\"formLabel\">Sub-locations:</div>";
+echo "<div class=\"formField\"><a href=\"list.php?list=listLocations&location=$id\">Show sub-locations</a></div></div>";
+echo "<div class=\"formRow\"><div class=\"formLabel\">Boxes:</div>";
+echo "<div class=\"formField\"><a href=\"list.php?list=listBoxes&location=$id\">Show boxes in location</a></div></div>";
+printCheckbox('obsolete', 'obsolete', $formParams);
 printSubmitButton($formParams, $button);
 ?>

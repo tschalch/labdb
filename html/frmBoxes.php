@@ -18,7 +18,7 @@ window.addEvent('domready', function() {
 	print "";
 	?>];
     window.DateFields = [
-	<?php 
+	<?php
 	    print "";
 	?>];
 });
@@ -27,11 +27,11 @@ window.addEvent('domready', function() {
 
 printID($formParams);
 printTextField('Box name', 'name', $formParams);
-printTextField('Location', 'location', $formParams);
+$lcol = array('tracker.trackID','locations.name');
+$locations = getRecords('locations', $userid, array(), $lcol, '', "name");
+printComboBox("Location",'location', $formParams, $locations, (isset($fields['location']) ? $fields['location']: null), null, true);
 printTextArea('Description', 'description', $formParams);
+echo "<div class=\"formRow\"><div class=\"formLabel\">Vials in this box:</div>";
+echo "<div class=\"formField\"><a href=\"list.php?list=listVials&box=$id\">Show vials</a></div></div>";
 printSubmitButton($formParams, $button);
-if ($mode == 'display'){
-	echo "<div class=\"formRow\">";
-	echo "<a href=\"list.php?list=listVials&box=$id\">Show vials</a></div>";
-}
 ?>

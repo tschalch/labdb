@@ -8,7 +8,7 @@ include_once("functions.php");
 </head>
 <body>
 
-<?php 
+<?php
 #include("title_bar.php");
 include("navigation.php");
 ?>
@@ -68,7 +68,7 @@ if (!isset($query)){
 #	$query .= " WHERE (tracker.`sampleType` = sampletypes.id) ";
 #	//if(($searchwords and $searchfields) or ($category) or ($projectSelect)) $query .= " WHERE";
 	if ($_GET['searchword'] and $_GET['searchword'] != " Search..."){
-		#print $_GET['searchword'];  
+		#print $_GET['searchword'];
 		$searchwords = explode (" ", $_GET['searchword']);
 	}
 	if (isset($searchwords) and isset($searchfields)){
@@ -93,7 +93,7 @@ if (!isset($query)){
 				if ($j < $jnum) $where .= " OR";
 			}
                         $i++;
-			if ($i < $inum){ 
+			if ($i < $inum){
 				$where .= ") AND (";
                                 print " AND ";
 			} else {
@@ -102,7 +102,7 @@ if (!isset($query)){
 		}
 		print ".<br/>";
 	}
-	
+
 	if (isset($projectSelect)){
 	    if (isset($where) and strlen($where)) $where .= " AND ";
 	    $where .= $projectSelect['q'];
@@ -122,7 +122,7 @@ if (!isset($query)){
 	}
 #	// user control
 #	$query .= " AND (tracker.owner=$userid OR tracker.public=TRUE)";
-	
+
 	if (isset($defaultOrder)){
 		$order = $defaultOrder;
 	}
@@ -142,7 +142,7 @@ if (!isset($rows)) $rows = array();
 <form name="mainform" onsubmit="
 	if (document.mainform.SelAction.value==3) return deleteRecords();
 	if (document.mainform.SelAction.value==4) return get_po_number();
-	purgeUnchecked();" 
+	purgeUnchecked();"
 	action="<?php echo $formaction;?>" method="post">
 
 <input type="hidden" name="table" value="<?php echo $table; ?>"/>
@@ -172,4 +172,3 @@ foreach ($fields as $key => $field){
 }
 ?>
 </tr>
-
