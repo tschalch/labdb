@@ -45,7 +45,7 @@ $newuser = 'username';
 
 // Check for existing user with the new id
 $sql = "SELECT COUNT(*) FROM user WHERE userid = :newuser";
-$result = pdo_query($sql, array(':newuser' => $_POST['newuser']));
+$result = pdo_query($sql, [':newuser' => $_POST['newuser']]);
 if (!$result) {
 error('A database error occurred in processing your '.
      'submission.\\nIf this error persists, please '.
@@ -65,8 +65,7 @@ $sql = "INSERT INTO user SET
      email = :newemail,
      groupType = 0";
 
-$vars = array(':newuser' => $_POST['newuser'], ':newpass' => $newpass, 
-  ':newname' => $_POST['newname'], ':newemail' => $_POST['newemail']);
+$vars = [':newuser' => $_POST['newuser'], ':newpass' => $newpass, ':newname' => $_POST['newname'], ':newemail' => $_POST['newemail']];
 $newid = pdo_query($sql, $vars);
 
 if (!$newid)
@@ -80,7 +79,7 @@ $sql = "INSERT INTO groups SET
      userid = :newid,
      belongsToGroup = :newid,
      defaultPermissions = 2";
-if (!pdo_query($sql, array(':newid' => $newid)))
+if (!pdo_query($sql, [':newid' => $newid]))
 	error('2A database error occurred in processing your '.
 	     'submission.\\nIf this error persists, please '.
 	     "contact $adminEmail.");
@@ -90,7 +89,7 @@ $sql = "INSERT INTO groups SET
      belongsToGroup = :group,
      defaultPermissions = 1;";
 
-if (!pdo_query($sql, array(':newid' => $newid, ':group' => $_POST['group'])))
+if (!pdo_query($sql, [':newid' => $newid, ':group' => $_POST['group']]))
 	error('3A database error occurred in processing your '.
 	     'submission.\\nIf this error persists, please '.
 	     "contact $adminEmail.");
@@ -122,11 +121,7 @@ Thomas
 
 $sendmailparams = "-r $adminEmail";
 
-$headers = array(
-    'From' => "From: $adminEmail",
-    'Reply-To' => "Reply-To: $adminEmail",
-    'X-Mailer' => 'X-Mail: PHP/' . phpversion()
-);
+$headers = ['From' => "From: $adminEmail", 'Reply-To' => "Reply-To: $adminEmail", 'X-Mailer' => 'X-Mail: PHP/' . phpversion()];
 
 mail($_POST['newemail'],"Your Password for labdb",
 	$message, implode("\n", $headers), $sendmailparams);

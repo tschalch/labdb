@@ -10,13 +10,13 @@ include("extractData.php");
 $ID=0;
 
 foreach ($data as $table => $datasets){
-	$permissions = array(2,0,0);
+	$permissions = [2, 0, 0];
 	switch ($table){
 		case 'inventory':
-		$permissions = array(2,2,1);
+		$permissions = [2, 2, 1];
 		break;
 		case 'locations':
-		$permissions = array(2,1,1);
+		$permissions = [2, 1, 1];
 		break;
 	}
 	if ($table == 'connections' and $trackID){
@@ -34,7 +34,7 @@ foreach ($data as $table => $datasets){
 				UploadFiles($file);
 			}
 		}
-		$trackID = newRecord($table, $dataset, $userid, $permissions);
+		$trackID = newRecord($table, $dataset, $userid);
 		$title = "Data entered successfully (New Record ID: $trackID)";
 	}
 }

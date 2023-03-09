@@ -3,7 +3,7 @@ $titleName = "Resources";
 $submitFunction = "validate_form()";
 $mode = $_GET['mode'];
 $table = 'resources';
-$formParams = array('table'=>$table, 'mode'=>$mode);
+$formParams = ['table'=>$table, 'mode'=>$mode];
 include("formhead.php");
 ?>
 <script type="text/javascript">

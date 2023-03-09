@@ -3,7 +3,7 @@ $submitFunction = "validate_form()";
 $titleName = "Project";
 $mode = $_GET['mode'];
 $table = 'projects';
-$formParams = array('table'=>$table, 'mode'=>$mode);
+$formParams = ['table'=>$table, 'mode'=>$mode];
 include("formhead.php");
 ?>
 <script type="text/javascript">

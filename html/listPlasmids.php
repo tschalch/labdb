@@ -6,9 +6,7 @@ $formaction = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}"; #action perfo
 #SQL parameters for data retrieval:
 #column names (need to be specified for each table):
 $table = "plasmids";
-$columns = array('plasmids.name', 'plasmids.description', 'plasmids.generation','plasmids.sequence',
-		 'tracker.trackID', 'tracker.owner','tracker.permOwner'
-		 );
+$columns = ['plasmids.name', 'plasmids.description', 'plasmids.generation', 'plasmids.sequence', 'tracker.trackID', 'tracker.owner', 'tracker.permOwner'];
 # optional join expressions to connect to more data
 $join = "";
 #array of fields that is going to be searched for the term entered in the search... box
@@ -17,13 +15,7 @@ $defaultOrder ="plasmids.id DESC";
 #End SQL parameters
 
 #array of query field => table heading
-$fields = array('trackID' => 'ID',
-		'hexID' => 'Plasmid',
-		'Name' => 'Name',
-		'Description' => 'Description',
-		'1' => 'Backbone',
-		'2' => 'Genes',
-		'sequence' => 'DNA Sequence',);
+$fields = ['trackID' => 'ID', 'hexID' => 'Plasmid', 'Name' => 'Name', 'Description' => 'Description', '1' => 'Backbone', '2' => 'Genes', 'sequence' => 'DNA Sequence'];
 
 #toggle Project combobox on and off
 $noProjectFilter = True;
@@ -37,12 +29,12 @@ $noUserFilter = True;
 
 <?php
 include("listhead.php");
-$fragments = array();
-$fcols = array('fragments.name','fragments.type','tracker.trackID');
-$frags = getRecords("fragments", $userid, array(), $fcols);
+$fragments = [];
+$fcols = ['fragments.name', 'fragments.type', 'tracker.trackID'];
+$frags = getRecords("fragments", $userid, [], $fcols);
 if($frags){
 	foreach($frags as $frag){
-		$fragments[$frag['trackID']] = array('name' => $frag['name'],'type' => $frag['type']);
+		$fragments[$frag['trackID']] = ['name' => $frag['name'], 'type' => $frag['type']];
 	}
 }
 #print_r($rows);
@@ -76,7 +68,7 @@ foreach ($rows as $row) {
 function printFragments($typ, $conxs){
 	if (!$conxs) return;
 	global $userid, $fragments;
-	$typeCons = array();
+	$typeCons = [];
 	foreach ($conxs as $c){
 		 $trackID = $c['record'];
 		 if ($trackID && $fragments[$trackID]['type'] == $typ) $typeCons[]=$c;
@@ -92,7 +84,7 @@ function printFragments($typ, $conxs){
 	}
 	print $out;
 }
-listProcessor(array(1,2,3,7));
+listProcessor([1, 2, 3, 7]);
 ?>
 </table>
 

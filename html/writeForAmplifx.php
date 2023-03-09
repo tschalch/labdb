@@ -7,7 +7,7 @@ $selection = $_POST['selection'];
 #print_r($selection);
 $file = "output/primerlist.txt";   
 if (!$file_handle = fopen($file,"w")) { echo "Cannot open file"; }  
-$num = count($selection);
+$num = is_countable($selection) ? count($selection) : 0;
 $i = 0;
 foreach($selection as $id){
 	$data = $_POST["sequence_$id"];

@@ -1,6 +1,6 @@
 <?php
 # data format table -> dataset -> field
-$data = array();
+$data = [];
 
 foreach ($_POST as $key => $post){
 	//print "$key-$post<br/>";

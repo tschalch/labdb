@@ -44,7 +44,7 @@ if (isset($category)){
 	}
 	echo "</ul></div>";
 }
-if (!isset($vars)) $vars = array();
+if (!isset($vars)) $vars = [];
 if (!isset($query)){
   if (!isset($where)) {
     $where = '';
@@ -78,11 +78,11 @@ if (!isset($query)){
 		}
 		$where .= "(";
                 $i=0;
-                $inum = count($searchwords);
+                $inum = is_countable($searchwords) ? count($searchwords) : 0;
 		foreach ($searchwords as $searchword){
 			print" \"$searchword\"";
                         $j=0;
-                        $jnum = count($searchfields);
+                        $jnum = is_countable($searchfields) ? count($searchfields) : 0;
 			$hexIDSQL = getHexIDSQL($table);
 			$where .= " $hexIDSQL LIKE :searchword$i OR ";
       $vars[":searchword$i"] = "%$searchword%";
@@ -132,12 +132,12 @@ if (!isset($query)){
 #print "where: $where <br/>";
 #$rows = pdo_query($query);
 if (!isset($join)) $join = '';
-$noRows = getRecords($table, $userid, $vars, array('trackID'), $where, "", 1, $join);
+$noRows = getRecords($table, $userid, $vars, ['trackID'], $where, "", 1, $join);
 include("pageNav.php");
 if (isset($limit)) $order .= "$limit";
 $rows = getRecords($table, $userid, $vars , $columns, $where, $order, 0, $join);
 //print_r($columns);
-if (!isset($rows)) $rows = array();
+if (!isset($rows)) $rows = [];
 ?>
 <form name="mainform" onsubmit="
 	if (document.mainform.SelAction.value==3) return deleteRecords();
@@ -150,7 +150,7 @@ if (!isset($rows)) $rows = array();
 <tr id="table_head">
 <?php
 $selfAddress = "list.php?";
-$exclude = array("currUser","page");
+$exclude = ["currUser", "page"];
 foreach($_GET as $key => $value){
 	if (!in_array($key, $exclude)){
             #print "Search: $searchlist";

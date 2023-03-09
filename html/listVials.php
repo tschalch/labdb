@@ -7,11 +7,7 @@ $formaction = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}"; #action perfo
 #SQL parameters for data retrieval:
 #column names (need to be specified for each table):
 $table = "vials";
-$columns = array('vials.name', 'vials.description', 'vials.position',
-                 'vials.sID', 'vials.boxID', 'vials.exists', 'vials.date',
-                 'trackboxes.boxName',
-		 'tracker.trackID', 'tracker.owner','tracker.permOwner'
-		 );
+$columns = ['vials.name', 'vials.description', 'vials.position', 'vials.sID', 'vials.boxID', 'vials.exists', 'vials.date', 'trackboxes.boxName', 'tracker.trackID', 'tracker.owner', 'tracker.permOwner'];
 # optional join expressions to connect to more data
 $join = "LEFT JOIN trackboxes ON vials.boxID=trackboxes.tID ";
 #array of fields that is going to be searched for the term entered in the search... box
@@ -20,13 +16,7 @@ $defaultOrder ="IF(vials.position REGEXP '^[A-Z]', CONCAT( LEFT(vials.position, 
 #End SQL parameters
 
 #array of query field => table heading
-$fields = array('vials.name' => 'Label',
-		'position' => 'Pos',
-                'vials.date' => 'Date',
-                'description' => 'Description',
-                'sID' => 'Content',
-                'boxID' => 'Box',
-                'exists' => 'On Stock');
+$fields = ['vials.name' => 'Label', 'position' => 'Pos', 'vials.date' => 'Date', 'description' => 'Description', 'sID' => 'Content', 'boxID' => 'Box', 'exists' => 'On Stock'];
 
 #toggle Project combobox on and off
 $noProjectFilter = True;
@@ -80,7 +70,7 @@ foreach ($rows as $row) {
 	echo "</tr>";
 	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
 }
-listProcessor(array(2,3,7));
+listProcessor([2, 3, 7]);
 ?>
 
 </table>

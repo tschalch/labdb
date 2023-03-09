@@ -38,22 +38,15 @@ function seqlen($seq){
 
 function complement($seq, $moltype)
 {
+    $comp_r = [];
     if (isset($moltype) == FALSE) {
          $moltype = 'DNA'; // default to DNA.
     }
     $seq = strtoupper($seq);
 
-    $dna_complements = array('A' => 'T',
-                             'T' => 'A',
-                             'G' => 'C',
-                             'C' => 'G',
-                             'N' => 'N');
+    $dna_complements = ['A' => 'T', 'T' => 'A', 'G' => 'C', 'C' => 'G', 'N' => 'N'];
 
-    $rna_complements = array('A' => 'U',
-                             'U' => 'A',
-                             'G' => 'C',
-                             'C' => 'G',
-                             'N' => 'N');
+    $rna_complements = ['A' => 'U', 'U' => 'A', 'G' => 'C', 'C' => 'G', 'N' => 'N'];
 
     $moltype = strtoupper($moltype);
     if ($moltype == 'DNA') {
@@ -223,6 +216,11 @@ function expand_na($string)
  */
 function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
 {
+    $tm = null;
+    $GCscore = null;
+    $ATscore = null;
+    $seqlength = null;
+    $nn = [];
     // Sanity checks
     if (!$sequence) {
         return "NoSeq";  // should throw an exception
@@ -242,7 +240,7 @@ function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
     if ($method=='basic') {
         if ($seqlen < 15) {
             for ($i=0;$i<$seqlen;$i++) {
-                switch ($sequence{$i}) {
+                switch ($sequence[$i]) {
                 case 'G':
                 case 'C':
                     $tm+=4;
@@ -255,7 +253,7 @@ function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
             }
         } else { // for sequences longer than 14 bp
             for ($i=0;$i<$seqlen;$i++) {
-                switch ($sequence{$i}) {
+                switch ($sequence[$i]) {
                     case 'G':
                     case 'C':
                         $GCscore+=1;
@@ -268,7 +266,7 @@ function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
 
     } elseif ($method=='sa') {
         for ($i=0;$i<$seqlen;$i++) {
-            switch ($sequence{$i}) {
+            switch ($sequence[$i]) {
                 case 'G':
                 case 'C':
                     $GCscore+=1;
@@ -288,8 +286,7 @@ function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
         return $tm;
 
     } elseif ($method=='nnt') {
-    	$DNA = array ('fw' => $sequence,
-    	              'rev' => $revcomp);
+    	$DNA = ['fw' => $sequence, 'rev' => $revcomp];
         // first setup array with needed data (we somehow should load these things from a file
         // deltaH (kcal/mol) and deltaS (cal/k.mol)
         $nn['A']['A']['H']=-7.9;
@@ -336,10 +333,10 @@ function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
 	$dS0=0;
 	foreach ($DNA as $strand){
 	        // sum dH and dS
-	        if ($strand{0}=='G' || $strand{0}=='C') {
+	        if ($strand[0]=='G' || $strand[0]=='C') {
 	             $dH+=$nn['initGC']['H'];
 	             $dS0+=$nn['initGC']['S'];
-	        } elseif ($strand{0}=='A' || $strand{0}=='T' || $strand{0}=='U') {
+	        } elseif ($strand[0]=='A' || $strand[0]=='T' || $strand[0]=='U') {
 	             $dH+=$nn['initAT']['H'];
 	             $dS0+=$nn['initAT']['S'];
 	        }
@@ -348,8 +345,8 @@ function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
         // loop through sequence and add up based on the table above
         $strand = $DNA['fw'];
         for ($i=0;$i<$seqlen-1;$i++) {
-            $dH+=$nn[$strand{$i}][$strand{$i+1}]['H'];
-            $dS0+=$nn[$strand{$i}][$strand{$i+1}]['S'];
+            $dH+=$nn[$strand[$i]][$strand[$i+1]]['H'];
+            $dS0+=$nn[$strand[$i]][$strand[$i+1]]['S'];
 	        //printf("Base step: %s%s, dH: %4.2f, dS0:%4.2f<br/>", $sequence{$i}, $sequence{$i+1}, $dH, $dS0);
         }
         // I guess we need to add the symetry correction now
@@ -370,8 +367,7 @@ function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
         return $tm;
    } elseif ($method=='bre') {
         // nearest neighbor according to bresslauer
-    	$DNA = array ('fw' => $sequence,
-    	              'rev' => $revcomp);
+    	$DNA = ['fw' => $sequence, 'rev' => $revcomp];
         // first setup array with needed data (we somehow should load these things from a file
         // deltaH (kcal/mol) and deltaS (cal/k.mol)
         $nn['A']['A']['H']=9.1;
@@ -415,8 +411,8 @@ function Tm ($sequence, $method='bre', $salt=0.05, $concentration=250E-12)
         $strand = $DNA['fw'];
         console_log("strand: ".$strand.$seqlen.print_r($nn, true));
         for ($i=0;$i<$seqlen-1;$i++) {
-            $dH+=$nn[$strand{$i}][$strand{$i+1}]['H'];
-            $dS0+=$nn[$strand{$i}][$strand{$i+1}]['S'];
+            $dH+=$nn[$strand[$i]][$strand[$i+1]]['H'];
+            $dS0+=$nn[$strand[$i]][$strand[$i+1]]['S'];
 	    //printf("Base step: %s%s, dH: %4.2f, dS0:%4.2f<br/>", $sequence{$i}, $sequence{$i+1}, $dH, $dS0);
         }
         // I guess we need to add the symetry correction now

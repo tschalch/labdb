@@ -1,7 +1,7 @@
 <?php
 $table = 'fragments';
 $mode = $_GET['mode'];
-$formParams = array('table'=>'fragments', 'mode'=>$mode);
+$formParams = ['table'=>'fragments', 'mode'=>$mode];
 $noUserFilter = False;
 $submitFunction = "validate_form()";
 #determine type of building block and set title
@@ -91,12 +91,12 @@ function printPCRFields($formParams){
 	$fields = $formParams['fields'];
 	$table = $formParams['table'];
 	$titleName = "PCR";
-	$tables = array('oligos','plasmids');
-	$choices = array();
+	$tables = ['oligos', 'plasmids'];
+	$choices = [];
 	# get choices for the comboboxes
 	foreach ($tables as $t){
-		$tcols = array('tracker.trackID',"$t.name");
-		$rows = getRecords($t, $userid, array(), $tcols);
+		$tcols = ['tracker.trackID', "$t.name"];
+		$rows = getRecords($t, $userid, [], $tcols);
 		if (!$rows) continue;
 		foreach ($rows as $row) {
 			$choices[$t][$row['trackID']] = $row['name'];

@@ -10,12 +10,12 @@ $extended = false;
 $hexIDSQL = getHexIDSQL($table);
 
 #$r = getRecords($table, $userid, array("$field"), " $field LIKE '%$cue%' OR tracker.trackID='$cue' OR $hexIDSQL='$cue' ", "$table.$field");
-$r = getRecords($table, $userid, array(':cue'=>"%$cue%"), array("$field"), " `$field` LIKE :cue ", "$table.$field", 0, '', 1);
+$r = getRecords($table, $userid, [':cue'=>"%$cue%"], ["$field"], " `$field` LIKE :cue ", "$table.$field", 0, '', 1);
 
 if (isset($_POST['extended']) && $_POST['extended'])
 {
     $extended = true;
-    $r = getRecords($table, $userid, array(':cue'=>"%$cue%", ':cueexact'=>"$cue"), array('tracker.trackID', "$field"), " ( $field LIKE :cue OR tracker.trackID=:cueexact OR $hexIDSQL LIKE :cue) ", "$table.$field", 0, '');
+    $r = getRecords($table, $userid, [':cue'=>"%$cue%", ':cueexact'=>"$cue"], ['tracker.trackID', "$field"], " ( $field LIKE :cue OR tracker.trackID=:cueexact OR $hexIDSQL LIKE :cue) ", "$table.$field", 0, '');
 } 
 
 #print_r($r);

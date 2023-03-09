@@ -6,7 +6,7 @@ include_once 'functions.php';
 //print_r($_FILES);
 //print_r($_GET);
 
-$valid_extensions = array('.pdf', '.docx', '.doc', '.xls', '.xlsx'); // valid extensions
+$valid_extensions = ['.pdf', '.docx', '.doc', '.xls', '.xlsx']; // valid extensions
 $path = '/local/labdb/uploads/'; // upload directory
 
 if(!empty($_GET['getFiles']) && !empty($_GET['trackID'])) {
@@ -18,7 +18,7 @@ if(!empty($_GET['removeFile'])) {
   $fileID = $_GET['removeFile'];
   $q = "SELECT * FROM uploads WHERE id=$fileID;";
   $result = pdo_query($q);
-  if (count($result) === 1){
+  if ((is_countable($result) ? count($result) : 0) === 1){
     $r = $result[0];
     $f = $r['file_name'];
     $f = $path.strtolower($f); 
@@ -50,7 +50,7 @@ if(!empty($_GET['file_desc']) && !empty($_FILES['file'])) {
 
     $data = ['description' => $_GET['file_desc'], 'filename' => $final_file];
     if (file_exists($upload_path)){
-      echo json_encode(array_merge(array("fileError" => "FileExists"), $data));
+      echo json_encode(array_merge(["fileError" => "FileExists"], $data), JSON_THROW_ON_ERROR);
       return;
     }
 
@@ -59,7 +59,7 @@ if(!empty($_GET['file_desc']) && !empty($_FILES['file'])) {
       if ($json === false) {
           // Avoid echo of empty string (which is invalid JSON), and
           // JSONify the error message instead:
-          $json = json_encode(array("jsonError", json_last_error_msg()));
+          $json = json_encode(["jsonError", json_last_error_msg()], JSON_THROW_ON_ERROR);
           if ($json === false) {
               // This should not happen, but we go all the way now:
               $json = '{"jsonError": "unknown"}';
@@ -84,7 +84,7 @@ if(!empty($_GET['file_desc']) && !empty($_FILES['file'])) {
   } 
   else 
   {
-      echo json_encode(array("fileError" => "FileExtensionError"));
+      echo json_encode(["fileError" => "FileExtensionError"]);
   }
 } 
 

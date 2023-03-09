@@ -17,8 +17,7 @@ if (isset($_POST['submitok'])):
 if ($_POST['name']!=$userfullname or $_POST['email']!=$useremail or $_POST['color']!=$usercolor or $_POST['notes']!=$usernotes) {
   $q ="UPDATE user SET fullname = :name, email = :email, 
      color = :color, notes = :notes WHERE userid = :uid;";
-  $vars = array(':name' => $_POST['name'], ':email' => $_POST['email'], ':uid' => $uid,
-    ':color' => $_POST['color'], ':notes' => $_POST['notes']);
+  $vars = [':name' => $_POST['name'], ':email' => $_POST['email'], ':uid' => $uid, ':color' => $_POST['color'], ':notes' => $_POST['notes']];
   $r = pdo_query($q, $vars);
   print $q;
   print "<strong>Profile change successful!</strong><br/>";
@@ -33,7 +32,7 @@ if (array_key_exists('newpwd', $_POST) && array_key_exists('oldpwd', $_POST) &&
   }elseif ($_POST['newpwd']!=''and $_POST['newpwdconf']==$_POST['newpwd'] and $_POST['oldpwd']==$pwd){
     $pwd = $_POST['newpwd'];
     $q ="UPDATE user SET password = MD5(:pwd) WHERE userid = :uid;";
-    $vars = array(':pwd' => $pwd, ':uid' => $uid);
+    $vars = [':pwd' => $pwd, ':uid' => $uid];
     $r = pdo_query($q, $vars);
     $_SESSION['pwd'] = $pwd;
     print "<strong>Password change successful!</strong>";

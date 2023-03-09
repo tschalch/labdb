@@ -4,7 +4,7 @@ $titleName = "Plasmid";
 $submitFunction = "validate_form()";
 $mode = $_GET['mode'];
 if (!$mode) $mode = 'display';
-$formParams = array('table'=>$table,'mode'=>$mode);
+$formParams = ['table'=>$table, 'mode'=>$mode];
 
 include("formhead.php");
 ?>
@@ -43,7 +43,7 @@ window.addEvent('domready', function() {
 <?php
 
 # get choices for fragment comboboxes
-$types = array('backbone'=>'fragments','gene'=>'fragments','PCR'=>'fragments');
+$types = ['backbone'=>'fragments', 'gene'=>'fragments', 'PCR'=>'fragments'];
 #print_r($choices);
 #get the associated fragments
 #if($formParams['fields']){
@@ -120,7 +120,7 @@ print "<div id=\"map\"></div>
 	</div>\n";
 printSubmitButton($formParams,$button);
 printSequenceField("Sequence", 'DNA', 'sequence', $formParams, true, true);
-$sites = getRestrictionSites($fields['enzymes'], $fields['sequence'], $userid);
+$sites = getRestrictionSites($fields['enzymes'], $fields['sequence']);
 print "</form>\n";
 if($mode == "modify"){
 	$seqField = "sequence";

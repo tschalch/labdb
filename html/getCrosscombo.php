@@ -11,7 +11,7 @@ $end = $_GET['end'];
 $dir = $_GET['dir'];
 $id = $_GET['id'];
 if ($id != ""){
-    $connection = array('connID' => -1,'record'=>$id, 'start'=>$start, 'end'=>$end, 'direction'=>$dir);
+    $connection = ['connID' => -1, 'record'=>$id, 'start'=>$start, 'end'=>$end, 'direction'=>$dir];
 }
 
 #getCrossCombobox($connection, $table, $type, $fcounter, $mode, $userid);

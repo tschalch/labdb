@@ -2,7 +2,7 @@
 $table = "oligos";
 $mode = $_GET['mode'];
 if (!$mode) $mode = 'display';
-$formParams = array('table'=>'oligos','mode'=>$mode);
+$formParams = ['table'=>'oligos', 'mode'=>$mode];
 $titleName = "Oligo";
 $submitFunction = "validate_form()";
 

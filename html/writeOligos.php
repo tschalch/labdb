@@ -11,7 +11,7 @@ if(isset($_POST['template'])) $template =  $_POST['template'];
 # code for ajax requests
 if ($_GET["output"]){
 	$output = $_GET["output"];
-	$selection = array();
+	$selection = [];
 	for ($i=1;$i<=2;$i++){
 		$selection[] = $_GET["oligo$i"];
 	}
@@ -50,7 +50,7 @@ if ($output == 'vectornti'){
 	$order = $_POST["orderDate_$id"];
 	header("Content-Disposition: attachment; filename=\"${order}_oligoOrder.dat\"");
     }
-    $num = count($selection);
+    $num = is_countable($selection) ? count($selection) : 0;
     $i = 0;
     $head="Oligo name,Sequence,Sequence Length,Purification,Scale,5' Modification,Inner Modification (5),Inner Modification (6),Inner Modification (7),Inner Modification (8),3' Modification,,DES,HPL,PAG,HPD,GEN,0.04,0.2,1.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,";
     if ($output == 'microsynth') print "$head\n";
@@ -60,7 +60,7 @@ if ($output == 'vectornti'){
 	$name = $_POST["name_$id"];
 	$hexID = $_POST["hexID_$id"];
 	#$name = "${hexID}_${id}_$name";
-	$name = substr(${hexID}, 2)."_$name";
+	$name = substr(${\HEXID}, 2)."_$name";
 	$scale = $_POST["scale_$id"];
 	$purification = $_POST["purity_$id"];
 	$length = strlen($data);

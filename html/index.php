@@ -31,12 +31,12 @@ include("navigation.php");
             $sql = "SELECT `st_name`, sampletypes.plural, `table`,`list` FROM sampletypes";
             $tables = pdo_query($sql);
             //print_r($tables);
-            $found = array();
+            $found = [];
             foreach($tables as $table){
                 $t = $table['table'];
 			    $hexIDSQL = getHexIDSQL($t);
                 $where = '';
-                $searchfields = array("$t.name", "$t.description", "sampletypes.st_name", "tracker.trackID");
+                $searchfields = ["$t.name", "$t.description", "sampletypes.st_name", "tracker.trackID"];
 				$columns = $searchfields;
 				$columns[] = getHexIDSQL($t)." as hexID";
                 if (isset($searchwords)){
@@ -62,7 +62,7 @@ include("navigation.php");
                }
                //print "where: $where";
                $noUserFilter = True;
-               $results = getRecords($t, $userid, array(':searchword'=>"%$searchword%"), $columns, $where);
+               $results = getRecords($t, $userid, [':searchword'=>"%$searchword%"], $columns, $where);
                 if (sizeof($results)){
                    $found[$t] = $results;
                    print "<a href=\"list.php?list=${table['list']}&searchword=$searchString\"><h2 class=\"qs\">${table["plural"]}</h2></a>";

@@ -1,5 +1,5 @@
 <?php
-$formParams = array('table'=>$table, 'mode'=>'modify');
+$formParams = ['table'=>$table, 'mode'=>'modify'];
 # Sample type combobox
 $q = "SELECT * FROM sampleTypes";
 $values = pdo_query($q);

@@ -2,7 +2,7 @@
 $titleName = "Item";
 $mode = $_GET['mode'];
 $table = 'inventory';
-$formParams = array('table'=>$table, 'mode'=>$mode);
+$formParams = ['table'=>$table, 'mode'=>$mode];
 $submitFunction = "validate_form()";
 $noUserFilter = true;
 
@@ -50,9 +50,9 @@ printTextArea('Description', 'description', $formParams);
 printHazards('Hazard signals', 'hazards', $formParams);
 printUploadField('Files (COSSH, MSDS, Quotes)', 'files', $formParams);
 printLinkField('Link','www', $formParams);
-$lcol = array('tracker.trackID','locations.name');
-$locations = getRecords('locations', $userid, array(), $lcol, '', "name");
-printComboBox("Location",'location', $formParams, $locations, (isset($fields['location']) ? $fields['location']: null));
+$lcol = ['tracker.trackID', 'locations.name'];
+$locations = getRecords('locations', $userid, [], $lcol, '', "name");
+printComboBox("Location",'location', $formParams, $locations, ($fields['location'] ?? null));
 printTextField('Manufacturer', 'manufacturer', $formParams);
 printTextField('Supplier', 'supplier', $formParams);
 if ($mode == 'modify'):
@@ -99,10 +99,10 @@ if (isset($fields['status']) and $fields['status'] > 2){
   unset($statusChoices[0]);
   unset($statusChoices[1]);
 }
-printComboBox("Status", 'status', $formParams, $statusChoices, (isset($fields['status']) ? $fields['status'] : null));
+printComboBox("Status", 'status', $formParams, $statusChoices, ($fields['status'] ?? null));
 printDateField("Billed on", 'billed', $formParams);
-$typeChoices = array(array("trackID"=>0, "name"=>"None"), array("trackID"=>1, "name"=>"Instrument"), array("trackID"=>2, "name"=>"Column"));
-printComboBox("Use in Log as", 'type', $formParams, $typeChoices, (isset($fields['type']) ? $fields['type'] : null));
+$typeChoices = [["trackID"=>0, "name"=>"None"], ["trackID"=>1, "name"=>"Instrument"], ["trackID"=>2, "name"=>"Column"]];
+printComboBox("Use in Log as", 'type', $formParams, $typeChoices, ($fields['type'] ?? null));
 printSubmitButton($formParams, $button);
 echo "</form>";
 ?>

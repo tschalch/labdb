@@ -3,12 +3,12 @@ require_once('accesscontrol.php');
 require_once('functions.php');
 require_once("header.php");
 
-$resource = isset($_GET['resource']) ? $_GET['resource']: NULL;
+$resource = $_GET['resource'] ?? NULL;
 $sql = "SELECT id, title, description, start, end, color FROM events WHERE resource=:resource;";
-$events = pdo_query($sql, array(':resource'=>$resource));
+$events = pdo_query($sql, [':resource'=>$resource]);
 
 $sql = "SELECT * FROM resources WHERE id=:resource;";
-$resource = pdo_query($sql, array(':resource'=>$resource))[0];
+$resource = pdo_query($sql, [':resource'=>$resource])[0];
 
 ?>
 <link href='fc4/packages/core/main.css' rel='stylesheet' />

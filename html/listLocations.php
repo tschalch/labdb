@@ -6,9 +6,7 @@ $formaction = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}"; #action perfo
 #SQL parameters for data retrieval:
 #column names (need to be specified for each table):
 $table = "locations";
-$columns = array('locations.name', 'locations.description',
-		 'tracker.trackID', 'tracker.owner','tracker.permOwner'
-		 );
+$columns = ['locations.name', 'locations.description', 'tracker.trackID', 'tracker.owner', 'tracker.permOwner'];
 # optional join expressions to connect to more data
 $join = "";
 #array of fields that is going to be searched for the term entered in the search... box
@@ -17,8 +15,7 @@ $defaultOrder ="locations.name";
 #End SQL parameters
 
 #array of query field => table heading
-$fields = array('Name' => 'Name',
-		'Description' => 'Description');
+$fields = ['Name' => 'Name', 'Description' => 'Description'];
 
 if (!isset($where)) $where = "";
 if (array_key_exists('location', $_GET)) {
@@ -53,6 +50,6 @@ foreach ($rows as $row) {
 	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
 	$i++;
 }
-listProcessor(array(2,3));
+listProcessor([2, 3]);
 print "</table>";
 ?>

@@ -6,9 +6,7 @@ $formaction = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}"; #action perfo
 #SQL parameters for data retrieval:
 #column names (need to be specified for each table):
 $table = "projects";
-$columns = array('projects.name', 'projects.description',
-		 'tracker.trackID', 'tracker.owner','tracker.permOwner'
-		 );
+$columns = ['projects.name', 'projects.description', 'tracker.trackID', 'tracker.owner', 'tracker.permOwner'];
 # optional join expressions to connect to more data
 $join = "";
 #array of fields that is going to be searched for the term entered in the search... box
@@ -17,8 +15,7 @@ $defaultOrder ="projects.name";
 #End SQL parameters
 
 #array of query field => table heading
-$fields = array('Name' => 'Name',
-		'Description' => 'Description');
+$fields = ['Name' => 'Name', 'Description' => 'Description'];
 
 #toggle Project combobox on and off
 $noProjectFilter = False;
@@ -38,10 +35,7 @@ foreach ($rows as $row) {
 	#print "row: ";print_r($row); print "<br/>";
 	$id = $row['trackID'];
 	$edit = 0;
-	$permissions = array(
-		$row['permOwner'],
-		$row['permGroup'],
-		$row['permOthers']);
+	$permissions = [$row['permOwner'], $row['permGroup'], $row['permOthers']];
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
 	echo "<tr class=\"lists data-row\" data-record_id=\"$id\">";
 	echo listActions($id);
@@ -52,4 +46,4 @@ foreach ($rows as $row) {
 	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
 }
 print "</table>";
-php?>
+\PHP?>

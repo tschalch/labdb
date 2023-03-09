@@ -18,10 +18,10 @@ foreach ($data as $table => $datasets){
         foreach ($datasets as $dataset){
             //print_r($dataset);
             if($dataset['connID']>-1){
-                list($uq, $values) = getUpdateQuery($dataset, 'connections', $dataset['connID']);
+                [$uq, $values] = getUpdateQuery($dataset, 'connections', $dataset['connID']);
                 //print "$uq\n";
                 pdo_query($uq, $values);
-                $newCnxs = array();
+                $newCnxs = [];
                 foreach($cnxs as $con){
                     if ($con['connID']!=$dataset['connID']) $newCnxs[] = ($con);
                 }
@@ -29,14 +29,14 @@ foreach ($data as $table => $datasets){
             } else {
                 unset($dataset['connID']);
                 $dataset['belongsTo'] = $id;
-                list($query, $values) = getInsertQuery($dataset, 'connections', '');
+                [$query, $values] = getInsertQuery($dataset, 'connections', '');
                 //print "$query\n";
                 pdo_query($query, $values);
             }
         }
         foreach($cnxs as $con){
             $qd = "DELETE FROM `connections` WHERE `connID`=:connid";
-            pdo_query($qd, array(':connid'=>$con['connID']));
+            pdo_query($qd, [':connid'=>$con['connID']]);
         }
         continue;
     }
@@ -60,16 +60,12 @@ Item on order has been been changed:
 labdb ";
 
                 $sendmailparams = "-r $adminEmail";
-                $headers = array(
-                    'From' => "From: $adminEmail",
-                    'Reply-To' => "Reply-To: $adminEmail",
-                    'X-Mailer' => 'X-Mail: PHP/' . phpversion()
-                );
+                $headers = ['From' => "From: $adminEmail", 'Reply-To' => "Reply-To: $adminEmail", 'X-Mailer' => 'X-Mail: PHP/' . phpversion()];
                 #mail("$adminEmail","Item on order has been changed",
                 #    $message, implode("\n", $headers), $sendmailparams);
             }
         } else {
-            $id = newRecord($table, $dataset, $userid, $permissions);
+            $id = newRecord($table, $dataset, $userid);
             if($table == "inventory" && $dataset['status'] == 1){
                 $message = "Hi!
 
@@ -81,11 +77,7 @@ A new item has been been put on order:
 labdb ";
 
                 $sendmailparams = "-r $adminEmail";
-                $headers = array(
-                    'From' => "From: $adminEmail",
-                    'Reply-To' => "Reply-To: $adminEmail",
-                    'X-Mailer' => 'X-Mail: PHP/' . phpversion()
-                );
+                $headers = ['From' => "From: $adminEmail", 'Reply-To' => "Reply-To: $adminEmail", 'X-Mailer' => 'X-Mail: PHP/' . phpversion()];
                 mail("$adminEmail","New item on order",
                     $message, implode("\n", $headers), $sendmailparams);
             }

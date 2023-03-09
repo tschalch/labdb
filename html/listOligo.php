@@ -6,13 +6,7 @@ $formaction = "list_doit.php"; #action performed when "do it" button is pressed
 #SQL parameters for data retrieval:
 #column names (need to be specified for each table):
 $table = "oligos";
-$columns = array('oligos.name', 'oligos.id', 'oligos.description', 'oligos.sequence',
-		 'oligos.supplier', 'oligos.scale', 'oligos.modifications',
-		 'oligos.purity', 'oligos.bpPrice', 'oligos.orderDate',
-		 'tracker.trackID', 'tracker.owner','tracker.permOwner',
-		 'oligos.tm', 'oligos.Saltconc', 'oligos.PCRconc',
-		 'oligos.targetmatch'
-		 );
+$columns = ['oligos.name', 'oligos.id', 'oligos.description', 'oligos.sequence', 'oligos.supplier', 'oligos.scale', 'oligos.modifications', 'oligos.purity', 'oligos.bpPrice', 'oligos.orderDate', 'tracker.trackID', 'tracker.owner', 'tracker.permOwner', 'oligos.tm', 'oligos.Saltconc', 'oligos.PCRconc', 'oligos.targetmatch'];
 # optional join expressions to connect to more data
 $join = "";
 #array of fields that is going to be searched for the term entered in the search... box
@@ -21,19 +15,7 @@ $defaultOrder ="oligos.id DESC";
 #End SQL parameters
 
 #array of query field => table heading
-$fields = array('trackID' => 'ID',
-		'hexID' => 'Oligo',
-		'name' => 'Name',
-		'description' => 'Description',
-		'sequence' => 'Sequence',
-		'length' => 'Length',
-		'supplier' => 'Supplier',
-		'scale' => 'Scale',
-		'modifications' => 'Modif.',
-		'purity' => 'Purity',
-		'bpPrice' => 'Cost',
-		'1' => 'Tm',
-		'orderDate' => 'order Date');
+$fields = ['trackID' => 'ID', 'hexID' => 'Oligo', 'name' => 'Name', 'description' => 'Description', 'sequence' => 'Sequence', 'length' => 'Length', 'supplier' => 'Supplier', 'scale' => 'Scale', 'modifications' => 'Modif.', 'purity' => 'Purity', 'bpPrice' => 'Cost', '1' => 'Tm', 'orderDate' => 'order Date'];
 
 
 #toggle Project combobox on and off
@@ -109,10 +91,10 @@ foreach ($rows as $row) {
 }
 ?>
 <tr><td colspan = "100"><?php 
-	$noOligos = count($rows);
+	$noOligos = is_countable($rows) ? count($rows) : 0;
 	echo "Number of Oligos: $noOligos; ";
 	echo "Total Cost = \$ $totalCost"; 
-	
+
 	?></td></tr>
 <tr><td colspan="100">
 <div id="oligoOptions" name="oligoOptions" style="display:none;" >
@@ -127,10 +109,10 @@ Select ouput format: <select name="output">
 </select><br/>
 Select template for Sequence Extractor: 
 <?php
-	$cols = array('tracker.trackID',"plasmids.name");
-	$choices = getRecords("plasmids", $userid, array(), $cols);
+	$cols = ['tracker.trackID', "plasmids.name"];
+	$choices = getRecords("plasmids", $userid, [], $cols);
 	//print_r($choices);print "<br/>";
-	$current = isset($_SESSION['template'])?$_SESSION['template']:null;
+	$current = $_SESSION['template'] ?? null;
 	print "<select name=\"template\">";
 	print "<option value=\"NA\"></option>";
 	$cmbBox = "";
@@ -144,6 +126,6 @@ Select template for Sequence Extractor:
 </select>
 </div>
 </td></tr>
-<?php listProcessor(array(0,2,3,7));?>
+<?php listProcessor([0, 2, 3, 7]);?>
 </table>
 </form>

@@ -2,8 +2,8 @@
 include("formhead.php");
 $type = $_GET['type'];
 if ($type == 'PCR'){
-	$tables = array('oligos','plasmids');
-	$choices = array();
+	$tables = ['oligos', 'plasmids'];
+	$choices = [];
 	# get choices for the comboboxes
 	foreach ($tables as $t){
 		$query="SELECT * FROM `$t` ORDER BY name";

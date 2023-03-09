@@ -18,7 +18,7 @@ function console_log( $data ){
   if ($DEBUG) write_log($data);
 }
 
-function pdo_query($q, $vars=array()){
+function pdo_query($q, $vars=[]){
   global $dbpass, $database, $host, $dbuser;
   $dsn = "mysql:host=$host;dbname=$database;charset=utf8mb4";
   $options = [
@@ -42,7 +42,7 @@ function pdo_query($q, $vars=array()){
   #echo "\n<br/>PDOStatement::errorInfo():<br/>\n";
   $arr = $stmt->errorInfo();
   #print_r($arr);
-  $result = array();
+  $result = [];
   $i = 0;
 #$dbhq = $dbh->query($q);
   //print_r($dbhq);
@@ -67,7 +67,7 @@ function pdo_query($q, $vars=array()){
 
 function escape_quotes($receive) {
     if (!is_array($receive))
-        $thearray = array($receive);
+        $thearray = [$receive];
     else
         $thearray = $receive;
 
@@ -99,7 +99,7 @@ function getInsertQuery($ds, $table, $id){
 	}
 	$iq .= ") VALUES (";
 	$count = 0;
-  $values = array();
+  $values = [];
 	foreach ($ds as $field => $dat){
 		if ($dat == 'mainID') $dat = $id;
     $dat = ($dat == '')? NULL : $dat;
@@ -110,16 +110,16 @@ function getInsertQuery($ds, $table, $id){
 	}
 
 	$iq .= ")";
-	return array($iq, $values);
+	return [$iq, $values];
 }
 
 function getUpdateQuery($ds, $table, $uid){
 	$i = 0;
-  $values = array();
+  $values = [];
 	if (array_key_exists('connID',$ds)){
 	    $uid=$ds['connID'];
 	}
-	$num = count($ds);
+	$num = is_countable($ds) ? count($ds) : 0;
 	$uq = "UPDATE `$table` SET ";
 	foreach ($ds as $key => $field){
 	    $i++;
@@ -130,7 +130,7 @@ function getUpdateQuery($ds, $table, $uid){
 	}
 	$uq .= " WHERE connID='$uid';";
 	//print $uq;
-	return array ($uq, $values);
+	return [$uq, $values];
 }
 
 #form functions
@@ -272,7 +272,7 @@ function printUploadField($label, $field, $formParams){
   print "\n<div class=\"formRow\"><div class=\"formLabel\">$label:";
   print "</div>\n";
   if (isset($fields['trackID'])){
-    $trackID = ($fields['trackID'])? $fields['trackID']:"";
+    $trackID = $fields['trackID'] ?: "";
   }
 
   $mode = $formParams['mode'];
@@ -389,7 +389,7 @@ function printID($formParams){
 	print "\n<div class=\"formRow idfield\"><div class=\"formLabel\">ID:</div>\n";
 	$fields = $formParams['fields'];
 	if (isset($fields['trackID'])){
-	    $value = ($fields['trackID'])? $fields['trackID']:"";
+	    $value = $fields['trackID'] ?: "";
 	    print "<div id=\"id\" class=\"displayField\" style=\"background-color: white;\">$value</div>
 			<input type=\"hidden\" id=\"inp_id\" name=\"id\" value=\"$value\"/>\n";
 	} else {
@@ -407,7 +407,7 @@ function printTypeID($formParams, $idName){
 	print "\n<div class=\"formRow idfield\"><div class=\"formLabel\">$idName:</div>\n";
 	$fields = $formParams['fields'];
 	if (isset($fields['hexID'])){
-	    $value = ($fields['hexID'])? $fields['hexID']:"";
+	    $value = $fields['hexID'] ?: "";
 	    print "<div id=\"hexID\" class=\"displayField\" style=\"background-color: white;\">$value</div>
 			<input type=\"hidden\" id=\"inp_hexID\" name=\"hexID\" value=\"$value\"/>\n";
 	} else {
@@ -439,7 +439,7 @@ function printDateField($label, $field, $formParams, $default=null){
 	if (isset($fields[$field]) and $fields[$field]!='0000-00-00'){
 		$date = getdate(strtotime($fields[$field]));
 	} else {
-	    $date = array('mon'=>'','mday'=>'','year'=>'','0'=>'');
+	    $date = ['mon'=>'', 'mday'=>'', 'year'=>'', '0'=>''];
 	}
 	#print "time:" . $fields[$field] . "isset: ". isset($fields[$field]) .  "<br/>";
 	#print strtotime($fields[$field])."<br/>";
@@ -527,7 +527,7 @@ function printReferenceLink($label, $text, $id, $type, $formParams, $cat=Null){
 	$mode = $formParams['mode'];
 	$qSt = "SELECT * FROM sampletypes WHERE st_name = :type;";
 	#print $qSt;
-	$rSt = pdo_query($qSt, array( ':type' => $type ));
+	$rSt = pdo_query($qSt, [':type' => $type]);
 	#print_r($rSt);
 	$list = $rSt[0]['list'];
 	$category="";
@@ -561,7 +561,7 @@ function printSeqEditor($seq){
 	$seq = fastaseq($seq, "<br/>", $lineLength);
 	print "<div id=\"seqEditor\"><span id=\"editDNA\">$seq</span>\n";
 	print "<span id=\"editProtein\"></span>\n";
-	$lines = strlen($seq) ? explode("<br/>",$seq) : array();
+	$lines = strlen($seq) ? explode("<br/>",$seq) : [];
 	print "<div id=\"lineNumbers\">";
 	for($l = 0; $l < sizeof($lines); $l++){
 		$line = "<div style=\"float: right; position: relative; top: 0.4em;\">";
@@ -576,7 +576,8 @@ function printSeqEditor($seq){
 }
 
 function printSequenceField($label, $type, $field, $formParams, $area, $seqEditor){
-	$table = $formParams['table'];
+	$seqLen = null;
+ $table = $formParams['table'];
 	$fields = $formParams['fields'];
 	$mode = $formParams['mode'];
 	$seq = $fields[$field];
@@ -655,7 +656,8 @@ function printSequenceField($label, $type, $field, $formParams, $area, $seqEdito
 }
 
 function getComboBox($field, $table, $mode, $choices, $match, $action=null, $link=null){
-	if ($mode == 'modify'){
+	$redchoices = [];
+ if ($mode == 'modify'){
 		$cmbBox = "<div class=\"formField\">";
 		if ($field){
 			$name= "${table}_0_$field";
@@ -706,30 +708,33 @@ function printComboBox($label, $field, $formParams, $choices, $match, $action=nu
 
 function getStatus($statusNr){
 	$status = pdo_query("SELECT statusName FROM itemstatus WHERE statusNr=:statusNr;",
-      array(':statusNr' => $statusNr));
+      [':statusNr' => $statusNr]);
 	return $status[0]['statusName'];
 }
 
 function getCrossCombobox($connection, $table, $type, $fcounter, $mode, $userid){
+    $fid = null;
+    $fragment = [];
+    $hidden = null;
     $selected = False;
     $option =  '';
     $fstyle = '';
-    if ($connection != None){
+    if ($connection != \NONE){
 		$fid = $connection['record'];
 		$fragment = getRecord($fid, $userid);
-		$type = ($fragment['type']) ? $fragment['type']: $fragment['st_name'];
+		$type = $fragment['type'] ?: $fragment['st_name'];
 		$table = $fragment['table'];
     } else {
-		$connection = array('connID' => -1, 'start' => '', 'end' =>'');
+		$connection = ['connID' => -1, 'start' => '', 'end' =>''];
     }
     //print "if:$fid, t:$type";
     //get choices
-    $columns = array('tracker.trackID', ":table.name");
-    $choices = array();
+    $columns = ['tracker.trackID', ":table.name"];
+    $choices = [];
     if ($table == 'fragments'){
-	$rows = getRecords($table, $userid, array(':table'=>$table, ':type'=>$type), $columns, " type=:type ");
+	$rows = getRecords($table, $userid, [':table'=>$table, ':type'=>$type], $columns, " type=:type ");
     } else {
-	$rows = getRecords($table, $userid, array(':table'=>$table), $columns);
+	$rows = getRecords($table, $userid, [':table'=>$table], $columns);
     }
     foreach ($rows as $row) {
             $choices[$row['trackID']] = $row['name'];
@@ -758,7 +763,7 @@ function getCrossCombobox($connection, $table, $type, $fcounter, $mode, $userid)
 	$selFrag = 0;
 	foreach ($choices as $cid => $fname){
 		print "<option value=\"$cid\"";
-		if ($connection != None and !$selected and $cid == $fid){
+		if ($connection != \NONE and !$selected and $cid == $fid){
 			print  " selected ";
 			$selected = True;
 		}
@@ -769,10 +774,10 @@ function getCrossCombobox($connection, $table, $type, $fcounter, $mode, $userid)
 	print "<input style=\"width: 10%; float: left;\" name=\"connections_${fcounter}_start\" value=\"${connection['start']}\"/>\n";
 	print "<input style=\"width: 10%; float: left;\" name=\"connections_${fcounter}_end\" value=\"${connection['end']}\"/>\n";
 	print "<select style=\"width: 10%; float: left;\" name=\"connections_${fcounter}_direction\">\n";
-	    $directions = array(1=>'forward', 0=>'reverse');
+	    $directions = [1=>'forward', 0=>'reverse'];
 	    foreach($directions as $d => $dname){
 		    print "<option value=\"$d\"";
-		    if ($connection != None and $connection['direction']==$d){
+		    if ($connection != \NONE and $connection['direction']==$d){
 			    print  " selected ";
 		    }
 		    print ">$dname</option>\n";
@@ -788,13 +793,15 @@ function getCrossCombobox($connection, $table, $type, $fcounter, $mode, $userid)
 }
 
 function getCrossAutoselectField($connection, $table, $type, $fcounter, $mode, $userid){
+    $fid = null;
+    $fragment = [];
     if (isset($connection)){
 		$fid = $connection['record'];
 		$fragment = getRecord($fid, $userid);
-		$type = ($fragment['type']) ? $fragment['type']: $fragment['st_name'];
+		$type = $fragment['type'] ?: $fragment['st_name'];
 		$table = $fragment['table'];
     } else {
-		$connection = array('connID' => -1, 'start' => '', 'end' =>'');
+		$connection = ['connID' => -1, 'start' => '', 'end' =>''];
     }
     print "<div id=\"$type$fcounter\" style=\"height: 1.5em;\">\n";
     if ($mode == 'display'){
@@ -825,7 +832,7 @@ function getCrossAutoselectField($connection, $table, $type, $fcounter, $mode, $
 	print "<input style=\"width: 10%; float: left;\" name=\"connections_${fcounter}_start\" value=\"${connection['start']}\"/>\n";
 	print "<input style=\"width: 10%; float: left;\" name=\"connections_${fcounter}_end\" value=\"${connection['end']}\"/>\n";
 	print "<select style=\"width: 10%; float: left;\" name=\"connections_${fcounter}_direction\">\n";
-	    $directions = array(1=>'forward', 0=>'reverse');
+	    $directions = [1=>'forward', 0=>'reverse'];
 	    foreach($directions as $d => $dname){
 		    print "<option value=\"$d\"";
 		    if ($connection != Null and $connection['direction']==$d){
@@ -888,7 +895,7 @@ function printCrossCombobxs($id, $types, $fcounter, $formParams, $unlink=False){
 	print "</div>\n";
 
 	#### gene fragments section
-	$frags = array();
+	$frags = [];
 	$fcounter = 0;
 	print "<div id=\"xcmbxFrags\" style=\"padding: 0em 0 0.5em 0\">\n";
 	if ($id){
@@ -925,7 +932,7 @@ function initProjects($noUserFilter, $noProjectFilter){
 		}
 		if (isset($project)){
 			$_SESSION['project'] = $project;
-			$projectSelect = array('q'=>" (tracker.project = :project)", 'vars'=>array(':project'=>$project));
+			$projectSelect = ['q'=>" (tracker.project = :project)", 'vars'=>[':project'=>$project]];
 		}
 	}
 	if (!$noUserFilter){
@@ -951,7 +958,7 @@ function setupProjects($userid){
 	print "var projects = new Object();\n";
 	foreach ($projects as $project){
 		$spq = "SELECT * FROM projects WHERE parent=:projectID";
-		$spr = pdo_query($spq, array(':projectID' => ${project['id']}));
+		$spr = pdo_query($spq, [':projectID' => ${\PROJECT['id']}]);
 		print "var project = new Array();\n";
 		print "projects[${project['id']}] = project;\n";
 		print "project.push(new Option('*',0, true));\n";
@@ -976,12 +983,12 @@ function getProjectCmbxs($projectID, $curUser){
 		JOIN user ON groups.belongsToGroup=user.ID WHERE groups.userid=:userid
 		ORDER BY user.groupType";
 	#print $uq;
-	$users = pdo_query($uq, array(':userid' => $userid));
-	if (!$users) $users = array();
-	$columns = array('tracker.trackID','projects.name');
-	$projects = getRecords('projects', $userid, array(':curUser'=>$curUser), $columns, " (owner = ':curUser') ");
-	if (!$projects) $projects = array();
-	$choices = array(array($curUser,$users,"currUser", "User: "),array($projectID,$projects,"project", "Project: "));
+	$users = pdo_query($uq, [':userid' => $userid]);
+	if (!$users) $users = [];
+	$columns = ['tracker.trackID', 'projects.name'];
+	$projects = getRecords('projects', $userid, [':curUser'=>$curUser], $columns, " (owner = ':curUser') ");
+	if (!$projects) $projects = [];
+	$choices = [[$curUser, $users, "currUser", "User: "], [$projectID, $projects, "project", "Project: "]];
 	print "<div class=\"project\">";
 	foreach ($choices as $choice){
 		print "<span class=\"projectCombo\">${choice[3]}</span>";
@@ -1035,7 +1042,8 @@ function printCloseAddFragmentButton($formParams, $id){
 
 
 function printOligoData($formParams, $field){
-	$row = $formParams['fields'];
+	$gc = null;
+ $row = $formParams['fields'];
 	$sequence = $row[$field];
 	$tm = Tm($sequence,'bre',$row['Saltconc']*1E-3, $row['PCRconc']*1E-9);
 	if (is_numeric($tm)){
@@ -1048,10 +1056,10 @@ function printOligoData($formParams, $field){
 
 function printProjectFields($formParams){
 	global $userid;
-	$columns = array('tracker.trackID','projects.name');
-	$projects = getRecords('projects', $userid, array(), $columns);
+	$columns = ['tracker.trackID', 'projects.name'];
+	$projects = getRecords('projects', $userid, [], $columns);
 	$row = $formParams['fields'];
-  $project = isset($row['project'])? $row['project'] : Null;
+  $project = $row['project'] ?? Null;
 	printComboBox('Project', 'project', $formParams, $projects, $project);
 	#setupProjects();
 }
@@ -1093,7 +1101,7 @@ function getSampleType($trackerID){
 	if (!is_numeric($trackerID)) return;
 	$q1 = "SELECT sampletypes.* FROM tracker INNER JOIN sampletypes ON sampletypes.id=tracker.sampleType WHERE trackID=:trackerID";
 	#print "$q1";
-	$r1 = pdo_query($q1, array(':trackerID' => $trackerID));
+	$r1 = pdo_query($q1, [':trackerID' => $trackerID]);
 	console_log("sampletype query: $q1 ".print_r($r1,true));
 	if($r1) return $r1[0];
 }
@@ -1126,7 +1134,7 @@ function getRecord($trackerID, $userid, $mode='display'){
 		       WHERE permissions.trackID=:trackerID $accesscontrol
 		       GROUP BY user.id";
 		//print "<br/>$q2<br/>";
-		$r2 = pdo_query($q2, array(':userid' => $userid, ':trackerID' => $trackerID));
+		$r2 = pdo_query($q2, [':userid' => $userid, ':trackerID' => $trackerID]);
 		console_log(print_r($r2, true));
 		if ($r2) return $r2[0];
 	}
@@ -1136,15 +1144,15 @@ function deleteRecord($trackerID, $userid, $groupids){
 	$r = getRecord($trackerID, $userid, $groupids);
 	if (($r['owner']==$userid and $r['permOwner']>1) or getPermissions($trackerID,$userid) > 1){
 		$q = "UPDATE tracker SET deleted=CURDATE() WHERE trackID=:trackerID";
-		$r = pdo_query($q, array(':trackerID'=>$trackerID));
+		$r = pdo_query($q, [':trackerID'=>$trackerID]);
 	}
 }
 
 function changePermission($trackerID, $newuser, $permission, $userid){
-	if (getRecord($trackerID, $userid, null, 'modify')){
+	if (getRecord($trackerID, $userid, null)){
 		$q = "SELECT MAX(permission) FROM permissions
 			WHERE trackID=:trackerID AND permissions.userid=:newuser";
-		$r = pdo_query($q, array(':trackerID'=>$trackerID, ':newuser'=>$newuser));
+		$r = pdo_query($q, [':trackerID'=>$trackerID, ':newuser'=>$newuser]);
 		$existing = $r[0][0];
 		if ($existing==NULL){
 			$pq = "INSERT INTO permissions (trackID,userid,permission)
@@ -1153,7 +1161,7 @@ function changePermission($trackerID, $newuser, $permission, $userid){
 			$pq = "UPDATE permissions SET permission=:permission WHERE
 			trackID=:trackerID AND userid=:newuser";
 		}
-		 pdo_query($pq, array(':trackerID'=>$trackerID, ':newuser'=>$newuser, ':permission'=>$permission));
+		 pdo_query($pq, [':trackerID'=>$trackerID, ':newuser'=>$newuser, ':permission'=>$permission]);
 	}
 }
 
@@ -1163,8 +1171,8 @@ function getPermissionString($trackerID){
 		LEFT JOIN tracker on tracker.trackID=permissions.trackID
 		WHERE permissions.trackID=:trackerID";
 	#print $q;
-	$r = pdo_query($q, array(':trackerID'=>$trackerID));
-	$permString = array('None','Read','Write');
+	$r = pdo_query($q, [':trackerID'=>$trackerID]);
+	$permString = ['None', 'Read', 'Write'];
 	$n=0;
 	$str = '';
 	foreach ($r as $perm){
@@ -1180,7 +1188,7 @@ function getPermissions($trackerID, $userid){
 	$q = "SELECT MAX(permission) FROM permissions
 	        JOIN groups ON groups.userid=:userid
 		WHERE trackID=:trackerID AND permissions.userid=groups.belongsToGroup";
-	$r = pdo_query($q, array(':trackerID'=>$trackerID, ':userid'=>$userid) );
+	$r = pdo_query($q, [':trackerID'=>$trackerID, ':userid'=>$userid] );
 	return $r[0];
 }
 
@@ -1189,9 +1197,10 @@ function getHexIDSQL($table){
 }
 
 function getRecords($table, $userid, $vars, $columns, $where='', $order='', $count = 0, $join='', $noTrack=0){
-	global $_SESSION;
+	$col = null;
+ global $_SESSION;
 	global $noUserFilter;
-  if(!is_array($vars)) $vars = array();
+  if(!is_array($vars)) $vars = [];
 	$currUid = $_SESSION['currUser'];
 	if($noUserFilter or $currUid == -1){
     $vars[':userid'] = $userid;
@@ -1256,7 +1265,7 @@ function getRecords($table, $userid, $vars, $columns, $where='', $order='', $cou
 	if(isset($r1) & is_array($r1)){
 	    return $r1;
 	} else {
-	    return array();
+	    return [];
 	}
 }
 
@@ -1271,11 +1280,11 @@ function newRecord($table, $ds, $userid){
 	#unset($ds['subProject']);
 	$stq = "SELECT * FROM sampletypes WHERE `table`=:table";
 	#print $stq;
-	$str = pdo_query($stq, array(':table'=>$table));
+	$str = pdo_query($stq, [':table'=>$table]);
 	$st = $str[0]['id'];
 	# insert query for data record
 	#print_r($ds);
-  $vars = array();
+  $vars = [];
 	$iq = "INSERT INTO `$table` (";
 	$cnt = 0;
 	$end = sizeof($ds);
@@ -1311,12 +1320,12 @@ function newRecord($table, $ds, $userid){
 	$iq = "INSERT INTO tracker (sampleID, sampleType, project, created, owner, permOwner, permGroup, permOthers)";
 	$iq .= " VALUES (:sampleID, :st, :project, NOW(), :userid, 2, 2, 0)";
 	//print "$iq<br/>;
-  $vars = array(':sampleID' => $sampleID,':st'=>$st, ':project'=>$project, ':userid'=>$userid);
+  $vars = [':sampleID' => $sampleID, ':st'=>$st, ':project'=>$project, ':userid'=>$userid];
 	$newTrackID = pdo_query($iq, $vars);
 	# setup permissions
 	$gq = "SELECT * FROM groups JOIN user ON belongsToGroup=user.id WHERE groups.userid=:userid AND user.groupType!=3;";
 	#print "$gq<br/>";
-	$groups = pdo_query($gq, array(':userid'=>$userid));
+	$groups = pdo_query($gq, [':userid'=>$userid]);
 	#print_r($groups);
 	foreach($groups as $g){
 		$perm = $g['defaultPermissions'];
@@ -1329,7 +1338,7 @@ function newRecord($table, $ds, $userid){
 			$pq = "INSERT INTO permissions (trackID,userid,permission)
 			 VALUES ($newTrackID, :belongsToGroup, :perm)";
 			 #print "$pq<br/>";
-			 pdo_query($pq, array(':perm'=>$perm, ':belongsToGroup'=>$g['belongsToGroup']));
+			 pdo_query($pq, [':perm'=>$perm, ':belongsToGroup'=>$g['belongsToGroup']]);
 		}
 	}
 
@@ -1339,18 +1348,19 @@ function newRecord($table, $ds, $userid){
 			(SELECT user.ID FROM groups JOIN user ON belongsToGroup=user.ID
 			WHERE groups.userid=:userid AND user.groupType=1)
 		WHERE user.groupType=3;";
-	$ags = pdo_query($aq, array(':userid'=>$userid));
+	$ags = pdo_query($aq, [':userid'=>$userid]);
 	$admin = $ags[0]['ID'];
 	$aiq = "INSERT INTO permissions (trackID,userid,permission)
 		 VALUES ($newTrackID, :admin,1)";
 		 #print "$aiq<br/>";
-	pdo_query($aiq, array(':admin'=>$admin));
+	pdo_query($aiq, [':admin'=>$admin]);
 	#insert read permission for this group
 	return $newTrackID;
 }
 
 function updateRecord($trackerID, $ds, $userid, $groupids){
-	$table = getTable($trackerID);
+	$vars = [];
+ $table = getTable($trackerID);
   #$vars = array(':table'=>$table);
 	$uq = "UPDATE $table, `tracker` SET ";
 	#print_r($ds);
@@ -1376,22 +1386,25 @@ function updateRecord($trackerID, $ds, $userid, $groupids){
 
 function getConnections($trackerID){
 	$q = "SELECT * FROM connections WHERE belongsTo=:trackerID";
-	$r = pdo_query($q, array( 'trackerID' => $trackerID ));
+	$r = pdo_query($q, ['trackerID' => $trackerID]);
 	return $r;
 }
 
 function getConnection($connID){
 	$q = "SELECT * FROM connections WHERE connID=:connID";
-	$r = pdo_query($q, array(':connID'=>$connID));
+	$r = pdo_query($q, [':connID'=>$connID]);
 	return $r[0];
 }
 
 function saveURI($uri){
-	include('config.php');
+	$host = null;
+ $username = null;
+ $password = null;
+ include('config.php');
 	$link = mysql_connect($host, $username, $password);
-	$uri = escape_quotes($uri, $link);
+	$uri = escape_quotes($uri);
 	$query = "UPDATE `settings` SET `value`=:uri WHERE `variable`='lastView';";
-	pdo_query($query, array(':uri'=>$uri));
+	pdo_query($query, [':uri'=>$uri]);
 	return;
 }
 function getLastView(){
@@ -1476,8 +1489,8 @@ function disableRow(rowID, disabled){
 <?php
 	$uq = "SELECT `ID` AS trackID, `fullname` AS `name` FROM `user`";
 	$users = pdo_query($uq);
-	if (!$users) $users = array();
-	$formParams = array('mode'=>'modify','table'=>'users');
+	if (!$users) $users = [];
+	$formParams = ['mode'=>'modify', 'table'=>'users'];
 	#getComboBox($field, $table, $mode, $choices, $match, $action=null, $link=null){
 	print getComboBox("user",$formParams['table'], $formParams['mode'],$users,null);
 ?>
@@ -1495,7 +1508,7 @@ function disableRow(rowID, disabled){
 
 
 function UploadFiles($file){
-	if (($file["size"] < 2000000)){
+	if (($file["size"] < 2_000_000)){
 	  if ($file["error"] > 0)
 	    {
 	    echo "Return Code: " . $file["error"] . "<br />";
@@ -1506,7 +1519,7 @@ function UploadFiles($file){
 	    echo "Type: " . $file["type"] . "<br />";
 	    echo "Size: " . ($file["size"] / 1024) . " Kb<br />";
 	    #echo "Temp file: " . $file["tmp_name"] . "<br />";
-	    $filePath = dirname(__FILE__)."/attachments/";
+	    $filePath = __DIR__."/attachments/";
 	    #print "<br/>".$filePath."<br/>";
 	    if (file_exists($filePath . $file["name"]))
 	      {
@@ -1527,12 +1540,13 @@ function UploadFiles($file){
 }
 
 function getRestrictionSites($digString, $dnaSequence){
-	include('config.php');
+	$enzymes_array = [];
+ include('config.php');
   include('lib/restriction_digest.php');
-  $digestion = digestDNA( array("sequence" => $dnaSequence, 'IIs' => 0, 'IIb' => 0) );
+  $digestion = digestDNA( ["sequence" => $dnaSequence, 'IIs' => 0, 'IIb' => 0] );
 
-	$output = array();
-	$sites = array();
+	$output = [];
+	$sites = [];
 	global $userid;
 	global $noUserFilter;
 	$sitelen = 4;
@@ -1543,7 +1557,7 @@ function getRestrictionSites($digString, $dnaSequence){
   $enzymeList = [];
 	if(in_array($lab_key, $enzymes)){
 		$noUserFilter = True;
-		$enzys = getRecords('vials', $userid, array(), array('vials.name'), " trackboxes.name='Lab Enzymes' ", "", 0, " LEFT JOIN trackboxes ON vials.boxID=trackboxes.tID ");
+		$enzys = getRecords('vials', $userid, [], ['vials.name'], " trackboxes.name='Lab Enzymes' ", "", 0, " LEFT JOIN trackboxes ON vials.boxID=trackboxes.tID ");
     console_log("enzymes: ".print_r($enzys,true));
 		$noUserFilter = False;
 		if (sizeof($enzys) > 0){
@@ -1564,7 +1578,7 @@ function getRestrictionSites($digString, $dnaSequence){
 	$limit ='';
   if (in_array('all', $enzymes)) {
     $all = True;
-    $enzymeList = array('all');
+    $enzymeList = ['all'];
   }
 	if ( $digestion == Null || $digestion == '' ){
 	    print "<script type='text/javascript'>alert('Problem with restriction sites! No restriction sites are displayed.');</script>";

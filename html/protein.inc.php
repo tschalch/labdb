@@ -58,7 +58,7 @@ function protein_isoelectric_point($pK, $aminoacid_content) {
 }
 function partial_charge($val1,$val2){
         // compute concentration ratio
-        $cr=pow(10,$val1-$val2);
+        $cr=10 ** ($val1-$val2);
         // compute partial charge
         $pc=$cr/($cr+1);
         return $pc;
@@ -77,43 +77,14 @@ function protein_charge($pK,$aminoacid_content,$pH){
         return $charge;
 }
 function pK_values ($data_source){
+        $pK = null;
         // pK values for each component (aa)
         if ($data_source=="EMBOSS"){
-                $pK=array(
-                        "N_terminus"=>8.6,
-                        "K"=>10.8,
-                        "R"=>12.5,
-                        "H"=>6.5,
-                        "C_terminus"=>3.6,
-                        "D"=>3.9,
-                        "E"=>4.1,
-                        "C"=>8.5,
-                        "Y"=>10.1
-                );
+                $pK=["N_terminus"=>8.6, "K"=>10.8, "R"=>12.5, "H"=>6.5, "C_terminus"=>3.6, "D"=>3.9, "E"=>4.1, "C"=>8.5, "Y"=>10.1];
         }elseif ($data_source=="DTASelect"){
-                $pK=array(
-                        "N_terminus"=>8,
-                        "K"=>10,
-                        "R"=>12,
-                        "H"=>6.5,
-                        "C_terminus"=>3.1,
-                        "D"=>4.4,
-                        "E"=>4.4,
-                        "C"=>8.5,
-                        "Y"=>10
-                );
+                $pK=["N_terminus"=>8, "K"=>10, "R"=>12, "H"=>6.5, "C_terminus"=>3.1, "D"=>4.4, "E"=>4.4, "C"=>8.5, "Y"=>10];
         }elseif ($data_source=="Solomon"){
-                $pK=array(
-                        "N_terminus"=>9.6,
-                        "K"=>10.5,
-                        "R"=>125,
-                        "H"=>6.0,
-                        "C_terminus"=>2.4,
-                        "D"=>3.9,
-                        "E"=>4.3,
-                        "C"=>8.3,
-                        "Y"=>10.1
-                );
+                $pK=["N_terminus"=>9.6, "K"=>10.5, "R"=>125, "H"=>6.0, "C_terminus"=>2.4, "D"=>3.9, "E"=>4.3, "C"=>8.3, "Y"=>10.1];
         }
         return $pK;
 }
@@ -133,8 +104,7 @@ function print_aminoacid_content($aminoacid_content) {
 }
 
 function aminoacid_content($seq) {
-        $array=array("A"=>0,"R"=>0,"N"=>0,"D"=>0,"C"=>0,"E"=>0,"Q"=>0,"G"=>0,"H"=>0,"I"=>0,"L"=>0,
-                     "K"=>0,"M"=>0,"F"=>0,"P"=>0,"S"=>0,"T"=>0,"W"=>0,"Y"=>0,"V"=>0,"X"=>0,"*"=>0);
+        $array=["A"=>0, "R"=>0, "N"=>0, "D"=>0, "C"=>0, "E"=>0, "Q"=>0, "G"=>0, "H"=>0, "I"=>0, "L"=>0, "K"=>0, "M"=>0, "F"=>0, "P"=>0, "S"=>0, "T"=>0, "W"=>0, "Y"=>0, "V"=>0, "X"=>0, "*"=>0];
         for($i=0; $i<strlen($seq);$i++){
                 $aa=substr($seq,$i,1);
                 if(array_key_exists($aa, $array)) $array[$aa]++;
@@ -273,11 +243,11 @@ function protein_aminoacid_nature1($seq){
         $result="";
         for($i=0; $i<strlen($seq); $i++){
                 // non-polar aminoacids, magenta
-                if (strpos(" GAPVILFM",substr($seq,$i,1))>0){$result.="<font color=yellow>".substr($seq,$i,1)."</font>";continue;}
+                if (strpos(" GAPVILFM",(string) substr($seq,$i,1))>0){$result.="<font color=yellow>".substr($seq,$i,1)."</font>";continue;}
                 // polar aminoacids, magenta
-                if (strpos(" SCTNQHYW",substr($seq,$i,1))>0){$result.="<font color=magenta>".substr($seq,$i,1)."</font>";continue;}
+                if (strpos(" SCTNQHYW",(string) substr($seq,$i,1))>0){$result.="<font color=magenta>".substr($seq,$i,1)."</font>";continue;}
                 // charged aminoacids, red
-                if (strpos(" DEKR",substr($seq,$i,1))>0){$result.="<font color=red>".substr($seq,$i,1)."</font>";continue;}
+                if (strpos(" DEKR",(string) substr($seq,$i,1))>0){$result.="<font color=red>".substr($seq,$i,1)."</font>";continue;}
 
         }
         return $result;
@@ -287,15 +257,15 @@ function protein_aminoacid_nature2($seq){
         $result="";
         for($i=0; $i<strlen($seq); $i++){
                 // Small nonpolar (yellow)
-                if (strpos(" GAST",substr($seq,$i,1))>0){$result.="<font color=yellow>".substr($seq,$i,1)."</font>";continue;}
+                if (strpos(" GAST",(string) substr($seq,$i,1))>0){$result.="<font color=yellow>".substr($seq,$i,1)."</font>";continue;}
                 // Small hydrophobic (green)
-                if (strpos(" CVILPFYMW",substr($seq,$i,1))>0){$result.="<font color=green>".substr($seq,$i,1)."</font>";continue;}
+                if (strpos(" CVILPFYMW",(string) substr($seq,$i,1))>0){$result.="<font color=green>".substr($seq,$i,1)."</font>";continue;}
                 // Polar
-                if (strpos(" DQH",substr($seq,$i,1))>0){$result.="<font color=magenta>".substr($seq,$i,1)."</font>";continue;}
+                if (strpos(" DQH",(string) substr($seq,$i,1))>0){$result.="<font color=magenta>".substr($seq,$i,1)."</font>";continue;}
                 // Negatively charged
-                if (strpos(" NE",substr($seq,$i,1))>0){$result.="<font color=red>".substr($seq,$i,1)."</font>";continue;}
+                if (strpos(" NE",(string) substr($seq,$i,1))>0){$result.="<font color=red>".substr($seq,$i,1)."</font>";continue;}
                 // Positively charged
-                if (strpos(" KR",substr($seq,$i,1))>0){$result.="<font color=red>".substr($seq,$i,1)."</font>";continue;}
+                if (strpos(" KR",(string) substr($seq,$i,1))>0){$result.="<font color=red>".substr($seq,$i,1)."</font>";continue;}
 
         }
         return $result;
@@ -318,10 +288,10 @@ function protein_aminoacids_chemical_group($amino_seq){
                 {
                 $amino_letter = substr($amino_seq, $ctr, 1);
                 if ($amino_letter == "") break;
-                if (strpos(" GAVLI", $amino_letter)>0) $chemgrp_seq .= "L";
+                if (strpos(" GAVLI", (string) $amino_letter)>0) $chemgrp_seq .= "L";
                 elseif (($amino_letter == "S") or ($amino_letter == "T")) $chemgrp_seq .= "H";
                 elseif (($amino_letter == "N") or ($amino_letter == "Q")) $chemgrp_seq .= "M";
-                elseif (strpos(" FYW", $amino_letter)>0) $chemgrp_seq .= "R";
+                elseif (strpos(" FYW", (string) $amino_letter)>0) $chemgrp_seq .= "R";
                 elseif (($amino_letter == "C") or ($amino_letter == "M")) $chemgrp_seq .= "S";
                 elseif ($amino_letter == "P") $chemgrp_seq .= "I";
                 elseif (($amino_letter == "D") or ($amino_letter == "E")) $chemgrp_seq .= "A";

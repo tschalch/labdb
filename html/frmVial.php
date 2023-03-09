@@ -3,7 +3,7 @@ $titleName = "Vial";
 $mode = $_GET['mode'];
 $table = 'vials';
 $submitFunction = "validate_form()";
-$formParams = array('table'=>$table, 'mode'=>$mode);
+$formParams = ['table'=>$table, 'mode'=>$mode];
 
 
 # setup fields from template if one is given
@@ -135,8 +135,8 @@ foreach ($sampleTypes as $type){
   #	ORDER BY $sTable.name";
   //print "$q <br/>";
   #$choices = pdo_query($q);
-  $cols = array('tracker.trackID',"CONCAT($sTable.name,' (id: ',tracker.trackID,')') AS name");
-  $choices = getRecords($sTable, $userid, array(), $cols);
+  $cols = ['tracker.trackID', "CONCAT($sTable.name,' (id: ',tracker.trackID,')') AS name"];
+  $choices = getRecords($sTable, $userid, [], $cols);
   if (key_exists('id', $type) & $type['id'] == $st){
     $fstyle = "display:block;";
       } else {
@@ -152,8 +152,8 @@ foreach ($sampleTypes as $type){
         print "</div>\n\n";
         # box combobox
         #$choices = pdo_query("SELECT tracker.trackID as id, boxes.name FROM tracker INNER JOIN boxes ON tracker.sampleID=boxes.id INNER JOIN sampletypes ON sampletypes.name='box' WHERE tracker.sampleType=sampletypes.id AND tracker.owner=$userid");
-        $cols = array('tracker.trackID','boxes.name');
-        $choices = getRecords('boxes', $userid, array(), $cols);
+        $cols = ['tracker.trackID', 'boxes.name'];
+        $choices = getRecords('boxes', $userid, [], $cols);
         #print_r($choices);
         if (!key_exists('boxID', $fields)) $fields['boxID'] = '';
         printComboBox("Storage Box",'boxID', $formParams, $choices, $fields['boxID'],'','frmBoxes');

@@ -4,7 +4,7 @@ include_once("accesscontrol.php");
 include("header.php");
 
 $mode = '';
-$formParams = array('table'=>'none', 'mode'=>$mode);
+$formParams = ['table'=>'none', 'mode'=>$mode];
 include("formhead.php");
 
 $helpText = "
@@ -50,12 +50,12 @@ if (!isset($_FILES['importFile'])){
 	while(!feof($fp)){
 		$csvRecord = fgetcsv($fp);
 		print_r($csvRecord);
-		if ($csvRecord[0]{0} == '>'){
+		if ($csvRecord[0][0] == '>'){
 			$table = trim(substr($csvRecord[0],1));
 			print "Table to import to: $table <br/>";
 			continue;
 		}
-		if ($csvRecord[0]{0} == '#'){
+		if ($csvRecord[0][0] == '#'){
 			$csvRecord[0] = substr($csvRecord[0],1);
 			$fieldnames = $csvRecord;
 			print "Fieldnames: ";
@@ -64,9 +64,9 @@ if (!isset($_FILES['importFile'])){
 			continue;
 		}
 		$tokens = $csvRecord;
-		if (count($tokens) == count($fieldnames)){
-			$dataset = array();
-			for($i=0; $i < count($tokens); $i++){
+		if (($tokens === null ? 0 : count($tokens)) == count($fieldnames)){
+			$dataset = [];
+			for($i=0; $i < ($tokens === null ? 0 : count($tokens)); $i++){
 				if(strlen(trim($tokens[$i])) > 0){
 					$dataset[$fieldnames[$i]] = trim($tokens[$i]);
 				}

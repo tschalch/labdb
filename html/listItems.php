@@ -43,7 +43,7 @@ foreach ($rows as $row) {
 	$id = $row['trackID'];
 	$itemid = $row['hexID'];
 	$edit = 0;
-	$permissions = array(9,9,9);
+	$permissions = [9, 9, 9];
 	$cost = $row['quantity'] * $row['price'];
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
   $tr = "";
@@ -89,16 +89,16 @@ foreach ($rows as $row) {
 	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
 }
     echo "<tr><td colspan = \"100\">";
-    $noItems = count($rows);
+    $noItems = is_countable($rows) ? count($rows) : 0;
     echo "Number of Items: $noItems; ";
     echo "Total Cost = \$ $totalCost; ";
     echo "Outstanding bills = \$ $unpaidBills";
     echo "</td></tr>";
 
 if (isset($status) and $status == 1){
-	listProcessor(array(3,4,5,8));
+	listProcessor([3, 4, 5, 8]);
 } else {
-	listProcessor(array(6,7,8,9));
+	listProcessor([6, 7, 8, 9]);
 }
 ?>
 

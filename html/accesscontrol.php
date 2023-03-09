@@ -49,7 +49,7 @@ include_once("title_bar.php");
 
 $sql = "SELECT * FROM user WHERE userid = :uid AND password = MD5(:pwd)";
 #print $sql;
-$accresult = pdo_query($sql, array(':uid'=>$uid, ':pwd'=>$pwd));
+$accresult = pdo_query($sql, [':uid'=>$uid, ':pwd'=>$pwd]);
 if (!$accresult) {
  unset($_SESSION['uid']);
  unset($_SESSION['pwd']);

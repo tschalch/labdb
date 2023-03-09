@@ -6,10 +6,7 @@ $formaction = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}"; #action perfo
 #SQL parameters for data retrieval:
 #column names (need to be specified for each table):
 $table = "strains";
-$columns = array('strains.name', 'strains.description', 'strains.organism',
-		 'strains.strain',
-		 'tracker.trackID', 'tracker.owner','tracker.permOwner'
-		 );
+$columns = ['strains.name', 'strains.description', 'strains.organism', 'strains.strain', 'tracker.trackID', 'tracker.owner', 'tracker.permOwner'];
 # optional join expressions to connect to more data
 $join = "";
 #array of fields that is going to be searched for the term entered in the search... box
@@ -18,13 +15,7 @@ $defaultOrder ="strains.id DESC";
 #End SQL parameters
 
 #array of query field => table heading
-$fields = array('trackID' => 'dbID',
-		'hexID' => 'Strain',
-		'strains.name' => 'Name',
-		'organism' => 'Organism',
-		'strain' => 'Genotype',
-		'strains.description' => 'Description',
-		'1' => 'Building blocks');
+$fields = ['trackID' => 'dbID', 'hexID' => 'Strain', 'strains.name' => 'Name', 'organism' => 'Organism', 'strain' => 'Genotype', 'strains.description' => 'Description', '1' => 'Building blocks'];
 
 #toggle Project combobox on and off
 $noProjectFilter = False;
@@ -40,9 +31,9 @@ $noUserFilter = False;
 
 include("listhead.php");
 
-$plasmids = array();
-$pcols = array('plasmids.name', 'tracker.trackID');
-$plds = getRecords("plasmids", $userid, array(), $pcols);
+$plasmids = [];
+$pcols = ['plasmids.name', 'tracker.trackID'];
+$plds = getRecords("plasmids", $userid, [], $pcols);
 if($plds){
 	foreach($plds as $plasmid){
 		$plasmids[$plasmid['trackID']] = $plasmid['name'];
@@ -72,7 +63,7 @@ foreach ($rows as $row) {
 	echo "<tr class=\"menu\" id=\"menu_$dbid\"></tr>";
 	$i++;
 }
-listProcessor(array(2,3,7));
+listProcessor([2, 3, 7]);
 
 function printPlasmids($sID, $conxs){
 	if (!$conxs) return;

@@ -4,7 +4,7 @@ $titleName = "Strain";
 $submitFunction = "validate_form()";
 $mode = $_GET['mode'];
 if (!$mode) $mode = 'display';
-$formParams = array('table'=>$table,'mode'=>$mode);
+$formParams = ['table'=>$table, 'mode'=>$mode];
 
 include("formhead.php");
 ?>
@@ -28,8 +28,8 @@ window.addEvent('domready', function() {
 <?php
 
 # get choices for fragment comboboxes
-$types = array('plasmid'=>'plasmids', 'fragment' =>'fragments', 'parent strain'=>'strains');
-$choices = array();
+$types = ['plasmid'=>'plasmids', 'fragment' =>'fragments', 'parent strain'=>'strains'];
+$choices = [];
 #print_r($rows);
 #print mysql_error($link);
 

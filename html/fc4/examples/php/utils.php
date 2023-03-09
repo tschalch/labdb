@@ -13,13 +13,13 @@ date_default_timezone_set('UTC');
 class Event {
 
   // Tests whether the given ISO8601 string has a time-of-day or not
-  const ALL_DAY_REGEX = '/^\d{4}-\d\d-\d\d$/'; // matches strings like "2013-12-29"
+  public const ALL_DAY_REGEX = '/^\d{4}-\d\d-\d\d$/'; // matches strings like "2013-12-29"
 
   public $title;
   public $allDay; // a boolean
   public $start; // a DateTime
   public $end; // a DateTime, or null
-  public $properties = array(); // an array of other misc properties
+  public $properties = []; // an array of other misc properties
 
 
   // Constructs an Event object from the given array of key=>values.
@@ -49,7 +49,7 @@ class Event {
 
     // Record misc properties
     foreach ($array as $name => $value) {
-      if (!in_array($name, array('title', 'allDay', 'start', 'end'))) {
+      if (!in_array($name, ['title', 'allDay', 'start', 'end'])) {
         $this->properties[$name] = $value;
       }
     }
@@ -111,7 +111,7 @@ class Event {
 function parseDateTime($string, $timeZone=null) {
   $date = new DateTime(
     $string,
-    $timeZone ? $timeZone : new DateTimeZone('UTC')
+    $timeZone ?: new DateTimeZone('UTC')
       // Used only when the string is ambiguous.
       // Ignored if string has a timeZone offset in it.
   );

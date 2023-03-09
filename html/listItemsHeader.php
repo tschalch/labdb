@@ -5,14 +5,7 @@ $formaction = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}"; #action perfo
 #SQL parameters for data retrieval:
 #column names (need to be specified for each table):
 $table = "inventory";
-$columns = array('inventory.orderDate', 'inventory.name', 'inventory.description', 'inventory.files',
-		 'inventory.orderNumber', 'inventory.casNumber', 'inventory.unitMeas',
-		 'inventory.price', 'inventory.orderDate', 'inventory.received',
-		 'inventory.funding', 'inventory.manufacturer', 'inventory.supplier',
-		 'inventory.location', 'inventory.status','inventory.billed','inventory.poNumber',
-		 'tracker.trackID', 'tracker.owner','tracker.permOwner', 'inventory.quantity',
-		 'user.userid'
-		 );
+$columns = ['inventory.orderDate', 'inventory.name', 'inventory.description', 'inventory.files', 'inventory.orderNumber', 'inventory.casNumber', 'inventory.unitMeas', 'inventory.price', 'inventory.orderDate', 'inventory.received', 'inventory.funding', 'inventory.manufacturer', 'inventory.supplier', 'inventory.location', 'inventory.status', 'inventory.billed', 'inventory.poNumber', 'tracker.trackID', 'tracker.owner', 'tracker.permOwner', 'inventory.quantity', 'user.userid'];
 
 # optional join expressions to connect to more data
 //$join = "LEFT JOIN locations ON inventory.location=locations.id ";
@@ -56,18 +49,7 @@ if (array_key_exists('column', $_GET)){
 #End SQL parameters
 
 #array of query field => table heading
-$fields = array('trackID' => 'ID',
-		'sampleID' => 'Item',
-		'name' => 'Name',
-		'supplier' => 'Supplier',
-		'orderNumber' => 'Cat #',
-		'casNumber' => 'cas #',
-		'quantity' => 'Qty',
-		'unitMeas' => 'Unit Meas.',
-		'price' => 'Price/Unit',
-		'status' => 'Status',
-		'orderDate' => 'Date ordered',
-		'location' => 'Location');
+$fields = ['trackID' => 'ID', 'sampleID' => 'Item', 'name' => 'Name', 'supplier' => 'Supplier', 'orderNumber' => 'Cat #', 'casNumber' => 'cas #', 'quantity' => 'Qty', 'unitMeas' => 'Unit Meas.', 'price' => 'Price/Unit', 'status' => 'Status', 'orderDate' => 'Date ordered', 'location' => 'Location'];
 
 #toggle Project combobox on and off
 $noProjectFilter = True;

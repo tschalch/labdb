@@ -1,7 +1,7 @@
 <?php
 include_once("accesscontrol.php");
 #$noUserFilter = True;
-$fields = isset($fields) ? $fields : array();
+$fields ??= [];
 if ((isset($edit) and $edit) or (isset($duplicate) and $duplicate)){
   if(isset($form)){
     $query="SELECT `$table`.*, tracker.*, sampletypes.`table`, sampletypes.`form`, sampletypes.st_name AS stName FROM `$table` LEFT JOIN tracker ON $table.id=tracker.sampleID LEFT JOIN sampletypes ON sampletypes.`table`='$table' WHERE $table.id='$id' AND tracker.sampleType=sampletypes.id AND tracker.owner=$userid ";
@@ -57,7 +57,7 @@ include("navigation.php");
 if (!isset($noUserFilter)) $noUserFilter = Null;
 if (!isset($noProjectFilter)) $noProjectFilter = Null;
 initProjects($noUserFilter, $noProjectFilter);
-$formParams['fields'] = isset($fields) ?  $fields : Null;
+$formParams['fields'] = $fields ?? Null;
 //print_r($fields);
 ?>
 <div id='title'><h2><?php echo "$entrytitle";?></h2></div>

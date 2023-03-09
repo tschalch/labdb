@@ -3,7 +3,7 @@ $titleName = "Location";
 $submitFunction = "validate_form()";
 $mode = $_GET['mode'];
 $table = 'locations';
-$formParams = array('table'=>$table, 'mode'=>$mode);
+$formParams = ['table'=>$table, 'mode'=>$mode];
 include("formhead.php");
 ?>
 <script type="text/javascript">
@@ -27,9 +27,9 @@ window.addEvent('domready', function() {
 
 printID($formParams);
 printTextField('Location name', 'name', $formParams);
-$lcol = array('tracker.trackID','locations.name');
-$locations = getRecords('locations', $userid, array(), $lcol, '', "name");
-printComboBox("Contained in location",'location', $formParams, $locations, (isset($fields['location']) ? $fields['location']: null), null, true);
+$lcol = ['tracker.trackID', 'locations.name'];
+$locations = getRecords('locations', $userid, [], $lcol, '', "name");
+printComboBox("Contained in location",'location', $formParams, $locations, ($fields['location'] ?? null), null, true);
 printTextArea('Description', 'description', $formParams);
 echo "<div class=\"formRow\"><div class=\"formLabel\">Sub-locations:</div>";
 echo "<div class=\"formField\"><a href=\"list.php?list=listLocations&location=$id\">Show sub-locations</a></div></div>";

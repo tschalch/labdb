@@ -15,7 +15,7 @@ function wikiPrintEntry($entry){
 			$o = getRecord($oligoID, $userid, $groups);
 			$ohexID = $o['hexID'];
 			$trackID = $o['trackID'];
-			$tm = $o['tm'] ? $o['tm'] : round(Tm($o['targetmatch'],'bre',$o['Saltconc']*1E-3, $o['PCRconc']*1E-9), 1);
+			$tm = $o['tm'] ?: round(Tm($o['targetmatch'],'bre',$o['Saltconc']*1E-3, $o['PCRconc']*1E-9), 1);
 			$wikiString .= "{{labdburl|id=$oligoID|label=${o['name']}}} ($trackID/$ohexID) || ";
 			$tmstring .= "$tm";
 			$tmstring .= ($i == 1) ? "/" : "";
@@ -26,7 +26,7 @@ function wikiPrintEntry($entry){
 		$wikiString .= CountATCG($entry['DNASequence'])." bp ";
 	} elseif ($entry['sampleType']==2){
 		$seq = $entry['sequence'];
-		$tm = $entry['tm'] ? $entry['tm'] : round(Tm($entry['targetmatch'],'bre',$entry['Saltconc']*1E-3, $entry['PCRconc']*1E-9), 1);
+		$tm = $entry['tm'] ?: round(Tm($entry['targetmatch'],'bre',$entry['Saltconc']*1E-3, $entry['PCRconc']*1E-9), 1);
 		$wikiString .= "$seq || $tm ||";
 		$wikiString .= seqlen($seq);
 	} elseif (isset($entry['strain'])){

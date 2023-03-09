@@ -6,12 +6,7 @@ $formaction = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}"; #action perfo
 #SQL parameters for data retrieval:
 #column names (need to be specified for each table):
 $table = "logbook";
-$columns = array('logbook.date', 'logbook.instrumentID', 'logbook.columnID',
-		 'logbook.sample', 'logbook.buffer', 'logbook.date',
-		 'logbook.bypresbef', 'logbook.bypresaf', 'logbook.colpresbef',
-		 'logbook.colpresaf', 'logbook.storage', 'logbook.remarks', 'logbook.user',
-		 'user.userid', 'tracker.trackID',
-		 );
+$columns = ['logbook.date', 'logbook.instrumentID', 'logbook.columnID', 'logbook.sample', 'logbook.buffer', 'logbook.date', 'logbook.bypresbef', 'logbook.bypresaf', 'logbook.colpresbef', 'logbook.colpresaf', 'logbook.storage', 'logbook.remarks', 'logbook.user', 'user.userid', 'tracker.trackID'];
 
 # optional join expressions to connect to more data
 //$join = "LEFT JOIN inventory ON logbook.instrumentID=locations.id ";
@@ -22,13 +17,7 @@ $defaultOrder ="logbook.date DESC";
 #End SQL parameters
 
 #array of query field => table heading
-$fields = array('date' => 'Date',
-		'instrumentID' => 'Instrument',
-		'columnID' => 'Column No',
-		'user' => 'User',
-		'bypresaf' => 'System Pressure',
-		'colpresaf' => 'Column Pressure',
-		'remarks' => 'Remarks');
+$fields = ['date' => 'Date', 'instrumentID' => 'Instrument', 'columnID' => 'Column No', 'user' => 'User', 'bypresaf' => 'System Pressure', 'colpresaf' => 'Column Pressure', 'remarks' => 'Remarks'];
 
 #toggle Project combobox on and off
 $noProjectFilter = True;
@@ -45,12 +34,12 @@ $noUserFilter = True;
 include("listhead.php");
 
 # get instrument names
-$fcols = array('inventory.name','tracker.trackID');
-$instrs = getRecords("inventory", $userid, array(), $fcols, ' inventory.type!=0 ');
-$instruments = Array();
+$fcols = ['inventory.name', 'tracker.trackID'];
+$instrs = getRecords("inventory", $userid, [], $fcols, ' inventory.type!=0 ');
+$instruments = [];
 if($instrs){
 	foreach($instrs as $instrument){
-		$instruments[$instrument['trackID']] = array('name' => "${instrument['name']} (${instrument['trackID']})");
+		$instruments[$instrument['trackID']] = ['name' => "${instrument['name']} (${instrument['trackID']})"];
 	}
 }
 
@@ -58,7 +47,7 @@ foreach ($rows as $row) {
 	#print "row: ";print_r($row); print "<br/>";
 	$id = $row['trackID'];
 	$edit = 0;
-	$permissions = array(9,9,9);
+	$permissions = [9, 9, 9];
 	if (($row['owner']==$userid and $row['permOwner']>1) or getPermissions($id, $userid)>1) $edit = 1;
 	if($row['status']==4 and $status != 4){
 		print "<tr class=\"lists data-row\" data-record_id=\"$id\" style=\"background-color: #DCDCDC;\">";
@@ -82,7 +71,7 @@ foreach ($rows as $row) {
 	$i++;
 }
 
-listProcessor(array(3));
+listProcessor([3]);
 
 ?>
 

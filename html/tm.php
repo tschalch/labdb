@@ -13,7 +13,7 @@ if ($primer!="" and strlen($primer)>=6 and strlen($primer)<=50){
         $cg=round(100*CountCG($primer)/strlen($primer),1);
         print "C+G%                     $cg\n";
         Mol_wt($primer);
-        Math.round(1000000/(this.gCount * 11.7 + this.cCount * 7.3 + this.aCount * 15.4 + this.tCount * 8.8));
+        \MATH.round(1_000_000/(\THIS.\GCOUNT * 11.7 + \THIS.\CCOUNT * 7.3 + \THIS.\ACOUNT * 15.4 + \THIS.\TCOUNT * 8.8));
         
         if (strlen($primer)!=CountATCG($primer)){print "\n\nTm        Minimun        ".Tm_min($primer)." &deg;C\n          Maximum        ".Tm_max($primer)." &deg;C";}else{print "\n\nTm                       ".Tm_min($primer)." &deg;C";}
 }
@@ -80,6 +80,7 @@ function primer_max($primer){
         return $primer;
         }
 function molwt($sequence,$moltype,$limit){
+        $wlimit = null;
         // the following are single strand molecular weights / base
         $rna_A_wt = 329.245;
         $rna_C_wt = 305.215;
@@ -93,43 +94,75 @@ function molwt($sequence,$moltype,$limit){
 
         $water = 18.015;
 
-        $dna_wts = array('A' => array($dna_A_wt, $dna_A_wt),  // Adenine
-                         'C' => array($dna_C_wt, $dna_C_wt),  // Cytosine
-                         'G' => array($dna_G_wt, $dna_G_wt),  // Guanine
-                         'T' => array($dna_T_wt, $dna_T_wt),  // Thymine
-                         'M' => array($dna_C_wt, $dna_A_wt),  // A or C
-                         'R' => array($dna_A_wt, $dna_G_wt),  // A or G
-                         'W' => array($dna_T_wt, $dna_A_wt),  // A or T
-                         'S' => array($dna_C_wt, $dna_G_wt),  // C or G
-                         'Y' => array($dna_C_wt, $dna_T_wt),  // C or T
-                         'K' => array($dna_T_wt, $dna_G_wt),  // G or T
-                         'V' => array($dna_C_wt, $dna_G_wt),  // A or C or G
-                         'H' => array($dna_C_wt, $dna_A_wt),  // A or C or T
-                         'D' => array($dna_T_wt, $dna_G_wt),  // A or G or T
-                         'B' => array($dna_C_wt, $dna_G_wt),  // C or G or T
-                         'X' => array($dna_C_wt, $dna_G_wt),  // G, A, T or C
-                         'N' => array($dna_C_wt, $dna_G_wt)   // G, A, T or C
-           );
+        $dna_wts = [
+            'A' => [$dna_A_wt, $dna_A_wt],
+            // Adenine
+            'C' => [$dna_C_wt, $dna_C_wt],
+            // Cytosine
+            'G' => [$dna_G_wt, $dna_G_wt],
+            // Guanine
+            'T' => [$dna_T_wt, $dna_T_wt],
+            // Thymine
+            'M' => [$dna_C_wt, $dna_A_wt],
+            // A or C
+            'R' => [$dna_A_wt, $dna_G_wt],
+            // A or G
+            'W' => [$dna_T_wt, $dna_A_wt],
+            // A or T
+            'S' => [$dna_C_wt, $dna_G_wt],
+            // C or G
+            'Y' => [$dna_C_wt, $dna_T_wt],
+            // C or T
+            'K' => [$dna_T_wt, $dna_G_wt],
+            // G or T
+            'V' => [$dna_C_wt, $dna_G_wt],
+            // A or C or G
+            'H' => [$dna_C_wt, $dna_A_wt],
+            // A or C or T
+            'D' => [$dna_T_wt, $dna_G_wt],
+            // A or G or T
+            'B' => [$dna_C_wt, $dna_G_wt],
+            // C or G or T
+            'X' => [$dna_C_wt, $dna_G_wt],
+            // G, A, T or C
+            'N' => [$dna_C_wt, $dna_G_wt],
+        ];
 
-        $rna_wts = array('A' => array($rna_A_wt, $rna_A_wt),  // Adenine
-                         'C' => array($rna_C_wt, $rna_C_wt),  // Cytosine
-                         'G' => array($rna_G_wt, $rna_G_wt),  // Guanine
-                         'U' => array($rna_U_wt, $rna_U_wt),  // Uracil
-                         'M' => array($rna_C_wt, $rna_A_wt),  // A or C
-                         'R' => array($rna_A_wt, $rna_G_wt),  // A or G
-                         'W' => array($rna_U_wt, $rna_A_wt),  // A or U
-                         'S' => array($rna_C_wt, $rna_G_wt),  // C or G
-                         'Y' => array($rna_C_wt, $rna_U_wt),  // C or U
-                         'K' => array($rna_U_wt, $rna_G_wt),  // G or U
-                         'V' => array($rna_C_wt, $rna_G_wt),  // A or C or G
-                         'H' => array($rna_C_wt, $rna_A_wt),  // A or C or U
-                         'D' => array($rna_U_wt, $rna_G_wt),  // A or G or U
-                         'B' => array($rna_C_wt, $rna_G_wt),  // C or G or U
-                         'X' => array($rna_C_wt, $rna_G_wt),  // G, A, U or C
-                         'N' => array($rna_C_wt, $rna_G_wt)   // G, A, U or C
-             );
+        $rna_wts = [
+            'A' => [$rna_A_wt, $rna_A_wt],
+            // Adenine
+            'C' => [$rna_C_wt, $rna_C_wt],
+            // Cytosine
+            'G' => [$rna_G_wt, $rna_G_wt],
+            // Guanine
+            'U' => [$rna_U_wt, $rna_U_wt],
+            // Uracil
+            'M' => [$rna_C_wt, $rna_A_wt],
+            // A or C
+            'R' => [$rna_A_wt, $rna_G_wt],
+            // A or G
+            'W' => [$rna_U_wt, $rna_A_wt],
+            // A or U
+            'S' => [$rna_C_wt, $rna_G_wt],
+            // C or G
+            'Y' => [$rna_C_wt, $rna_U_wt],
+            // C or U
+            'K' => [$rna_U_wt, $rna_G_wt],
+            // G or U
+            'V' => [$rna_C_wt, $rna_G_wt],
+            // A or C or G
+            'H' => [$rna_C_wt, $rna_A_wt],
+            // A or C or U
+            'D' => [$rna_U_wt, $rna_G_wt],
+            // A or G or U
+            'B' => [$rna_C_wt, $rna_G_wt],
+            // C or G or U
+            'X' => [$rna_C_wt, $rna_G_wt],
+            // G, A, U or C
+            'N' => [$rna_C_wt, $rna_G_wt],
+        ];
 
-        $all_na_wts = array('DNA' => $dna_wts, 'RNA' => $rna_wts);
+        $all_na_wts = ['DNA' => $dna_wts, 'RNA' => $rna_wts];
         //print_r($all_na_wts);
         $na_wts = $all_na_wts[$moltype];
 

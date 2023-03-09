@@ -6,9 +6,7 @@ $formaction = "${_SERVER['PHP_SELF']}?${_SERVER['QUERY_STRING']}"; #action perfo
 #SQL parameters for data retrieval:
 #column names (need to be specified for each table):
 $table = "resources";
-$columns = array('resources.name', 'resources.description', 'resources.location', 'resources.active',
-		 'tracker.trackID', 'tracker.owner','tracker.permOwner'
-		 );
+$columns = ['resources.name', 'resources.description', 'resources.location', 'resources.active', 'tracker.trackID', 'tracker.owner', 'tracker.permOwner'];
 # optional join expressions to connect to more data
 $join = "";
 #array of fields that is going to be searched for the term entered in the search... box
@@ -17,10 +15,7 @@ $defaultOrder ="resources.name";
 #End SQL parameters
 
 #array of query field => table heading
-$fields = array('Name' => 'Name',
-'Location' => 'Location',
-'Description' => 'Description',
-'active' => 'active');
+$fields = ['Name' => 'Name', 'Location' => 'Location', 'Description' => 'Description', 'active' => 'active'];
 
 #toggle Project combobox on and off
 $noProjectFilter = True;
@@ -51,6 +46,6 @@ foreach ($rows as $row) {
 	echo "</tr>";
 	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";
 }
-listProcessor(array(2,3));
+listProcessor([2, 3]);
 print "</table>";
 ?>

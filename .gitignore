@@ -3,3 +3,6 @@ config.php
 *.swp
 *~
 temp/
+vendor
+rector.php
+composer*

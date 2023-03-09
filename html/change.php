@@ -17,7 +17,7 @@ foreach ($data as $table => $datasets){
 			if($dataset['connID'] > -1){
 				$uq = getUpdateQuery($dataset, 'connections', $dataset['connID']);
 				pdo_query($uq);
-				$newCnxs = array();
+				$newCnxs = [];
 				foreach($cnxs as $con){
 					if ($con['connID']!=$dataset['connID']) $newCnxs[] = ($con);
 				}
