@@ -83,7 +83,9 @@ foreach ($rows as $row) {
 	$date = '';
 	$loc = getRecord($row['location'], $userid);
 	echo "<td class=\"lists\" width=\5%\">";
-		echo "<a href=\"editEntry.php?id=${row['location']}&amp;mode=display\"> ${loc['name']}</a>";
+  if (!($loc == NULL)){
+    echo "<a href=\"editEntry.php?id=${row['location']}&amp;mode=display\"> ${loc['name']}</a>";
+  }
 	echo "</td>";
 	echo "</tr>";
 	echo "<tr class=\"menu\" id=\"menu_$id\"></tr>";

@@ -587,7 +587,7 @@ function printSequenceField($label, $type, $field, $formParams, $area, $seqEdito
 	$label = "$label:";
 
 	print "<div class=\"formRow\"><div class=\"formLabel\">$label";
-	if (sizeof ($seq)){
+	if (strlen($seq)){
 		if ($type == 'oligo'){
 			printOligoData($formParams, $field);
 		}
